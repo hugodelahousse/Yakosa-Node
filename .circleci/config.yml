@@ -3,8 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/node
-      - image: postgres
-
     steps:
       - checkout
       - run:
@@ -21,6 +19,8 @@ jobs:
             - ./node_modules
 
   lint:
+    docker:
+      - image: circleci/node
     requires:
       - build
     steps:
