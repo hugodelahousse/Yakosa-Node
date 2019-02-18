@@ -22,11 +22,9 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - ./node_modules
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - .cache
-            - app
+      - run:
+          name: build
+          command: yarn build
 
   lint:
     <<: *defaults
@@ -35,8 +33,16 @@ jobs:
     requires:
       - build
     steps:
-      - attach_workspace:
-          at: ~/
+      - checkout
+      - restore_cache: # Get cache based on node_modules
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-packages
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
       - run:
           name: lint
           command: yarn lint
