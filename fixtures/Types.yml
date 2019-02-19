@@ -1,0 +1,36 @@
+entity: Type
+items:
+  bug:
+    name: bug
+  dragon:
+    name: dragon
+  electric:
+    name: electric
+  fairy:
+    name: fairy
+  fighting:
+    name: fighting
+  fire:
+    name: fire
+  flying:
+    name: flying
+  ghost:
+    name: ghost
+  grass:
+    name: grass
+  ground:
+    name: ground
+  ice:
+    name: ice
+  normal:
+    name: normal
+  poison:
+    name: poison
+  psychic:
+    name: psychic
+  rock:
+    name: rock
+  steel:
+    name: steel
+  water:
+    name: water

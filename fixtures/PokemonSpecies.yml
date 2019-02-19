@@ -1,0 +1,1512 @@
+entity: PokemonSpecies
+items:
+  1:
+    description: "A strange seed was planted on its back at birth. The plant sprouts\
+      \ and grows with this POK\xE9MON."
+    height: 7
+    id: 1
+    name: bulbasaur
+    primaryType: poison
+    secondaryType: grass
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png
+    weight: 69
+  2:
+    description: When the bulb on its back grows large, it appears to lose the ability
+      to stand on its hind legs.
+    height: 10
+    id: 2
+    name: ivysaur
+    primaryType: poison
+    secondaryType: grass
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/2.png
+    weight: 130
+  3:
+    description: The plant blooms when it is absorbing solar energy. It stays on the
+      move to seek sunlight.
+    height: 20
+    id: 3
+    name: venusaur
+    primaryType: poison
+    secondaryType: grass
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png
+    weight: 1000
+  4:
+    description: Obviously prefers hot places. When it rains, steam is said to spout
+      from the tip of its tail.
+    height: 6
+    id: 4
+    name: charmander
+    primaryType: fire
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png
+    weight: 85
+  5:
+    description: When it swings its burning tail, it elevates the temperature to unbearably
+      high levels.
+    height: 11
+    id: 5
+    name: charmeleon
+    primaryType: fire
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/5.png
+    weight: 190
+  6:
+    description: Spits fire that is hot enough to melt boulders. Known to cause forest
+      fires unintentionally.
+    height: 17
+    id: 6
+    name: charizard
+    primaryType: flying
+    secondaryType: fire
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png
+    weight: 905
+  7:
+    description: After birth, its back swells and hardens into a shell. Powerfully
+      sprays foam from its mouth.
+    height: 5
+    id: 7
+    name: squirtle
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/7.png
+    weight: 90
+  8:
+    description: Often hides in water to stalk unwary prey. For swimming fast, it
+      moves its ears to maintain balance.
+    height: 10
+    id: 8
+    name: wartortle
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/8.png
+    weight: 225
+  9:
+    description: "A brutal POK\xE9MON with pressurized water jets on its shell. They\
+      \ are used for high speed tackles."
+    height: 16
+    id: 9
+    name: blastoise
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png
+    weight: 855
+  10:
+    description: Its short feet are tipped with suction pads that enable it to tirelessly
+      climb slopes and walls.
+    height: 3
+    id: 10
+    name: caterpie
+    primaryType: bug
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/10.png
+    weight: 29
+  11:
+    description: "This POK\xE9MON is vulnerable to attack while its shell is soft,\
+      \ exposing its weak and tender body."
+    height: 7
+    id: 11
+    name: metapod
+    primaryType: bug
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/11.png
+    weight: 99
+  12:
+    description: In battle, it flaps its wings at high speed to release highly toxic
+      dust into the air.
+    height: 11
+    id: 12
+    name: butterfree
+    primaryType: flying
+    secondaryType: bug
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/12.png
+    weight: 320
+  13:
+    description: Often found in forests, eating leaves. It has a sharp venomous stinger
+      on its head.
+    height: 3
+    id: 13
+    name: weedle
+    primaryType: poison
+    secondaryType: bug
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/13.png
+    weight: 32
+  14:
+    description: "Almost incapable of moving, this POK\xE9MON can only harden its\
+      \ shell to protect itself from predators."
+    height: 6
+    id: 14
+    name: kakuna
+    primaryType: poison
+    secondaryType: bug
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/14.png
+    weight: 100
+  15:
+    description: Flies at high speed and attacks using its large venomous stingers
+      on its forelegs and tail.
+    height: 10
+    id: 15
+    name: beedrill
+    primaryType: poison
+    secondaryType: bug
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/15.png
+    weight: 295
+  16:
+    description: A common sight in forests and woods. It flaps its wings at ground
+      level to kick up blinding sand.
+    height: 3
+    id: 16
+    name: pidgey
+    primaryType: flying
+    secondaryType: normal
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/16.png
+    weight: 18
+  17:
+    description: "Very protective of its sprawling territorial area, this POK\xE9\
+      MON will fiercely peck at any intruder."
+    height: 11
+    id: 17
+    name: pidgeotto
+    primaryType: flying
+    secondaryType: normal
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/17.png
+    weight: 300
+  18:
+    description: When hunting, it skims the surface of water at high speed to pick
+      off unwary prey such as MAGIKARP.
+    height: 15
+    id: 18
+    name: pidgeot
+    primaryType: flying
+    secondaryType: normal
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/18.png
+    weight: 395
+  19:
+    description: Bites anything when it attacks. Small and very quick, it is a common
+      sight in many places.
+    height: 3
+    id: 19
+    name: rattata
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/19.png
+    weight: 35
+  20:
+    description: "It uses its whis\xAD kers to maintain its balance. It apparently\
+      \ slows down if they are cut off."
+    height: 7
+    id: 20
+    name: raticate
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/20.png
+    weight: 185
+  21:
+    description: Eats bugs in grassy areas. It has to flap its short wings at high
+      speed to stay airborne.
+    height: 3
+    id: 21
+    name: spearow
+    primaryType: flying
+    secondaryType: normal
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/21.png
+    weight: 20
+  22:
+    description: With its huge and magnificent wings, it can keep aloft without ever
+      having to land for rest.
+    height: 12
+    id: 22
+    name: fearow
+    primaryType: flying
+    secondaryType: normal
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/22.png
+    weight: 380
+  23:
+    description: Moves silently and stealthily. Eats the eggs of birds, such as PIDGEY
+      and SPEAROW, whole.
+    height: 20
+    id: 23
+    name: ekans
+    primaryType: poison
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/23.png
+    weight: 69
+  24:
+    description: It is rumored that the ferocious warning markings on its belly differ
+      from area to area.
+    height: 35
+    id: 24
+    name: arbok
+    primaryType: poison
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/24.png
+    weight: 650
+  25:
+    description: "When several of these POK\xE9MON gather, their electricity could\
+      \ build and cause lightning storms."
+    height: 4
+    id: 25
+    name: pikachu
+    primaryType: electric
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png
+    weight: 60
+  26:
+    description: Its long tail serves as a ground to protect itself from its own high
+      voltage power.
+    height: 8
+    id: 26
+    name: raichu
+    primaryType: electric
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/26.png
+    weight: 300
+  27:
+    description: Burrows deep underground in arid locations far from water. It only
+      emerges to hunt for food.
+    height: 6
+    id: 27
+    name: sandshrew
+    primaryType: ground
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/27.png
+    weight: 120
+  28:
+    description: Curls up into a spiny ball when threatened. It can roll while curled
+      up to attack or escape.
+    height: 10
+    id: 28
+    name: sandslash
+    primaryType: ground
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/28.png
+    weight: 295
+  29:
+    description: "Although small, its venomous barbs render this POK\xE9MON dangerous.\
+      \ The female has smaller horns."
+    height: 4
+    id: 29
+    name: nidoran-f
+    primaryType: poison
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/29.png
+    weight: 70
+  30:
+    description: The female's horn develops slowly. Prefers physical attacks such
+      as clawing and biting.
+    height: 8
+    id: 30
+    name: nidorina
+    primaryType: poison
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/30.png
+    weight: 200
+  31:
+    description: Its hard scales provide strong protection. It uses its hefty bulk
+      to execute powerful moves.
+    height: 13
+    id: 31
+    name: nidoqueen
+    primaryType: ground
+    secondaryType: poison
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/31.png
+    weight: 600
+  32:
+    description: Stiffens its ears to sense danger. The larger its horns, the more
+      powerful its secreted venom.
+    height: 5
+    id: 32
+    name: nidoran-m
+    primaryType: poison
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/32.png
+    weight: 90
+  33:
+    description: "An aggressive POK\xE9MON that is quick to attack. The horn on its\
+      \ head secretes a powerful venom."
+    height: 9
+    id: 33
+    name: nidorino
+    primaryType: poison
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/33.png
+    weight: 195
+  34:
+    description: It uses its powerful tail in battle to smash, constrict, then break
+      the prey's bones.
+    height: 14
+    id: 34
+    name: nidoking
+    primaryType: ground
+    secondaryType: poison
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/34.png
+    weight: 620
+  35:
+    description: Its magical and cute appeal has many admirers. It is rare and found
+      only in certain areas.
+    height: 6
+    id: 35
+    name: clefairy
+    primaryType: fairy
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/35.png
+    weight: 75
+  36:
+    description: "A timid fairy POK\xE9MON that is rarely seen. It will run and hide\
+      \ the moment it senses people."
+    height: 13
+    id: 36
+    name: clefable
+    primaryType: fairy
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/36.png
+    weight: 400
+  37:
+    description: At the time of birth, it has just one tail. The tail splits from
+      its tip as it grows older.
+    height: 6
+    id: 37
+    name: vulpix
+    primaryType: fire
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/37.png
+    weight: 99
+  38:
+    description: Very smart and very vengeful. Grabbing one of its many tails could
+      result in a 1000-year curse.
+    height: 11
+    id: 38
+    name: ninetales
+    primaryType: fire
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/38.png
+    weight: 199
+  39:
+    description: When its huge eyes light up, it sings a mysteriously soothing melody
+      that lulls its enemies to sleep.
+    height: 5
+    id: 39
+    name: jigglypuff
+    primaryType: fairy
+    secondaryType: normal
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png
+    weight: 55
+  40:
+    description: The body is soft and rubbery. When angered, it will suck in air and
+      inflate itself to an enormous size.
+    height: 10
+    id: 40
+    name: wigglytuff
+    primaryType: fairy
+    secondaryType: normal
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/40.png
+    weight: 120
+  41:
+    description: Forms colonies in perpetually dark places. Uses ultrasonic waves
+      to identify and approach targets.
+    height: 8
+    id: 41
+    name: zubat
+    primaryType: flying
+    secondaryType: poison
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/41.png
+    weight: 75
+  42:
+    description: Once it strikes, it will not stop draining energy from the victim
+      even if it gets too heavy to fly.
+    height: 16
+    id: 42
+    name: golbat
+    primaryType: flying
+    secondaryType: poison
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/42.png
+    weight: 550
+  43:
+    description: During the day, it keeps its face buried in the ground. At night,
+      it wanders around sowing its seeds.
+    height: 5
+    id: 43
+    name: oddish
+    primaryType: poison
+    secondaryType: grass
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/43.png
+    weight: 54
+  44:
+    description: The fluid that oozes from its mouth isn't drool. It is a nectar that
+      is used to attract prey.
+    height: 8
+    id: 44
+    name: gloom
+    primaryType: poison
+    secondaryType: grass
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/44.png
+    weight: 86
+  45:
+    description: The larger its petals, the more toxic pollen it contains. Its big
+      head is heavy and hard to hold up.
+    height: 12
+    id: 45
+    name: vileplume
+    primaryType: poison
+    secondaryType: grass
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/45.png
+    weight: 186
+  46:
+    description: "Burrows to suck tree roots. The mushrooms on its back grow by draw\xAD\
+      \ ing nutrients from the bug host."
+    height: 3
+    id: 46
+    name: paras
+    primaryType: grass
+    secondaryType: bug
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/46.png
+    weight: 54
+  47:
+    description: A host-parasite pair in which the parasite mushroom has taken over
+      the host bug. Prefers damp places.
+    height: 10
+    id: 47
+    name: parasect
+    primaryType: grass
+    secondaryType: bug
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/47.png
+    weight: 295
+  48:
+    description: Lives in the shadows of tall trees where it eats insects. It is attracted
+      by light at night.
+    height: 10
+    id: 48
+    name: venonat
+    primaryType: poison
+    secondaryType: bug
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/48.png
+    weight: 300
+  49:
+    description: The dust-like scales covering its wings are color coded to indicate
+      the kinds of poison it has.
+    height: 15
+    id: 49
+    name: venomoth
+    primaryType: poison
+    secondaryType: bug
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/49.png
+    weight: 125
+  50:
+    description: Lives about one yard underground where it feeds on plant roots. It
+      sometimes appears above ground.
+    height: 2
+    id: 50
+    name: diglett
+    primaryType: ground
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/50.png
+    weight: 8
+  51:
+    description: A team of DIGLETT triplets. It triggers huge earthquakes by burrowing
+      60 miles underground.
+    height: 7
+    id: 51
+    name: dugtrio
+    primaryType: ground
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/51.png
+    weight: 333
+  52:
+    description: Adores circular objects. Wanders the streets on a nightly basis to
+      look for dropped loose change.
+    height: 4
+    id: 52
+    name: meowth
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/52.png
+    weight: 42
+  53:
+    description: Although its fur has many admirers, it is tough to raise as a pet
+      because of its fickle meanness.
+    height: 10
+    id: 53
+    name: persian
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/53.png
+    weight: 320
+  54:
+    description: "While lulling its enemies with its vacant look, this wily POK\xE9\
+      MON will use psychokinetic powers."
+    height: 8
+    id: 54
+    name: psyduck
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/54.png
+    weight: 196
+  55:
+    description: "Often seen swim\xAD ming elegantly by lake shores. It is often mistaken\
+      \ for the Japanese monster, Kappa."
+    height: 17
+    id: 55
+    name: golduck
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/55.png
+    weight: 766
+  56:
+    description: Extremely quick to anger. It could be docile one moment then thrashing
+      away the next instant.
+    height: 5
+    id: 56
+    name: mankey
+    primaryType: fighting
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/56.png
+    weight: 280
+  57:
+    description: Always furious and tenacious to boot. It will not abandon chasing
+      its quarry until it is caught.
+    height: 10
+    id: 57
+    name: primeape
+    primaryType: fighting
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/57.png
+    weight: 320
+  58:
+    description: Very protective of its territory. It will bark and bite to repel
+      intruders from its space.
+    height: 7
+    id: 58
+    name: growlithe
+    primaryType: fire
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/58.png
+    weight: 190
+  59:
+    description: "A POK\xE9MON that has been admired since the past for its beauty.\
+      \ It runs agilely as if on wings."
+    height: 19
+    id: 59
+    name: arcanine
+    primaryType: fire
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/59.png
+    weight: 1550
+  60:
+    description: Its newly grown legs prevent it from running. It appears to prefer
+      swimming than trying to stand.
+    height: 6
+    id: 60
+    name: poliwag
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/60.png
+    weight: 124
+  61:
+    description: Capable of living in or out of water. When out of water, it sweats
+      to keep its body slimy.
+    height: 10
+    id: 61
+    name: poliwhirl
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/61.png
+    weight: 200
+  62:
+    description: An adept swimmer at both the front crawl and breast stroke. Easily
+      overtakes the best human swimmers.
+    height: 13
+    id: 62
+    name: poliwrath
+    primaryType: fighting
+    secondaryType: water
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/62.png
+    weight: 540
+  63:
+    description: Using its ability to read minds, it will identify impending danger
+      and TELEPORT to safety.
+    height: 9
+    id: 63
+    name: abra
+    primaryType: psychic
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/63.png
+    weight: 195
+  64:
+    description: It emits special alpha waves from its body that induce headaches
+      just by being close by.
+    height: 13
+    id: 64
+    name: kadabra
+    primaryType: psychic
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/64.png
+    weight: 565
+  65:
+    description: "Its brain can out\xAD perform a super\xAD computer. Its intelligence\
+      \ quotient is said to be 5,000."
+    height: 15
+    id: 65
+    name: alakazam
+    primaryType: psychic
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/65.png
+    weight: 480
+  66:
+    description: Loves to build its muscles. It trains in all styles of martial arts
+      to become even stronger.
+    height: 8
+    id: 66
+    name: machop
+    primaryType: fighting
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/66.png
+    weight: 195
+  67:
+    description: Its muscular body is so powerful, it must wear a power save belt
+      to be able to regulate its motions.
+    height: 15
+    id: 67
+    name: machoke
+    primaryType: fighting
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/67.png
+    weight: 705
+  68:
+    description: Using its heavy muscles, it throws powerful punches that can send
+      the victim clear over the horizon.
+    height: 16
+    id: 68
+    name: machamp
+    primaryType: fighting
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/68.png
+    weight: 1300
+  69:
+    description: "A carnivorous POK\xE9MON that traps and eats bugs. It uses its root\
+      \ feet to soak up needed moisture."
+    height: 7
+    id: 69
+    name: bellsprout
+    primaryType: poison
+    secondaryType: grass
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/69.png
+    weight: 40
+  70:
+    description: It spits out POISONPOWDER to immobilize the enemy and then finishes
+      it with a spray of ACID.
+    height: 10
+    id: 70
+    name: weepinbell
+    primaryType: poison
+    secondaryType: grass
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/70.png
+    weight: 64
+  71:
+    description: Said to live in huge colonies deep in jungles, although no one has
+      ever returned from there.
+    height: 17
+    id: 71
+    name: victreebel
+    primaryType: poison
+    secondaryType: grass
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/71.png
+    weight: 155
+  72:
+    description: Drifts in shallow seas. Anglers who hook them by accident are often
+      punished by its stinging acid.
+    height: 9
+    id: 72
+    name: tentacool
+    primaryType: poison
+    secondaryType: water
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/72.png
+    weight: 455
+  73:
+    description: The tentacles are normally kept short. On hunts, they are extended
+      to ensnare and immobilize prey.
+    height: 16
+    id: 73
+    name: tentacruel
+    primaryType: poison
+    secondaryType: water
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/73.png
+    weight: 550
+  74:
+    description: Found in fields and mountains. Mistaking them for boulders, people
+      often step or trip on them.
+    height: 4
+    id: 74
+    name: geodude
+    primaryType: ground
+    secondaryType: rock
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/74.png
+    weight: 200
+  75:
+    description: Rolls down slopes to move. It rolls over any obstacle without slowing
+      or changing its direction.
+    height: 10
+    id: 75
+    name: graveler
+    primaryType: ground
+    secondaryType: rock
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/75.png
+    weight: 1050
+  76:
+    description: Its boulder-like body is extremely hard. It can easily withstand
+      dynamite blasts without damage.
+    height: 14
+    id: 76
+    name: golem
+    primaryType: ground
+    secondaryType: rock
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/76.png
+    weight: 3000
+  77:
+    description: Its hooves are 10 times harder than diamonds. It can trample anything
+      completely flat in little time.
+    height: 10
+    id: 77
+    name: ponyta
+    primaryType: fire
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/77.png
+    weight: 300
+  78:
+    description: "Very competitive, this POK\xE9MON will chase anything that moves\
+      \ fast in the hopes of racing it."
+    height: 17
+    id: 78
+    name: rapidash
+    primaryType: fire
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/78.png
+    weight: 950
+  79:
+    description: Incredibly slow and dopey. It takes 5 seconds for it to feel pain
+      when under attack.
+    height: 12
+    id: 79
+    name: slowpoke
+    primaryType: psychic
+    secondaryType: water
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/79.png
+    weight: 360
+  80:
+    description: The SHELLDER that is latched onto SLOWPOKE's tail is said to feed
+      on the host's left over scraps.
+    height: 16
+    id: 80
+    name: slowbro
+    primaryType: psychic
+    secondaryType: water
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/80.png
+    weight: 785
+  81:
+    description: Uses anti-gravity to stay suspended. Appears without warning and
+      uses THUNDER WAVE and similar moves.
+    height: 3
+    id: 81
+    name: magnemite
+    primaryType: steel
+    secondaryType: electric
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/81.png
+    weight: 60
+  82:
+    description: Formed by several MAGNEMITEs linked together. They frequently appear
+      when sunspots flare up.
+    height: 10
+    id: 82
+    name: magneton
+    primaryType: steel
+    secondaryType: electric
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/82.png
+    weight: 600
+  83:
+    description: The sprig of green onions it holds is its weapon. It is used much
+      like a metal sword.
+    height: 8
+    id: 83
+    name: farfetchd
+    primaryType: flying
+    secondaryType: normal
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/83.png
+    weight: 150
+  84:
+    description: A bird that makes up for its poor flying with its fast foot speed.
+      Leaves giant footprints.
+    height: 14
+    id: 84
+    name: doduo
+    primaryType: flying
+    secondaryType: normal
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/84.png
+    weight: 392
+  85:
+    description: Uses its three brains to execute complex plans. While two heads sleep,
+      one head stays awake.
+    height: 18
+    id: 85
+    name: dodrio
+    primaryType: flying
+    secondaryType: normal
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/85.png
+    weight: 852
+  86:
+    description: The protruding horn on its head is very hard. It is used for bashing
+      through thick ice.
+    height: 11
+    id: 86
+    name: seel
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/86.png
+    weight: 900
+  87:
+    description: Stores thermal energy in its body. Swims at a steady 8 knots even
+      in intensely cold waters.
+    height: 17
+    id: 87
+    name: dewgong
+    primaryType: ice
+    secondaryType: water
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/87.png
+    weight: 1200
+  88:
+    description: Appears in filthy areas. Thrives by sucking up polluted sludge that
+      is pumped out of factories.
+    height: 9
+    id: 88
+    name: grimer
+    primaryType: poison
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/88.png
+    weight: 300
+  89:
+    description: Thickly covered with a filthy, vile sludge. It is so toxic, even
+      its footprints contain poison.
+    height: 12
+    id: 89
+    name: muk
+    primaryType: poison
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/89.png
+    weight: 300
+  90:
+    description: Its hard shell repels any kind of attack. It is vulnerable only when
+      its shell is open.
+    height: 3
+    id: 90
+    name: shellder
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/90.png
+    weight: 40
+  91:
+    description: When attacked, it launches its horns in quick volleys. Its innards
+      have never been seen.
+    height: 15
+    id: 91
+    name: cloyster
+    primaryType: ice
+    secondaryType: water
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/91.png
+    weight: 1325
+  92:
+    description: "Almost invisible, this gaseous POK\xE9MON cloaks the target and\
+      \ puts it to sleep without notice."
+    height: 13
+    id: 92
+    name: gastly
+    primaryType: poison
+    secondaryType: ghost
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/92.png
+    weight: 1
+  93:
+    description: "Because of its ability to slip through block walls, it is said to\
+      \ be from an\xAD other dimension."
+    height: 16
+    id: 93
+    name: haunter
+    primaryType: poison
+    secondaryType: ghost
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/93.png
+    weight: 1
+  94:
+    description: "Under a full moon, this POK\xE9MON likes to mimic the shadows of\
+      \ people and laugh at their fright."
+    height: 15
+    id: 94
+    name: gengar
+    primaryType: poison
+    secondaryType: ghost
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/94.png
+    weight: 405
+  95:
+    description: As it grows, the stone portions of its body harden to become similar
+      to a diamond, but colored black.
+    height: 88
+    id: 95
+    name: onix
+    primaryType: ground
+    secondaryType: rock
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/95.png
+    weight: 2100
+  96:
+    description: Puts enemies to sleep then eats their dreams. Occasionally gets sick
+      from eating bad dreams.
+    height: 10
+    id: 96
+    name: drowzee
+    primaryType: psychic
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/96.png
+    weight: 324
+  97:
+    description: When it locks eyes with an enemy, it will use a mix of PSI moves
+      such as HYPNOSIS and CONFUSION.
+    height: 16
+    id: 97
+    name: hypno
+    primaryType: psychic
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/97.png
+    weight: 756
+  98:
+    description: Its pincers are not only powerful weapons, they are used for balance
+      when walking sideways.
+    height: 4
+    id: 98
+    name: krabby
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/98.png
+    weight: 65
+  99:
+    description: The large pincer has 10000 hp of crushing power. However, its huge
+      size makes it unwieldy to use.
+    height: 13
+    id: 99
+    name: kingler
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/99.png
+    weight: 600
+  100:
+    description: "Usually found in power plants. Easily mistaken for a POK\xE9 BALL,\
+      \ they have zapped many people."
+    height: 5
+    id: 100
+    name: voltorb
+    primaryType: electric
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/100.png
+    weight: 104
+  101:
+    description: It stores electric energy under very high pressure. It often explodes
+      with little or no provocation.
+    height: 12
+    id: 101
+    name: electrode
+    primaryType: electric
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/101.png
+    weight: 666
+  102:
+    description: Often mistaken for eggs. When disturbed, they quickly gather and
+      attack in swarms.
+    height: 4
+    id: 102
+    name: exeggcute
+    primaryType: psychic
+    secondaryType: grass
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/102.png
+    weight: 25
+  103:
+    description: Legend has it that on rare occasions, one of its heads will drop
+      off and continue on as an EXEGGCUTE.
+    height: 20
+    id: 103
+    name: exeggutor
+    primaryType: psychic
+    secondaryType: grass
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/103.png
+    weight: 1200
+  104:
+    description: "Because it never removes its skull helmet, no one has ever seen\
+      \ this POK\xE9MON's real face."
+    height: 4
+    id: 104
+    name: cubone
+    primaryType: ground
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/104.png
+    weight: 65
+  105:
+    description: The bone it holds is its key weapon. It throws the bone skillfully
+      like a boomerang to KO targets.
+    height: 10
+    id: 105
+    name: marowak
+    primaryType: ground
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/105.png
+    weight: 450
+  106:
+    description: When in a hurry, its legs lengthen progressively. It runs smoothly
+      with extra long, loping strides.
+    height: 15
+    id: 106
+    name: hitmonlee
+    primaryType: fighting
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/106.png
+    weight: 498
+  107:
+    description: While apparently doing nothing, it fires punches in lightning fast
+      volleys that are impossible to see.
+    height: 14
+    id: 107
+    name: hitmonchan
+    primaryType: fighting
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/107.png
+    weight: 502
+  108:
+    description: Its tongue can be extended like a chameleon's. It leaves a tingling
+      sensation when it licks enemies.
+    height: 12
+    id: 108
+    name: lickitung
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/108.png
+    weight: 655
+  109:
+    description: Because it stores several kinds of toxic gases in its body, it is
+      prone to exploding without warning.
+    height: 6
+    id: 109
+    name: koffing
+    primaryType: poison
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/109.png
+    weight: 10
+  110:
+    description: Where two kinds of poison gases meet, 2 KOFFINGs can fuse into a
+      WEEZING over many years.
+    height: 12
+    id: 110
+    name: weezing
+    primaryType: poison
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/110.png
+    weight: 95
+  111:
+    description: Its massive bones are 1000 times harder than human bones. It can
+      easily knock a trailer flying.
+    height: 10
+    id: 111
+    name: rhyhorn
+    primaryType: rock
+    secondaryType: ground
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/111.png
+    weight: 1150
+  112:
+    description: Protected by an armor-like hide, it is capable of living in molten
+      lava of 3,600 degrees.
+    height: 19
+    id: 112
+    name: rhydon
+    primaryType: rock
+    secondaryType: ground
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/112.png
+    weight: 1200
+  113:
+    description: "A rare and elusive POK\xE9MON that is said to bring happiness to\
+      \ those who manage to get it."
+    height: 11
+    id: 113
+    name: chansey
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/113.png
+    weight: 346
+  114:
+    description: "The whole body is swathed with wide vines that are similar to sea\xAD\
+      \ weed. Its vines shake as it walks."
+    height: 10
+    id: 114
+    name: tangela
+    primaryType: grass
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/114.png
+    weight: 350
+  115:
+    description: The infant rarely ventures out of its mother's protective pouch until
+      it is 3 years old.
+    height: 22
+    id: 115
+    name: kangaskhan
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/115.png
+    weight: 800
+  116:
+    description: Known to shoot down flying bugs with precision blasts of ink from
+      the surface of the water.
+    height: 4
+    id: 116
+    name: horsea
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/116.png
+    weight: 80
+  117:
+    description: "Capable of swim\xAD ming backwards by rapidly flapping its wing-like\
+      \ pectoral fins and stout tail."
+    height: 12
+    id: 117
+    name: seadra
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/117.png
+    weight: 250
+  118:
+    description: Its tail fin billows like an elegant ballroom dress, giving it the
+      nickname of the Water Queen.
+    height: 6
+    id: 118
+    name: goldeen
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/118.png
+    weight: 150
+  119:
+    description: "In the autumn spawning season, they can be seen swimming power\xAD\
+      \ fully up rivers and creeks."
+    height: 13
+    id: 119
+    name: seaking
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/119.png
+    weight: 390
+  120:
+    description: "An enigmatic POK\xE9MON that can effortlessly regenerate any appendage\
+      \ it loses in battle."
+    height: 8
+    id: 120
+    name: staryu
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/120.png
+    weight: 345
+  121:
+    description: Its central core glows with the seven colors of the rainbow. Some
+      people value the core as a gem.
+    height: 11
+    id: 121
+    name: starmie
+    primaryType: psychic
+    secondaryType: water
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/121.png
+    weight: 800
+  122:
+    description: If interrupted while it is miming, it will slap around the offender
+      with its broad hands.
+    height: 13
+    id: 122
+    name: mr-mime
+    primaryType: fairy
+    secondaryType: psychic
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/122.png
+    weight: 545
+  123:
+    description: With ninja-like agility and speed, it can create the illusion that
+      there is more than one.
+    height: 15
+    id: 123
+    name: scyther
+    primaryType: flying
+    secondaryType: bug
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/123.png
+    weight: 560
+  124:
+    description: It seductively wiggles its hips as it walks. It can cause people
+      to dance in unison with it.
+    height: 14
+    id: 124
+    name: jynx
+    primaryType: psychic
+    secondaryType: ice
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/124.png
+    weight: 406
+  125:
+    description: Normally found near power plants, they can wander away and cause
+      major blackouts in cities.
+    height: 11
+    id: 125
+    name: electabuzz
+    primaryType: electric
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/125.png
+    weight: 300
+  126:
+    description: Its body always burns with an orange glow that enables it to hide
+      perfectly among flames.
+    height: 13
+    id: 126
+    name: magmar
+    primaryType: fire
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/126.png
+    weight: 445
+  127:
+    description: If it fails to crush the victim in its pincers, it will swing it
+      around and toss it hard.
+    height: 15
+    id: 127
+    name: pinsir
+    primaryType: bug
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/127.png
+    weight: 550
+  128:
+    description: When it targets an enemy, it charges furiously while whipping its
+      body with its long tails.
+    height: 14
+    id: 128
+    name: tauros
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/128.png
+    weight: 884
+  129:
+    description: In the distant past, it was somewhat stronger than the horribly weak
+      descendants that exist today.
+    height: 9
+    id: 129
+    name: magikarp
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/129.png
+    weight: 100
+  130:
+    description: Rarely seen in the wild. Huge and vicious, it is capable of destroying
+      entire cities in a rage.
+    height: 65
+    id: 130
+    name: gyarados
+    primaryType: flying
+    secondaryType: water
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/130.png
+    weight: 2350
+  131:
+    description: "A POK\xE9MON that has been over\xAD hunted almost to extinction.\
+      \ It can ferry people across the water."
+    height: 25
+    id: 131
+    name: lapras
+    primaryType: ice
+    secondaryType: water
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/131.png
+    weight: 2200
+  132:
+    description: Capable of copying an enemy's genetic code to instantly transform
+      itself into a duplicate of the enemy.
+    height: 3
+    id: 132
+    name: ditto
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png
+    weight: 40
+  133:
+    description: Its genetic code is irregular. It may mutate if it is exposed to
+      radiation from element STONEs.
+    height: 3
+    id: 133
+    name: eevee
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png
+    weight: 65
+  134:
+    description: Lives close to water. Its long tail is ridged with a fin which is
+      often mistaken for a mermaid's.
+    height: 10
+    id: 134
+    name: vaporeon
+    primaryType: water
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/134.png
+    weight: 290
+  135:
+    description: It accumulates negative ions in the atmosphere to blast out 10000-
+      volt lightning bolts.
+    height: 8
+    id: 135
+    name: jolteon
+    primaryType: electric
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/135.png
+    weight: 245
+  136:
+    description: When storing thermal energy in its body, its temperature could soar
+      to over 1600 degrees.
+    height: 9
+    id: 136
+    name: flareon
+    primaryType: fire
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/136.png
+    weight: 250
+  137:
+    description: "A POK\xE9MON that consists entirely of programming code. Capable\
+      \ of moving freely in cyberspace."
+    height: 8
+    id: 137
+    name: porygon
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/137.png
+    weight: 365
+  138:
+    description: Although long extinct, in rare cases, it can be genetically resurrected
+      from fossils.
+    height: 4
+    id: 138
+    name: omanyte
+    primaryType: water
+    secondaryType: rock
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/138.png
+    weight: 75
+  139:
+    description: "A prehistoric POK\xE9MON that died out when its heavy shell made\
+      \ it impossible to catch prey."
+    height: 10
+    id: 139
+    name: omastar
+    primaryType: water
+    secondaryType: rock
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/139.png
+    weight: 350
+  140:
+    description: "A POK\xE9MON that was resurrected from a fossil found in what was\
+      \ once the ocean floor eons ago."
+    height: 5
+    id: 140
+    name: kabuto
+    primaryType: water
+    secondaryType: rock
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/140.png
+    weight: 115
+  141:
+    description: "Its sleek shape is perfect for swim\xAD ming. It slashes prey with\
+      \ its claws and drains the body fluids."
+    height: 13
+    id: 141
+    name: kabutops
+    primaryType: water
+    secondaryType: rock
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/141.png
+    weight: 405
+  142:
+    description: "A ferocious, pre\xAD historic POK\xE9MON that goes for the enemy's\
+      \ throat with its serrated saw-like fangs."
+    height: 18
+    id: 142
+    name: aerodactyl
+    primaryType: flying
+    secondaryType: rock
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/142.png
+    weight: 590
+  143:
+    description: Very lazy. Just eats and sleeps. As its rotund bulk builds, it becomes
+      steadily more slothful.
+    height: 21
+    id: 143
+    name: snorlax
+    primaryType: normal
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/143.png
+    weight: 4600
+  144:
+    description: "A legendary bird POK\xE9MON that is said to appear to doomed people\
+      \ who are lost in icy mountains."
+    height: 17
+    id: 144
+    name: articuno
+    primaryType: flying
+    secondaryType: ice
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/144.png
+    weight: 554
+  145:
+    description: "A legendary bird POK\xE9MON that is said to appear from clouds while\
+      \ dropping enormous lightning bolts."
+    height: 16
+    id: 145
+    name: zapdos
+    primaryType: flying
+    secondaryType: electric
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/145.png
+    weight: 526
+  146:
+    description: Known as the legendary bird of fire. Every flap of its wings creates
+      a dazzling flash of flames.
+    height: 20
+    id: 146
+    name: moltres
+    primaryType: flying
+    secondaryType: fire
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/146.png
+    weight: 600
+  147:
+    description: "Long considered a mythical POK\xE9MON until recently when a small\
+      \ colony was found living underwater."
+    height: 18
+    id: 147
+    name: dratini
+    primaryType: dragon
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/147.png
+    weight: 33
+  148:
+    description: "A mystical POK\xE9MON that exudes a gentle aura. Has the ability\
+      \ to change climate conditions."
+    height: 40
+    id: 148
+    name: dragonair
+    primaryType: dragon
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/148.png
+    weight: 165
+  149:
+    description: "An extremely rarely seen marine POK\xE9MON. Its intelligence is\
+      \ said to match that of humans."
+    height: 22
+    id: 149
+    name: dragonite
+    primaryType: flying
+    secondaryType: dragon
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/149.png
+    weight: 2100
+  150:
+    description: It was created by a scientist after years of horrific gene splicing
+      and DNA engineering experiments.
+    height: 20
+    id: 150
+    name: mewtwo
+    primaryType: psychic
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/150.png
+    weight: 1220
+  151:
+    description: So rare that it is still said to be a mirage by many experts. Only
+      a few people have seen it worldwide.
+    height: 4
+    id: 151
+    name: mew
+    primaryType: psychic
+    secondaryType: null
+    sprite: https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/151.png
+    weight: 40
