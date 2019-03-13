@@ -17,7 +17,7 @@ createConnection().then(async (connection) => {
   // ...
 
   // start express server
-  app.listen(3000);
+  app.listen(process.env.PORT || 3000);
 
   // insert new users for test
   await connection.manager.save(connection.manager.create(User, {
