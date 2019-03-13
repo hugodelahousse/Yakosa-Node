@@ -1,0 +1,12 @@
+{
+   "compilerOptions": {
+      "lib": ["es2017"],
+      "target": "es2017",
+      "moduleResolution": "node",
+      "outDir": "./build",
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "sourceMap": true,
+      "strictNullChecks": true
+   }
+}
