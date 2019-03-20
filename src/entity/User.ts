@@ -1,4 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from 'typeorm';
+import { Store } from './Store';
+import { Promotion } from './Promotion';
+import { Vote } from './Vote';
 
 @Entity()
 export class User {
@@ -14,5 +17,14 @@ export class User {
 
   @Column()
   age: number;
+
+  @ManyToMany(type => Store, store => store.id)
+  store: Store[];
+
+  @ManyToMany(type => Vote, vote => vote => vote.user)
+  vote: Vote[];
+
+  @OneToMany(type => Promotion, promotion => promotion.id)
+  promotion: Promotion[];
 
 }
