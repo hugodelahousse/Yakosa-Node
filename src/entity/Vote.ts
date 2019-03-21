@@ -14,6 +14,6 @@ export class Vote {
   promotion: Promotion;
 
   @Column()
-  upVote: boolean;
+  upvote: boolean;
 
 }

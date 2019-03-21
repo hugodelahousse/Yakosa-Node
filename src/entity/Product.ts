@@ -9,9 +9,9 @@ export class Product {
   barcode: string;
 
   @OneToMany(type => Promotion, promotion => promotion.id)
-  promotion: Promotion[];
+  promotions: Promotion[];
 
   @OneToMany(type => ListProduct, listProduct => listProduct.product)
-  listProduct: ListProduct[];
+  listProducts: ListProduct[];
 
 }

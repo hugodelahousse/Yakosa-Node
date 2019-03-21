@@ -19,12 +19,12 @@ export class User {
   age: number;
 
   @OneToMany(type => Vote, vote => vote => vote.user)
-  vote: Vote[];
+  votes: Vote[];
 
   @OneToMany(type => Promotion, promotion => promotion.id)
-  promotion: Promotion[];
+  promotions: Promotion[];
 
   @ManyToMany(type => Store, store => store.id)
-  store: Store[];
+  stores: Store[];
 
 }
