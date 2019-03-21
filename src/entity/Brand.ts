@@ -12,9 +12,9 @@ export class Brand {
   name: string;
 
   @OneToMany(type => Store, store => store.id)
-  store: Store[];
+  stores: Store[];
 
   @OneToMany(type => BrandPromotion, brandPromotion => brandPromotion.id)
-  brandPromotion: BrandPromotion[];
+  brandPromotions: BrandPromotion[];
 
 }

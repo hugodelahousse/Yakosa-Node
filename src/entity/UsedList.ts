@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   OneToOne,
 } from 'typeorm';
-import { List } from './List';
+import { ClientList } from './ClientList';
 
 @Entity()
 export class UsedList {
@@ -17,7 +17,7 @@ export class UsedList {
   lastUsed: Date;
 
   @PrimaryColumn()
-  @OneToOne(type => List, list => list.id)
-  list: List;
+  @OneToOne(type => ClientList, list => list.id)
+  clientList: ClientList;
 
 }

@@ -1,13 +1,13 @@
 import { Entity, PrimaryColumn, Column, ManyToOne } from 'typeorm';
-import { List } from './List';
+import { ClientList } from './ClientList';
 import { Product } from './Product';
 
 @Entity()
 export class ListProduct {
 
   @PrimaryColumn()
-  @ManyToOne(type => List, list => list.id)
-  list: List;
+  @ManyToOne(type => ClientList, list => list.id)
+  clientList: ClientList;
 
   @PrimaryColumn()
   @ManyToOne(type => Product, product => product.barcode)

@@ -4,7 +4,7 @@ import { ListProduct } from './ListProduct';
 import { UsedList } from './UsedList';
 
 @Entity()
-export class List {
+export class ClientList {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,7 +18,7 @@ export class List {
   @ManyToOne(type => User, user => user.id)
   user: User;
 
-  @OneToMany(type => ListProduct, listProduct => listProduct.list)
-  listProduct: ListProduct[];
+  @OneToMany(type => ListProduct, listProduct => listProduct.product)
+  products: ListProduct[];
 
 }

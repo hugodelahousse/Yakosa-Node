@@ -25,6 +25,6 @@ export abstract class Promotion {
   user: User;
 
   @OneToMany(type => Vote, vote => vote.promotion)
-  vote: Vote[];
+  votes: Vote[];
 
 }

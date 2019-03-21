@@ -19,9 +19,9 @@ export class Store {
   brand: Brand;
 
   @OneToMany(type => StorePromotion, storePromotion => storePromotion.id)
-  storePromotion: StorePromotion[];
+  storePromotions: StorePromotion[];
 
   @ManyToMany(type => User, user => user.id)
-  manager: User[];
+  managers: User[];
 
 }
