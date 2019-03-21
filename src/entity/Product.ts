@@ -1,5 +1,6 @@
 import { Entity, PrimaryColumn, OneToMany } from 'typeorm';
 import { Promotion } from './Promotion';
+import { ListProduct } from './ListProduct';
 
 @Entity()
 export class Product {
@@ -9,5 +10,8 @@ export class Product {
 
   @OneToMany(type => Promotion, promotion => promotion.id)
   promotion: Promotion[];
+
+  @OneToMany(type => ListProduct, listProduct => listProduct.product)
+  listProduct: ListProduct[];
 
 }
