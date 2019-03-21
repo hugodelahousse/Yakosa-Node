@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { Store } from './Store';
-import { Promotion } from './Promotion';
+import { BrandPromotion } from './BrandPromotion';
 
 @Entity()
 export class Brand {
@@ -14,7 +14,7 @@ export class Brand {
   @OneToMany(type => Store, store => store.id)
   store: Store[];
 
-  @OneToMany(type => Promotion, promotion => promotion.id)
-  promotion: Promotion[];
+  @OneToMany(type => BrandPromotion, brandPromotion => brandPromotion.id)
+  brandPromotion: BrandPromotion[];
 
 }

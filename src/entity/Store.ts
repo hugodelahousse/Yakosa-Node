@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
 import { Brand } from './Brand';
 import { User } from './User';
+import { StorePromotion } from './StorePromotion';
 
 @Entity()
 export class Store {
@@ -11,10 +12,14 @@ export class Store {
   @Column()
   name: string;
 
-  /*Missing position*/
+  @Column('geography', { nullable: true })
+  position: object;
 
-  @ManyToMany(type => Brand, brand => brand.id)
-  band: Brand[];
+  @ManyToOne(type => Brand, brand => brand.id)
+  brand: Brand;
+
+  @OneToMany(type => StorePromotion, storePromotion => storePromotion.id)
+  storePromotion: StorePromotion[];
 
   @ManyToMany(type => User, user => user.id)
   manager: User[];

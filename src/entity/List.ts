@@ -12,13 +12,13 @@ export class List {
   @Column()
   creationDate: Date;
 
+  @OneToOne(type => UsedList, usedList => usedList.id)
+  usedList: UsedList;
+
   @ManyToOne(type => User, user => user.id)
   user: User;
 
   @OneToMany(type => ListProduct, listProduct => listProduct.list)
-  list: List;
-
-  @OneToOne(type => UsedList, usedList => usedList.id)
-  usedList: UsedList;
+  listProduct: ListProduct[];
 
 }

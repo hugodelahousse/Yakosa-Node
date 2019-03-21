@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryColumn, ManyToOne } from 'typeorm';
 import { User } from './User';
 import { Promotion } from './Promotion';
 
@@ -6,12 +6,12 @@ import { Promotion } from './Promotion';
 export class Vote {
 
   @PrimaryColumn()
-  @ManyToMany(type => User, user => user.id)
-  user: User[];
+  @ManyToOne(type => User, user => user.id)
+  user: User;
 
   @PrimaryColumn()
-  @ManyToMany(type => Promotion, promotion => promotion.id)
-  promotion: Promotion[];
+  @ManyToOne(type => Promotion, promotion => promotion.id)
+  promotion: Promotion;
 
   @Column()
   upVote: boolean;
