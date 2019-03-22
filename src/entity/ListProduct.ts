@@ -1,19 +1,20 @@
-import { Entity, PrimaryColumn, Column, ManyToOne } from 'typeorm';
-import { ClientList } from './ClientList';
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { UserList } from './UserList';
 import { Product } from './Product';
 
 @Entity()
 export class ListProduct {
 
-  @PrimaryColumn()
-  @ManyToOne(type => ClientList, list => list.id)
-  clientList: ClientList;
-
-  @PrimaryColumn()
-  @ManyToOne(type => Product, product => product.barcode)
-  product: Product;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column()
   quantity: number;
+
+  @ManyToOne(type => UserList, list => list.id)
+  userList: UserList;
+
+  @ManyToOne(type => Product, product => product.barcode)
+  product: Product;
 
 }

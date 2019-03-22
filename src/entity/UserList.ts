@@ -1,10 +1,9 @@
-import { Entity, OneToMany, PrimaryGeneratedColumn, Column, ManyToOne, OneToOne } from 'typeorm';
+import { Entity, OneToMany, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
 import { User } from './User';
 import { ListProduct } from './ListProduct';
-import { UsedList } from './UsedList';
 
 @Entity()
-export class ClientList {
+export class UserList {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -12,8 +11,8 @@ export class ClientList {
   @Column()
   creationDate: Date;
 
-  @OneToOne(type => UsedList, usedList => usedList.id)
-  usedList: UsedList;
+  @Column({ nullable: true })
+  lastUsed: Date;
 
   @ManyToOne(type => User, user => user.id)
   user: User;

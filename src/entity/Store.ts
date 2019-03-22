@@ -9,11 +9,8 @@ export class Store {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  name: string;
-
-  @Column('geography', { nullable: true })
-  position: object;
+  @Column('geography', { spatialFeatureType: 'Point', srid: 4326 })
+  position: string;
 
   @ManyToOne(type => Brand, brand => brand.id)
   brand: Brand;

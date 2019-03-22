@@ -1,0 +1,22 @@
+entity: User
+items:
+  1:
+    id: 1
+    name: "DeLaMaison"
+    firstName: "Hugo"
+    age: 22
+  2:
+    id: 2
+    name: "Hellec"
+    firstName: "Adrian"
+    age: 22
+  3:
+    id: 3
+    name: "Mounier"
+    firstName: "Romain"
+    age: 22
+  4:
+    id: 4
+    name: "Issarni"
+    firstName: "Théo"
+    age: 22
