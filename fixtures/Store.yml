@@ -1,0 +1,11 @@
+entity: Store
+items:
+  1:
+    id: 1
+    brand: 1
+  2:
+    id: 2
+    brand: 1
+  3:
+    id: 3
+    brand: 2
