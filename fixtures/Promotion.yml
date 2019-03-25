@@ -1,4 +1,4 @@
-entity: BrandPromotion
+entity: Promotion
 items:
   1:
     id: 1
@@ -30,3 +30,12 @@ items:
     product: "3228886030011"
     user: 1
     brand: 4
+  5:
+    id: 5
+    description: "-50% sur les deuxième produit"
+    beginDate: "2019-03-22"
+    endDate: "2012-03-22"
+    product: "3228886030011"
+    user: 1
+    brand: null
+    store: 1
