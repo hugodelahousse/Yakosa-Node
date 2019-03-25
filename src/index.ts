@@ -1,10 +1,10 @@
 import 'reflect-metadata';
-import { createConnection } from 'typeorm';
 import * as bodyParser from 'body-parser';
 import { createExpressServer } from 'routing-controllers';
 import { UserController } from './controller/UserController';
+import createTypeormConnection from './utils/createTypeormConnection';
 
-createConnection().then(async (connection) => {
+createTypeormConnection().then(async (connection) => {
 
   // create express app
   const app = createExpressServer({
