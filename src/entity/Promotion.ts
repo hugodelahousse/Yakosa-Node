@@ -2,9 +2,11 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'ty
 import { Product } from './Product';
 import { User } from './User';
 import { Vote } from './Vote';
+import { Brand } from './Brand';
+import { Store } from './Store';
 
 @Entity()
-export abstract class Promotion {
+export class Promotion {
 
   @PrimaryGeneratedColumn()
   id: number;
@@ -23,6 +25,12 @@ export abstract class Promotion {
 
   @ManyToOne(type => User, user => user.id)
   user: User;
+
+  @ManyToOne(type => Store, store => store.id, { nullable: true })
+  store: Store;
+
+  @ManyToOne(type => Brand, brand => brand.id, { nullable: true })
+  brand: Brand;
 
   @OneToMany(type => Vote, vote => vote.promotion)
   votes: Vote[];
