@@ -1,13 +1,13 @@
 import { Vote } from '../entity/Vote';
 import { User } from '../entity/User';
 import createTypeormConnection from '../utils/createTypeormConnection';
-import { BrandPromotion } from '../entity/BrandPromotion';
+import { Promotion } from '../entity/Promotion';
 
 describe('Vote', () => {
   it('should be able to be created', async () => {
     const connection = await createTypeormConnection();
     const userRepository = connection.getRepository(User);
-    const promotionRepository = connection.getRepository(BrandPromotion);
+    const promotionRepository = connection.getRepository(Promotion);
     const voteRepository = connection.getRepository(Vote);
 
     let user = userRepository.create({

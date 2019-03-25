@@ -74,4 +74,5 @@ workflows:
   lint-and-test:
     jobs:
       - build
+      - test
       - lint
