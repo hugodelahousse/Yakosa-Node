@@ -1,4 +1,4 @@
-entity: ClientList
+entity: UserList
 items:
   1:
     id: 1
