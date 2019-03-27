@@ -1,9 +1,9 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, Index } from 'typeorm';
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
 import { UserList } from './UserList';
 import { Product } from './Product';
 
 @Entity()
-@Index(['userList', 'product'], { unique: true })
+@Unique(['userList', 'product'])
 export class ListProduct {
 
   @PrimaryGeneratedColumn()

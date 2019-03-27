@@ -63,6 +63,6 @@ describe('ListProduct', () => {
       userList,
       quantity: 10,
     });
-    listProductRepository.save(listProduct).then(() => fail()).catch();
+    listProductRepository.save(listProduct).then(() => fail()).catch(() => {});
   });
 });
