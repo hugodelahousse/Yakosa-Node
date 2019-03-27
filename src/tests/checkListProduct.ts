@@ -1,13 +1,13 @@
 import { User } from '../entity/User';
 import { ListProduct } from '../entity/ListProduct';
-import { UserList } from '../entity/UserList';
+import { ShoppingList } from '../entity/ShoppingList';
 import { connection } from './setup';
 import { fail } from 'assert';
 
 describe('ListProduct', () => {
   it('Should be able to be created', async () => {
     const userRepository = connection.getRepository(User);
-    const userListRepository = connection.getRepository(UserList);
+    const userListRepository = connection.getRepository(ShoppingList);
     const listProductRepository = connection.getRepository(ListProduct);
 
     let user = userRepository.create({
@@ -36,7 +36,7 @@ describe('ListProduct', () => {
 describe('ListProduct', () => {
   it('Should NOT be able to be created', async () => {
     const userRepository = connection.getRepository(User);
-    const userListRepository = connection.getRepository(UserList);
+    const userListRepository = connection.getRepository(ShoppingList);
     const listProductRepository = connection.getRepository(ListProduct);
 
     let user = userRepository.create({

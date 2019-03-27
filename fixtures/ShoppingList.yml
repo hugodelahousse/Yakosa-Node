@@ -1,4 +1,4 @@
-entity: UserList
+entity: ShoppingList
 items:
   1:
     id: 1
