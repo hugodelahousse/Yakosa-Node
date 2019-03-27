@@ -1,12 +1,12 @@
 import { connection } from './setup';
 import { User } from '../entity/User';
-import { UserList } from '../entity/UserList';
+import { ShoppingList } from '../entity/ShoppingList';
 import { expect } from 'chai';
 
 describe('UserList', () => {
   it('Object before and after insertion should be the same', async () => {
     const userRepository = connection.getRepository(User);
-    const userListRepository = connection.getRepository(UserList);
+    const userListRepository = connection.getRepository(ShoppingList);
 
     let user = userRepository.create({
       firstName: 'Login',

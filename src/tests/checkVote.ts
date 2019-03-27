@@ -1,10 +1,10 @@
+import { fail } from 'assert';
+import { expect } from 'chai';
 import { Vote } from '../entity/Vote';
 import { User } from '../entity/User';
 import { Promotion } from '../entity/Promotion';
-import { connection } from './setup';
 import { Product } from '../entity/Product';
-import { fail } from 'assert';
-import { expect } from 'chai';
+import { connection } from './setup';
 
 describe('Vote', () => {
   it('Should be able to be created vote', async () => {
@@ -120,16 +120,10 @@ describe('Vote', () => {
     });
     await voteRepository.save(vote);
 
-    const filter: {[key: string]: boolean}[] = [];
-    filter.push({ upvote: true });
     const data = await voteRepository.find({
-      where: filter,
+      where: { upvote: true },
     });
 
-    expect({
-      value: 4,
-    }).to.deep.equal({
-      value: data.length,
-    });
+    expect(4).to.equal(data.length);
   });
 });

@@ -1,5 +1,5 @@
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
-import { UserList } from './UserList';
+import { ShoppingList } from './ShoppingList';
 import { Product } from './Product';
 
 @Entity()
@@ -12,8 +12,8 @@ export class ListProduct {
   @Column()
   quantity: number;
 
-  @ManyToOne(type => UserList, list => list.id)
-  userList: UserList;
+  @ManyToOne(type => ShoppingList, list => list.id)
+  userList: ShoppingList;
 
   @ManyToOne(type => Product, product => product.barcode)
   product: Product;

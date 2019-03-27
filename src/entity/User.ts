@@ -22,9 +22,9 @@ export class User {
   votes: Vote[];
 
   @OneToMany(type => Promotion, promotion => promotion.id)
-  promotions: Promotion[];
+  postedPromotions: Promotion[];
 
   @ManyToMany(type => Store, store => store.id)
-  stores: Store[];
+  managedStore: Store[];
 
 }
