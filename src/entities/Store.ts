@@ -22,3 +22,17 @@ export class Store {
   managers: User[];
 
 }
+
+/*
+{
+  "brand": 1,
+  "id": 22,
+  "position": {
+      "coordinates": [
+          139.9341032213472,
+          36.80798008559315
+       ],
+       "type": "Point"
+   }
+}
+*/
