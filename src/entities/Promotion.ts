@@ -36,3 +36,14 @@ export class Promotion {
   votes: Vote[];
 
 }
+
+/*
+{
+    "beginDate": "2019-03-22T00:00:00.000Z",
+    "description": "test",
+    "endDate": "2012-03-22T00:00:00.000Z",
+    "product": "3228886030011",
+    "store": 1,
+    "user": 1
+}
+*/
