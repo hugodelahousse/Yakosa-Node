@@ -1,12 +1,12 @@
 import { fail } from 'assert';
 import { expect } from 'chai';
-import { Vote } from '../entity/Vote';
-import { User } from '../entity/User';
-import { Promotion } from '../entity/Promotion';
-import { Product } from '../entity/Product';
+import { Vote } from '@entities/Vote';
+import { User } from '@entities/User';
+import { Promotion } from '@entities/Promotion';
+import { Product } from '@entities/Product';
 import { connection } from './setup';
 
-describe('Vote', () => {
+describe('Vote Entity', () => {
   it('Should be able to be created vote', async () => {
     const userRepository = connection.getRepository(User);
     const promotionRepository = connection.getRepository(Promotion);
@@ -34,9 +34,6 @@ describe('Vote', () => {
     });
     vote = await voteRepository.save(vote);
   });
-});
-
-describe('Vote', () => {
   it('Should NOT be able to be created vote', async () => {
     const userRepository = connection.getRepository(User);
     const promotionRepository = connection.getRepository(Promotion);
@@ -70,9 +67,6 @@ describe('Vote', () => {
     });
     voteRepository.save(vote).then(() => fail()).catch(() => {});
   });
-});
-
-describe('Vote', () => {
   it('The vote status of the promotion should be +2', async () => {
 
     const productRepository = connection.getRepository(Product);

@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { User } from '../entity/User';
+import { User } from '../entities/User';
 import { Body, Delete, Get, JsonController, OnUndefined, Param, Post } from 'routing-controllers';
 
 @JsonController()
