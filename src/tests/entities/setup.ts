@@ -1,12 +1,13 @@
-import createTypeormConnection from '../../utils/createTypeormConnection';
+import { getConnectionManager, getConnectionOptions } from 'typeorm';
 
 export let connection;
 
-before(async () => {
-  if (connection !== null) { return; }
-  connection = await createTypeormConnection();
-});
+const manager = getConnectionManager();
 
-after(async () => {
-  connection = await connection.close();
+before(async () => {
+  if (manager.has('test')) {
+    connection = manager.get('test');
+  }
+  connection = manager.create(await getConnectionOptions('test'));
+  await connection.connect();
 });
