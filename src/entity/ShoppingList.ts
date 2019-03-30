@@ -3,7 +3,7 @@ import { User } from './User';
 import { ListProduct } from './ListProduct';
 
 @Entity()
-export class ShoppingList {
+export default class ShoppingList {
 
   @PrimaryGeneratedColumn()
   id: number;
