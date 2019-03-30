@@ -1,0 +1,10 @@
+entity: Vote
+items:
+  1:
+    user: 1
+    promotion: 1
+    upvote: true
+  2:
+    user: 2
+    promotion: 2
+    upvote: false

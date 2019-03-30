@@ -1,0 +1,14 @@
+entity: Brand
+items:
+  1:
+    id: 1
+    name: "Auchan"
+  2:
+    id: 2
+    name: "Casino"
+  3:
+    id: 3
+    name: "Intermarché"
+  4:
+    id: 4
+    name: "Leclerc"
