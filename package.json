@@ -39,7 +39,8 @@
     "start": "ts-node -r tsconfig-paths/register src/index.ts",
     "watch": "nodemon -e ts -w ./src -x npm run start",
     "lint": "tslint -p tsconfig.json src/**.ts",
-    "fixtures": "ts-node node_modules/.bin/fixtures",
+    "fixtures": "ts-node -r tsconfig-paths/register node_modules/.bin/fixtures",
+    "migrations:run": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:run",
     "build": "tsc",
     "test": "NODE_ENV=test mocha -r ts-node/register -r tsconfig-paths/register src/tests/**/*.test.ts"
   }
