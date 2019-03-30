@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from 'typeorm';
 import { Store } from './Store';
-import { Promotion } from './Promotion';
+import { Promotion } from '@entities/Promotion';
 import { Vote } from './Vote';
 
 @Entity()

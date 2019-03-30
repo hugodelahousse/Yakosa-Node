@@ -1,6 +1,6 @@
 {
    "compilerOptions": {
-      "lib": ["es2017"],
+      "lib": ["es2017", "dom"],
       "target": "es2017",
       "module": "commonjs",
       "moduleResolution": "node",
@@ -8,6 +8,11 @@
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true,
-      "strictNullChecks": true
+      "strictNullChecks": true,
+      "baseUrl": "src",
+      "paths": {
+         "@entities/*": ["entities/*"],
+         "@utils/*": ["utils/*"]
+      }
    }
 }

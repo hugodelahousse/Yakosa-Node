@@ -1,9 +1,9 @@
 import { connection } from './setup';
-import { User } from '../entity/User';
-import { ShoppingList } from '../entity/ShoppingList';
+import { User } from '@entities/User';
+import ShoppingList from '../../entities/ShoppingList';
 import { expect } from 'chai';
 
-describe('UserList', () => {
+describe('UserList Entity', () => {
   it('Object before and after insertion should be the same', async () => {
     const userRepository = connection.getRepository(User);
     const userListRepository = connection.getRepository(ShoppingList);
