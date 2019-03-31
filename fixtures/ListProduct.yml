@@ -1,14 +1,16 @@
 entity: ListProduct
 items:
-  1:
-    userList: 1
-    barcode: "3228886030011"
-    quantity: 3
-  2:
-    userList: 1
-    barcode: "5000112572926"
-    quantity: 4
-  3:
-    userList: 1
-    barcode: "3259426022227"
-    quandtity: 2
+  listProductOne{1..100}:
+    quantity: '{{random.number}}'
+    list: '@shoppingList($current)'
+    product: '@productOne($current)'
+
+  listProductTwo{1..100}:
+    quantity: '{{random.number}}'
+    list: '@shoppingList($current)'
+    product: '@productTwo($current)'
+
+  listProductThree{1..100}:
+    quantity: '{{random.number}}'
+    list: '@shoppingList($current)'
+    product: '@productThree($current)'
