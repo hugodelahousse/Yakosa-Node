@@ -1,22 +1,6 @@
 entity: User
 items:
-  1:
-    id: 1
-    lastName: "DeLaMaison"
-    firstName: "Hugo"
-    age: 22
-  2:
-    id: 2
-    lastName: "Hellec"
-    firstName: "Adrian"
-    age: 22
-  3:
-    id: 3
-    lastName: "Mounier"
-    firstName: "Romain"
-    age: 22
-  4:
-    id: 4
-    lastName: "Issarni"
-    firstName: "Théo"
+  user{1..100}:
+    firstName: '{{name.firstName}}'
+    lastName: '{{name.lastName}}'
     age: 22
