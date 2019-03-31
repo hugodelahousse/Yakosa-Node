@@ -11,4 +11,9 @@ export class ShoppingListController {
   async all() {
     return this.repository.find();
   }
+
+  @Get('/lists/for/:userId')
+  async allForUser(@Param('userId') userId: number) {
+    return this.repository.find({ userId });
+  }
 }

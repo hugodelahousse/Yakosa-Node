@@ -3,39 +3,59 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import ShoppingList from '@entities/ShoppingList';
 import { User } from '@entities/User';
-import { getOrCreateConnection } from '@utils/createTypeormConnection';
 import { getRepository } from 'typeorm';
+import loadFixtures from '../utils/loadFixtures';
+
 chai.use(chaiHttp);
 
 const expect = chai.expect;
 
 let app;
+let lists: ShoppingList[];
+let users: User[];
 before(async () => {
   app = await createApp();
+  await loadFixtures('User.yml', 'ShoppingList.yml');
+  lists = await getRepository(ShoppingList).find();
+  users = await getRepository(User).find({ relations: ['shoppingLists'] });
 });
 
 describe('ShoppingListController should be able to list items', () => {
   it('Should respond with 200', async () => {
     const res = await chai.request(app).get('/lists/');
-    console.log(res);
     expect(res).to.have.status(200);
   });
 
   it('Should list existing shopping lists', async () => {
-    const listRepository = getRepository(ShoppingList);
-    const userRepository = getRepository(User);
-    const user = await userRepository.save({ firstName: 'Login', lastName: 'X', age: 22 });
-    const lists = await listRepository.save([
-      { user, creationDate: new Date(), lastUsed: new Date() },
-      { user, creationDate: new Date(), lastUsed: new Date() },
-    ]);
-
     const res = await chai.request(app).get('/lists/');
     expect(res).to.be.json;
-    expect(res.body).to.have.length(2);
-    console.log(lists);
+    expect(res.body).to.have.length.above(0);
+    expect(res.body).to.have.length(lists.length);
     const dbIds = lists.map(list => list.id);
     const responseIds = lists.map(list => list.id);
     expect(responseIds).to.have.members(dbIds);
+  });
+
+  it('Should display user ids', async () => {
+    const res = await chai.request(app).get('/lists/');
+    const responseIds = res.body.map(list => list.userId);
+    const dbIds = lists.map(list => list.userId);
+    expect(responseIds).to.have.members(dbIds);
+  });
+});
+
+describe('ShoppingListController should be able to find lists for a specific user', () =>{
+  it('Responds with 200', async () => {
+    const user = users[0];
+    const res = await chai.request(app).get(`/lists/for/${user.id}/`);
+    expect(res).to.have.status(200);
+  });
+
+  it('Returns the proper lists', async () => {
+    const user = users[0];
+    const res = await chai.request(app).get(`/lists/for/${user.id}/`);
+    const userLists = user.shoppingLists;
+    expect(res.body).to.have.length(userLists.length);
+    expect(userLists.map(l => l.id)).to.have.members(res.body.map(l => l.id));
   });
 });
