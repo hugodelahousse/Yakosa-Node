@@ -20,7 +20,7 @@ export default class ShoppingList {
   @ManyToOne(type => User)
   user: User;
 
-  @OneToMany(type => ListProduct, listProduct => listProduct.product)
+  @OneToMany(type => ListProduct, listProduct => listProduct.list)
   products: ListProduct[];
 
 }

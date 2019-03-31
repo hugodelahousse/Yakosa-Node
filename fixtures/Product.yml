@@ -1,14 +1,8 @@
 entity: Product
 items:
-  1:
-    barcode: "3228886030011"
-  2:
-    barcode: "5000112572926"
-  3:
-    barcode: "3259426022227"
-  4:
-    barcode: "3364691366447"
-  5:
-    barcode: "3336970711071"
-  6:
-    barcode: "00964432"
+  productOne{1..100}:
+    barcode: "{{random.number}}"
+  productTwo{1..100}:
+    barcode: "{{random.number}}"
+  productThree{1..100}:
+    barcode: "{{random.number}}"
