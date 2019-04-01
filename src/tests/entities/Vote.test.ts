@@ -17,23 +17,25 @@ describe('Vote Entity', () => {
       lastName: 'X',
       age: 22,
     });
+    user = await userRepository.save(user);
 
     let promotion = promotionRepository.create({
       description: 'Description',
       beginDate: new Date(),
       endDate: new Date(),
+      userId: user.id,
     });
-
-    user = await userRepository.save(user);
     promotion = await promotionRepository.save(promotion);
 
     let vote = voteRepository.create({
       user,
       promotion,
+      userId: user.id,
       upvote: true,
     });
     vote = await voteRepository.save(vote);
   });
+
   it('Should NOT be able to be created vote', async () => {
     const userRepository = connection.getRepository(User);
     const promotionRepository = connection.getRepository(Promotion);
@@ -44,31 +46,34 @@ describe('Vote Entity', () => {
       lastName: 'X',
       age: 22,
     });
+    user = await userRepository.save(user);
 
     let promotion = promotionRepository.create({
       description: 'Description',
       beginDate: new Date(),
       endDate: new Date(),
+      userId: user.id,
     });
-
-    user = await userRepository.save(user);
     promotion = await promotionRepository.save(promotion);
 
     let vote = voteRepository.create({
       user,
       promotion,
       upvote: true,
+      userId: user.id,
     });
+
     await voteRepository.save(vote);
     vote = voteRepository.create({
       user,
       promotion,
       upvote: true,
+      userId: user.id,
     });
     voteRepository.save(vote).then(() => fail()).catch(() => {});
   });
-  it('The vote status of the promotion should be +2', async () => {
 
+  it('The vote status of the promotion should be +2', async () => {
     const productRepository = connection.getRepository(Product);
     const promotionRepository = connection.getRepository(Promotion);
     const userRepository = connection.getRepository(User);
@@ -97,12 +102,14 @@ describe('Vote Entity', () => {
       user: user1,
       description: 'test',
       beginDate: new Date(),
+      userId: user1.id,
     });
     promotion = await promotionRepository.save(promotion);
 
     let vote = voteRepository.create({
-      promotion: promotion.id,
-      user: user1.id,
+      promotion,
+      user: user1,
+      userId: user1.id,
       upvote: true,
     });
     await voteRepository.save(vote);
@@ -110,6 +117,7 @@ describe('Vote Entity', () => {
     vote = voteRepository.create({
       promotion,
       user: user2,
+      userId: user2.id,
       upvote: true,
     });
     await voteRepository.save(vote);
