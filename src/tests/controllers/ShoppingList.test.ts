@@ -1,24 +1,10 @@
-import createApp from '@utils/createApp';
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
-import ShoppingList from '@entities/ShoppingList';
-import { User } from '@entities/User';
-import { getRepository } from 'typeorm';
-import loadFixtures from '../utils/loadFixtures';
+import { app, lists, users } from './setup';
 
 chai.use(chaiHttp);
 
 const expect = chai.expect;
-
-let app;
-let lists: ShoppingList[];
-let users: User[];
-before(async () => {
-  app = await createApp();
-  await loadFixtures('User.yml', 'ShoppingList.yml');
-  lists = await getRepository(ShoppingList).find();
-  users = await getRepository(User).find({ relations: ['shoppingLists'] });
-});
 
 describe('ShoppingListController should be able to list items', () => {
   it('Should respond with 200', async () => {
@@ -32,7 +18,7 @@ describe('ShoppingListController should be able to list items', () => {
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(lists.length);
     const dbIds = lists.map(list => list.id);
-    const responseIds = lists.map(list => list.id);
+    const responseIds = res.body.map(list => list.id);
     expect(responseIds).to.have.members(dbIds);
   });
 
@@ -44,7 +30,7 @@ describe('ShoppingListController should be able to list items', () => {
   });
 });
 
-describe('ShoppingListController should be able to find lists for a specific user', () =>{
+describe('ShoppingListController should be able to find lists for a specific user', () => {
   it('Responds with 200', async () => {
     const user = users[0];
     const res = await chai.request(app).get(`/lists/for/${user.id}/`);
