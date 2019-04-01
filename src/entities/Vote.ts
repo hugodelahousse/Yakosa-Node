@@ -3,7 +3,7 @@ import { User } from './User';
 import { Promotion } from './Promotion';
 
 @Entity()
-@Unique(['user', 'promotion'])
+@Unique(['userId', 'promotionId'])
 export class Vote {
 
   @PrimaryGeneratedColumn()
@@ -12,10 +12,16 @@ export class Vote {
   @Column()
   upvote: boolean;
 
-  @ManyToOne(type => User, user => user.id)
+  @Column()
+  userId: number;
+
+  @Column()
+  promotionId: number;
+
+  @ManyToOne(type => User)
   user: User;
 
-  @ManyToOne(type => Promotion, promotion => promotion.id)
+  @ManyToOne(type => Promotion)
   promotion: Promotion;
 
 }

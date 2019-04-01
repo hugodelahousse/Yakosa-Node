@@ -12,7 +12,10 @@ export class Store {
   @Column('geography', { spatialFeatureType: 'Point', srid: 4326, nullable: true })
   position: string;
 
-  @ManyToOne(type => Brand, brand => brand.id)
+  @Column()
+  brandId: number
+
+  @ManyToOne(type => Brand)
   brand: Brand;
 
   @OneToMany(type => Promotion, promotion => promotion.store)
@@ -22,4 +25,3 @@ export class Store {
   managers: User[];
 
 }
-
