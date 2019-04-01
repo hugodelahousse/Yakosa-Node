@@ -1,16 +1,16 @@
 entity: ListProduct
 items:
-  listProductOne{1..100}:
+  listProductOne{1..10}:
     quantity: '{{random.number}}'
     list: '@shoppingList($current)'
     product: '@productOne($current)'
 
-  listProductTwo{1..100}:
+  listProductTwo{1..10}:
     quantity: '{{random.number}}'
     list: '@shoppingList($current)'
     product: '@productTwo($current)'
 
-  listProductThree{1..100}:
+  listProductThree{1..10}:
     quantity: '{{random.number}}'
     list: '@shoppingList($current)'
     product: '@productThree($current)'

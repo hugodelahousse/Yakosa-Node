@@ -1,10 +1,14 @@
 entity: Vote
 items:
-  1:
-    user: 1
-    promotion: 1
+  voteOne{1..10}:
+    user: '@user($current)'
+    promotion: '@promotionOne($current)'
     upvote: true
-  2:
-    user: 2
-    promotion: 2
-    upvote: false
+  voteTwo{1..10}:
+    user: '@user($current)'
+    promotion: '@promotionTwo($current)'
+    upvote: true
+  voteThree{1..10}:
+    user: '@user($current)'
+    promotion: '@promotionThree($current)'
+    upvote: true

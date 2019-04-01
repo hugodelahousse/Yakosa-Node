@@ -1,41 +1,23 @@
 entity: Promotion
 items:
-  1:
-    id: 1
-    description: "2 pour le prix de 1"
-    beginDate: "2019-03-22"
-    product: "3228886030011"
-    user: 2
-    brand: 1
-  2:
-    id: 2
-    description: "20%"
-    beginDate: "2019-03-22"
-    endDate: "2012-03-22"
-    product: "5000112572926"
-    user: 1
-    brand: 2
-  3:
-    id: 3
-    description: "-10 euros"
-    beginDate: "2019-03-22"
-    endDate: "2012-03-22"
-    product: "3228886030011"
-    user: 3
-    brand: 3
-  4:
-    id: 4
-    description: "-50% sur les deuxième produit"
-    beginDate: "2019-03-22"
-    product: "3228886030011"
-    user: 1
-    brand: 4
-  5:
-    id: 5
-    description: "-50% sur les deuxième produit"
-    beginDate: "2019-03-22"
-    endDate: "2012-03-22"
-    product: "3228886030011"
-    user: 1
-    brand: null
-    store: 1
+  promotionOne{1..10}:
+    description: '{{lorem.sentence}}'
+    beginDate: '{{date.past}}'
+    endDate: '{{date.future}}'
+    product: '@productOne($current)'
+    user: '@user($current)'
+    brand: '@brand($current)'
+  promotionTwo{1..10}:
+    description: '{{lorem.sentence}}'
+    beginDate: '{{date.past}}'
+    endDate: '{{date.future}}'
+    product: '@productTwo($current)'
+    user: '@user($current)'
+    brand: '@brand($current)'
+  promotionThree{1..10}:
+    description: '{{lorem.sentence}}'
+    beginDate: '{{date.past}}'
+    endDate: '{{date.future}}'
+    product: '@productThree($current)'
+    user: '@user($current)'
+    brand: '@brand($current)'
