@@ -47,6 +47,6 @@ export class ShoppingListController {
     }
     existing.creationDate = list.creationDate || existing.creationDate;
     existing.lastUsed = list.lastUsed || existing.lastUsed;
-    return existing;
+    return this.repository.save(existing);
   }
 }
