@@ -20,30 +20,28 @@ export class Promotion {
   @Column({ nullable: true })
   endDate: Date;
 
+  @Column()
+  userId: number;
+
+  @Column({ nullable: true })
+  storeId: number;
+
+  @Column({ nullable: true })
+  brandId: number;
+
   @ManyToOne(type => Product, product => product.barcode)
   product: Product;
 
-  @ManyToOne(type => User, user => user.id)
+  @ManyToOne(type => User)
   user: User;
 
-  @ManyToOne(type => Store, store => store.id, { nullable: true })
+  @ManyToOne(type => Store, { nullable: true })
   store: Store;
 
-  @ManyToOne(type => Brand, brand => brand.id, { nullable: true })
+  @ManyToOne(type => Brand, { nullable: true })
   brand: Brand;
 
   @OneToMany(type => Vote, vote => vote.promotion)
   votes: Vote[];
 
 }
-
-/*
-{
-    "beginDate": "2019-03-22T00:00:00.000Z",
-    "description": "test",
-    "endDate": "2012-03-22T00:00:00.000Z",
-    "product": "3228886030011",
-    "store": 1,
-    "user": 1
-}
-*/
