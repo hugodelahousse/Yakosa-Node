@@ -19,6 +19,9 @@ export class User {
   @Column()
   age: number;
 
+  @Column({ unique: true, nullable: true })
+  googleId: string;
+
   @OneToMany(type => Vote, vote => vote => vote.user)
   votes: Vote[];
 

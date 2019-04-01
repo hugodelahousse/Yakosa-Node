@@ -12,7 +12,8 @@
       "baseUrl": "src",
       "paths": {
          "@entities/*": ["entities/*"],
-         "@utils/*": ["utils/*"]
+         "@utils/*": ["utils/*"],
+         "config": ["config.ts"]
       }
    }
 }
