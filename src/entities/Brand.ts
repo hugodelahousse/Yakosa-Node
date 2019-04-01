@@ -11,7 +11,7 @@ export class Brand {
   @Column()
   name: string;
 
-  @OneToMany(type => Store, store => store.id)
+  @OneToMany(type => Store, store => store.brand)
   stores: Store[];
 
   @OneToMany(type => Promotion, promotion => promotion.brand)
