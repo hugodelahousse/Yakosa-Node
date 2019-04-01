@@ -1,4 +1,4 @@
-import { getConnectionOptions, createConnection, Connection, getConnectionManager } from 'typeorm';
+import { getConnectionOptions, Connection, getConnectionManager } from 'typeorm';
 
 export async function getOrCreateConnection(name?: string) : Promise<Connection> {
   const connectionManager = getConnectionManager();
