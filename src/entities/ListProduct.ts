@@ -3,7 +3,7 @@ import ShoppingList from './ShoppingList';
 import { Product } from './Product';
 
 @Entity()
-@Unique(['userList', 'product'])
+@Unique(['list', 'product'])
 export class ListProduct {
 
   @PrimaryGeneratedColumn()
@@ -12,10 +12,10 @@ export class ListProduct {
   @Column()
   quantity: number;
 
-  @ManyToOne(type => ShoppingList, list => list.id)
-  userList: ShoppingList;
+  @ManyToOne(type => ShoppingList)
+  list: ShoppingList;
 
-  @ManyToOne(type => Product, product => product.barcode)
+  @ManyToOne(type => Product)
   product: Product;
 
 }

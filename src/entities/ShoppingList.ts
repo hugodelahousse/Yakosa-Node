@@ -14,10 +14,13 @@ export default class ShoppingList {
   @Column({ nullable: true })
   lastUsed: Date;
 
-  @ManyToOne(type => User, user => user.id)
+  @Column()
+  userId: number;
+
+  @ManyToOne(type => User)
   user: User;
 
-  @OneToMany(type => ListProduct, listProduct => listProduct.product)
+  @OneToMany(type => ListProduct, listProduct => listProduct.list)
   products: ListProduct[];
 
 }
