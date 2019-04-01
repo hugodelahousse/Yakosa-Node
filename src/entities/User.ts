@@ -25,13 +25,13 @@ export class User {
   @OneToMany(type => Vote, vote => vote => vote.user)
   votes: Vote[];
 
-  @OneToMany(type => Promotion, promotion => promotion.id)
+  @OneToMany(type => Promotion, promotion => promotion.user)
   postedPromotions: Promotion[];
 
   @OneToMany(type => ShoppingList, shoppingList => shoppingList.user)
   shoppingLists: ShoppingList[];
 
-  @ManyToMany(type => Store, store => store.id)
+  @ManyToMany(type => Store, store => store.managers)
   managedStore: Store[];
 
 }

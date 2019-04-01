@@ -34,25 +34,24 @@ export class PromotionController {
     });
   }
 
-  @OnUndefined(404)
   @Get('/promotions/:id')
   async one(@Param('id') id: number) {
-    return this.repository.findOne({ id },{
+    return this.repository.findOne({ id }, {
       relations: ['store', 'brand', 'user'],
     });
+  }
+
+  @Get('/promotions/for/:userId')
+  async allForUser(@Param('userId') userId: number) {
+    return this.repository.find({ userId });
   }
 
   @Post('/promotions/')
   @HttpCode(201)
   async create(@Body() promotion: Promotion) {
-    try {
-      return await this.repository.save(promotion);
-    } catch (e) {
-      throw new BadRequestError(e.detail);
-    }
+    return await this.repository.save(promotion);
   }
 
-  @OnUndefined(404)
   @Delete('/promotions/:id')
   async remove(@Param('id') id: number) {
     const promotionToRemove = await this.repository.findOne(id);
@@ -65,7 +64,7 @@ export class PromotionController {
   @OnUndefined(404)
   @Patch('/promotions/:id')
   async patch(@Param('id') id: number,
-               @Body() promotion: Promotion) {
+              @Body() promotion: Promotion) {
     const existing = await this.repository.findOne(id);
     if (existing === undefined) {
       return undefined;

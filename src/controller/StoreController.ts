@@ -6,8 +6,8 @@ import {
   JsonController,
   Param,
   Post,
-  OnUndefined,
   Patch,
+  HttpCode,
 } from 'routing-controllers';
 import { Store } from '../entities/Store';
 
@@ -31,11 +31,11 @@ export class StoreController {
   }
 
   @Post('/stores/')
-  async save(@Body() store: Store) {
+  @HttpCode(201)
+  async create(@Body() store: Store) {
     return this.repository.save(store);
   }
 
-  @OnUndefined(404)
   @Delete('/stores/:id')
   async remove(@Param('id') id: number) {
     const storeToRemove = await this.repository.findOne(id);
