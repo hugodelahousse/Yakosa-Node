@@ -1,8 +1,8 @@
 entity: Product
 items:
-  productOne{1..100}:
+  productOne{1..10}:
     barcode: "{{random.number}}"
-  productTwo{1..100}:
+  productTwo{1..10}:
     barcode: "{{random.number}}"
-  productThree{1..100}:
+  productThree{1..10}:
     barcode: "{{random.number}}"
