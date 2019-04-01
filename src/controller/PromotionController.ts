@@ -8,14 +8,14 @@ import {
   Post,
   QueryParam,
   OnUndefined,
-  Patch,
+  Patch, HttpCode, BadRequestError,
 } from 'routing-controllers';
-import { Promotion } from '../entity/Promotion';
+import { Promotion } from '../entities/Promotion';
 
 @JsonController()
 export class PromotionController {
 
-  private promotionRepository = getRepository(Promotion);
+  private repository = getRepository(Promotion);
 
   @Get('/promotions/')
   async all(@QueryParam('limit') limit: number,
@@ -27,44 +27,56 @@ export class PromotionController {
     if (brand) { filter.push({ brand }); }
     if (user) { filter.push({ user }); }
 
-    return this.promotionRepository.find({
+    return this.repository.find({
       relations: ['store', 'brand', 'user'],
       where: filter,
       take: limit,
     });
   }
 
+  @OnUndefined(404)
   @Get('/promotions/:id')
   async one(@Param('id') id: number) {
-    return this.promotionRepository.findOne({ id },{
+    return this.repository.findOne({ id },{
       relations: ['store', 'brand', 'user'],
     });
   }
 
   @Post('/promotions/')
-  async save(@Body() promotion: Promotion) {
-    console.debug(promotion);
-    if ((promotion.store == null && promotion.brand == null)
-      || promotion.product == null || promotion.user == null) {
-      return null;
+  @HttpCode(201)
+  async create(@Body() promotion: Promotion) {
+    try {
+      return await this.repository.save(promotion);
+    } catch (e) {
+      throw new BadRequestError(e.detail);
     }
-    return this.promotionRepository.save(promotion);
   }
 
   @OnUndefined(404)
   @Delete('/promotions/:id')
   async remove(@Param('id') id: number) {
-    const promotionToRemove = await this.promotionRepository.findOne(id);
+    const promotionToRemove = await this.repository.findOne(id);
     if (promotionToRemove) {
-      await this.promotionRepository.remove(promotionToRemove);
+      await this.repository.remove(promotionToRemove);
     }
     return promotionToRemove;
   }
 
+  @OnUndefined(404)
   @Patch('/promotions/:id')
-  async update(@Param('id') id: number,
+  async patch(@Param('id') id: number,
                @Body() promotion: Promotion) {
-    console.debug(promotion);
-    return this.promotionRepository.update(id, promotion);
+    const existing = await this.repository.findOne(id);
+    if (existing === undefined) {
+      return undefined;
+    }
+    existing.store = promotion.store || existing.store;
+    existing.brand = promotion.brand || existing.brand;
+    existing.user = promotion.user || existing.brand;
+    existing.product = promotion.product || existing.product;
+    existing.beginDate = promotion.beginDate || existing.beginDate;
+    existing.endDate = promotion.endDate || existing.endDate;
+    existing.description = promotion.description || existing.description;
+    return this.repository.save(existing);
   }
 }

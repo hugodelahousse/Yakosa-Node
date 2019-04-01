@@ -9,38 +9,38 @@ import {
   OnUndefined,
   Patch,
 } from 'routing-controllers';
-import { Store } from '../entity/Store';
+import { Store } from '../entities/Store';
 
 @JsonController()
 export class StoreController {
 
-  private storeRepository = getRepository(Store);
+  private repository = getRepository(Store);
 
   @Get('/stores/')
   async all() {
-    return this.storeRepository.find({
+    return this.repository.find({
       relations: ['brand'],
     });
   }
 
   @Get('/stores/:id')
   async one(@Param('id') id: number) {
-    return this.storeRepository.findOne({ id }, {
+    return this.repository.findOne({ id }, {
       relations: ['brand'],
     });
   }
 
   @Post('/stores/')
   async save(@Body() store: Store) {
-    return this.storeRepository.save(store);
+    return this.repository.save(store);
   }
 
   @OnUndefined(404)
   @Delete('/stores/:id')
   async remove(@Param('id') id: number) {
-    const storeToRemove = await this.storeRepository.findOne(id);
+    const storeToRemove = await this.repository.findOne(id);
     if (storeToRemove) {
-      await this.storeRepository.remove(storeToRemove);
+      await this.repository.remove(storeToRemove);
     }
     return storeToRemove;
   }
@@ -48,6 +48,6 @@ export class StoreController {
   @Patch('/stores/:id')
   async update(@Param('id') id: number,
                @Body() store: Store) {
-    return this.storeRepository.update(id, store);
+    return this.repository.update(id, store);
   }
 }
