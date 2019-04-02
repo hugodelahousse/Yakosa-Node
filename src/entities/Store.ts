@@ -9,7 +9,7 @@ export class Store {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('geography', { spatialFeatureType: 'Point', srid: 4326, nullable: true })
+  @Column('geography', { spatialFeatureType: 'Point', srid: 4326 })
   position: string;
 
   @Column()

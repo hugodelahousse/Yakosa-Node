@@ -8,7 +8,7 @@ import {
   Post,
   QueryParam,
   OnUndefined,
-  Patch, HttpCode, BadRequestError,
+  Patch, HttpCode,
 } from 'routing-controllers';
 import { Promotion } from '../entities/Promotion';
 
@@ -19,16 +19,15 @@ export class PromotionController {
 
   @Get('/promotions/')
   async all(@QueryParam('limit') limit: number,
-            @QueryParam('store') store: number,
-            @QueryParam('brand') brand: number,
-            @QueryParam('user') user: number) {
+            @QueryParam('storeId') storeId: number,
+            @QueryParam('brandId') brandId: number,
+            @QueryParam('userId') userId: number) {
     const filter: {[key: string]: number}[] = [];
-    if (store) { filter.push({ store }); }
-    if (brand) { filter.push({ brand }); }
-    if (user) { filter.push({ user }); }
+    if (storeId) { filter.push({ storeId }); }
+    if (brandId) { filter.push({ brandId }); }
+    if (userId) { filter.push({ userId }); }
 
     return this.repository.find({
-      relations: ['store', 'brand', 'user'],
       where: filter,
       take: limit,
     });
@@ -39,11 +38,6 @@ export class PromotionController {
     return this.repository.findOne({ id }, {
       relations: ['store', 'brand', 'user'],
     });
-  }
-
-  @Get('/promotions/for/:userId')
-  async allForUser(@Param('userId') userId: number) {
-    return this.repository.find({ userId });
   }
 
   @Post('/promotions/')
@@ -69,13 +63,11 @@ export class PromotionController {
     if (existing === undefined) {
       return undefined;
     }
-    existing.store = promotion.store || existing.store;
-    existing.brand = promotion.brand || existing.brand;
-    existing.user = promotion.user || existing.brand;
-    existing.product = promotion.product || existing.product;
-    existing.beginDate = promotion.beginDate || existing.beginDate;
-    existing.endDate = promotion.endDate || existing.endDate;
-    existing.description = promotion.description || existing.description;
+    const fieldsToChange = ['store', 'beginDate', 'endDate', 'description', 'user', 'product',
+      'brand'];
+    for (const field in fieldsToChange) {
+      if (promotion.hasOwnProperty(field)) { existing[field] = promotion[field]; }
+    }
     return this.repository.save(existing);
   }
 }

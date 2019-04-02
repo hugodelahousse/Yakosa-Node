@@ -3,4 +3,3 @@ items:
   user{1..100}:
     firstName: '{{name.firstName}}'
     lastName: '{{name.lastName}}'
-    age: "{{random.number}}"
