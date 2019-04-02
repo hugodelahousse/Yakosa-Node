@@ -1,9 +1,7 @@
-import { getBindingElementVariableDeclaration } from 'tslint';
-
 // Load config from `.env` file
 require('dotenv').config();
 
-function getEnv(variable, defaultValue = undefined): string {
+function getEnv(variable: string, defaultValue = undefined): string {
   const value = process.env[variable] || defaultValue;
   if (value === undefined) {
     throw new Error(`Invalid value for configuration variable: ${variable}`);
