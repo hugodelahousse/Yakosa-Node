@@ -1,7 +1,17 @@
 entity: Store
 items:
-  store{1..100}:
-    brand: '@brand($current)'
+  store1:
+    brand: '@brand1'
     position:
-      coordinates: ['{{address.latitude}}', '{{address.longitude}}']
+      coordinates: ['48.825398799999995', '2.3536142']
+      type: 'Point'
+  store2:
+    brand: '@brand2'
+    position:
+      coordinates: ['60.825398799999995', '23.3536142']
+      type: 'Point'
+  store3:
+    brand: '@brand3'
+    position:
+      coordinates: ['8.825398799999995', '50.3536142']
       type: 'Point'

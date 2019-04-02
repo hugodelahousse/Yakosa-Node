@@ -1,23 +1,23 @@
 entity: Promotion
 items:
-  promotionOne{1..10}:
+  promotionOne{1..100}:
     description: '{{lorem.sentence}}'
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
     product: '@productOne($current)'
     user: '@user($current)'
     brand: '@brand($current)'
-  promotionTwo{1..10}:
+  promotionTwo{1..100}:
     description: '{{lorem.sentence}}'
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
     product: '@productTwo($current)'
     user: '@user($current)'
     brand: '@brand($current)'
-  promotionThree{1..10}:
+  promotionThree{1..3}:
     description: '{{lorem.sentence}}'
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
-    product: '@productThree($current)'
+    product: '@productOne($current)'
     user: '@user($current)'
-    brand: '@brand($current)'
+    store: '@store($current)'
