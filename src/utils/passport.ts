@@ -8,7 +8,7 @@ passport.use(new GoogleStrategy(
   {
     clientID: config.GOOGLE_CONSUMER_KEY,
     clientSecret: config.GOOGLE_CONSUMER_SECRET,
-    callbackURL: `${config.SERVER_URL}/auth/google/callback`,
+    callbackURL: `/auth/google/callback`,
   },
   async (token, tokenSecret, profile, done) => {
     const userRepository = getRepository(User);
