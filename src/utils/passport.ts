@@ -12,14 +12,12 @@ passport.use(new GoogleStrategy(
     callbackURL: `${config.SERVER_URL}/auth/google/callback`,
   },
   async (token, tokenSecret, profile, done) => {
-    console.log(profile);
     const userRepository = getRepository(User);
     let user = await userRepository.findOne({ googleId: profile.id });
     if (user === undefined) {
       if (profile.name === undefined) {
         return done(new Error('No name information'), null);
       }
-      console.log(profile);
       user = await userRepository.save({
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
