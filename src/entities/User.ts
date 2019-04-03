@@ -16,8 +16,11 @@ export class User {
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ nullable: true })
   age: number;
+
+  @Column({ unique: true, nullable: true })
+  googleId: string;
 
   @OneToMany(type => Vote, vote => vote => vote.user)
   votes: Vote[];
