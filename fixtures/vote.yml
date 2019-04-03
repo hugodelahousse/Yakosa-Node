@@ -8,7 +8,7 @@ items:
     user: '@user($current)'
     promotion: '@promotionTwo($current)'
     upvote: true
-  voteThree{1..100}:
+  voteThree{1..3}:
     user: '@user($current)'
     promotion: '@promotionThree($current)'
     upvote: true
