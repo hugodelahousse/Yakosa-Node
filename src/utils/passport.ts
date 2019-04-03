@@ -3,7 +3,6 @@ import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import config from 'config';
 import { getRepository } from 'typeorm';
 import { User } from '@entities/User';
-import { PassportStatic } from 'passport';
 
 passport.use(new GoogleStrategy(
   {
@@ -22,7 +21,6 @@ passport.use(new GoogleStrategy(
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
         googleId: profile.id,
-        age: 0,
       });
     }
     return done(null, user);
