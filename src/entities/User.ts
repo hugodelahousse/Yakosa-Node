@@ -2,6 +2,7 @@ import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, OneToMany } from 't
 import { Store } from './Store';
 import { Promotion } from '@entities/Promotion';
 import { Vote } from './Vote';
+import ShoppingList from '@entities/ShoppingList';
 
 @Entity()
 export class User {
@@ -26,6 +27,9 @@ export class User {
 
   @OneToMany(type => Promotion, promotion => promotion.id)
   postedPromotions: Promotion[];
+
+  @OneToMany(type => ShoppingList, shoppingList => shoppingList.user)
+  shoppingLists: ShoppingList[];
 
   @ManyToMany(type => Store, store => store.id)
   managedStore: Store[];

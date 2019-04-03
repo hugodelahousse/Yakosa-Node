@@ -8,10 +8,9 @@ export class Product {
   @PrimaryColumn()
   barcode: string;
 
-  @OneToMany(type => Promotion, promotion => promotion.id)
+  @OneToMany(type => Promotion, promotion => promotion.product)
   promotions: Promotion[];
 
   @OneToMany(type => ListProduct, listProduct => listProduct.product)
   listProducts: ListProduct[];
-
 }
