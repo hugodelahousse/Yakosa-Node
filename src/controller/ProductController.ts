@@ -10,6 +10,9 @@ import {
     HttpCode,
 } from 'routing-controllers';
 import { Product } from '../entities/Product';
+import * as request from 'request-promise';
+import { debuglog } from 'util';
+import { OpenFoodFactProductResponse } from '../types/OpenFoodFactProduct';
 
 @JsonController()
 export class ProductController {
@@ -18,6 +21,19 @@ export class ProductController {
   @Get('/products/')
   async all() {
     return this.repository.find();
+  }
+
+  @Get('/products/:barcode')
+  async one(@Param('barcode') barcode: string) {
+    const product = await this.repository.findOne(barcode);
+    if (product) {
+      return product;
+    }
+    const object : OpenFoodFactProductResponse =
+      await request(`https://fr.openfoodfacts.org/api/v0/produit/${barcode}`, { json : true });
+    const newProd : Product = { barcode: object.code, listProducts: [], promotions: [] };
+    await this.create({ barcode: object.code } as Product);
+    return newProd;
   }
 
   @Post('/products/')
