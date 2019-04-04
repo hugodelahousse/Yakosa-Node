@@ -7,7 +7,7 @@ import {
   Param,
   Post,
   Patch,
-  HttpCode,
+  HttpCode, BadRequestError,
 } from 'routing-controllers';
 import { Store } from '../entities/Store';
 
@@ -18,9 +18,7 @@ export class StoreController {
 
   @Get('/stores/')
   async all() {
-    return this.repository.find({
-      relations: ['brand'],
-    });
+    return this.repository.find();
   }
 
   @Get('/stores/:id')
@@ -33,7 +31,11 @@ export class StoreController {
   @Post('/stores/')
   @HttpCode(201)
   async create(@Body() store: Store) {
-    return this.repository.save(store);
+    try {
+      return await this.repository.save(store);
+    } catch (e) {
+      throw new BadRequestError(e.detail);
+    }
   }
 
   @Delete('/stores/:id')
@@ -48,6 +50,12 @@ export class StoreController {
   @Patch('/stores/:id')
   async update(@Param('id') id: number,
                @Body() store: Store) {
-    return this.repository.update(id, store);
+    const existing = await this.repository.findOne(id);
+    if (existing === undefined) {
+      return undefined;
+    }
+    existing.brand = store.brand || existing.brand;
+    existing.position = store.position || existing.position;
+    return this.repository.save(existing);
   }
 }

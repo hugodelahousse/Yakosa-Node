@@ -8,7 +8,7 @@ import {
   Post,
   QueryParam,
   OnUndefined,
-  Patch, HttpCode,
+  Patch, HttpCode, BadRequestError,
 } from 'routing-controllers';
 import { Promotion } from '../entities/Promotion';
 
@@ -43,7 +43,11 @@ export class PromotionController {
   @Post('/promotions/')
   @HttpCode(201)
   async create(@Body() promotion: Promotion) {
-    return await this.repository.save(promotion);
+    try {
+      return await this.repository.save(promotion);
+    } catch (e) {
+      throw new BadRequestError(e.detail);
+    }
   }
 
   @Delete('/promotions/:id')
