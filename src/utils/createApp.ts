@@ -7,6 +7,8 @@ import { StoreController } from '../controller/StoreController';
 import { PromotionController } from '../controller/PromotionController';
 import createTypeormConnection from './createTypeormConnection';
 
+export let connection;
+
 export default async function createApp() {
 
   const app = express();
@@ -15,7 +17,7 @@ export default async function createApp() {
   });
   app.use(bodyParser.json());
 
-  await createTypeormConnection();
+  connection = await createTypeormConnection();
 
   return app;
 }

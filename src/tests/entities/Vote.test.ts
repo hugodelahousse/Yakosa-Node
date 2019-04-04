@@ -4,13 +4,13 @@ import { Vote } from '@entities/Vote';
 import { User } from '@entities/User';
 import { Promotion } from '@entities/Promotion';
 import { Product } from '@entities/Product';
-import { connection } from './setup';
+import { testConnection } from './setup';
 
 describe('Vote Entity', () => {
   it('Should be able to be created vote', async () => {
-    const userRepository = connection.getRepository(User);
-    const promotionRepository = connection.getRepository(Promotion);
-    const voteRepository = connection.getRepository(Vote);
+    const userRepository = testConnection.getRepository(User);
+    const promotionRepository = testConnection.getRepository(Promotion);
+    const voteRepository = testConnection.getRepository(Vote);
 
     let user = userRepository.create({
       firstName: 'Login',
@@ -37,9 +37,9 @@ describe('Vote Entity', () => {
   });
 
   it('Should NOT be able to be created vote', async () => {
-    const userRepository = connection.getRepository(User);
-    const promotionRepository = connection.getRepository(Promotion);
-    const voteRepository = connection.getRepository(Vote);
+    const userRepository = testConnection.getRepository(User);
+    const promotionRepository = testConnection.getRepository(Promotion);
+    const voteRepository = testConnection.getRepository(Vote);
 
     let user = userRepository.create({
       firstName: 'Login',
@@ -74,10 +74,10 @@ describe('Vote Entity', () => {
   });
 
   it('The vote status of the promotion should be +2', async () => {
-    const productRepository = connection.getRepository(Product);
-    const promotionRepository = connection.getRepository(Promotion);
-    const userRepository = connection.getRepository(User);
-    const voteRepository = connection.getRepository(Vote);
+    const productRepository = testConnection.getRepository(Product);
+    const promotionRepository = testConnection.getRepository(Promotion);
+    const userRepository = testConnection.getRepository(User);
+    const voteRepository = testConnection.getRepository(Vote);
 
     let user1 = userRepository.create({
       firstName: 'Login',

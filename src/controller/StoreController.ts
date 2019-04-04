@@ -7,18 +7,33 @@ import {
   Param,
   Post,
   Patch,
-  HttpCode, BadRequestError,
+  HttpCode, QueryParam, BadRequestError,
 } from 'routing-controllers';
-import { Store } from '../entities/Store';
+import { Store } from '@entities/Store';
+import { connection } from '@utils/createApp';
 
 @JsonController()
 export class StoreController {
 
   private repository = getRepository(Store);
 
+  /* Query example
+    http://localhost:3000/stores
+    ?position={"type":"Point","coordinates":[-48.23456,20.12345]}&distance=100000000&limit=5 */
+
   @Get('/stores/')
-  async all() {
-    return this.repository.find();
+  async all(@QueryParam('distance') distance: string,
+            @QueryParam('position') position: string,
+            @QueryParam('limit') limit: number) {
+    if (position === undefined) {
+      return await connection.createQueryBuilder(Store, 'store').getMany();
+    }
+    return await connection.createQueryBuilder(Store, 'store')
+        .where(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`
+                   + `< ${distance || 1000}`)
+        .orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`)
+        .limit(limit || 20)
+        .getMany();
   }
 
   @Get('/stores/:id')

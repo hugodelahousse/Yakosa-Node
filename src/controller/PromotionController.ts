@@ -10,7 +10,7 @@ import {
   OnUndefined,
   Patch, HttpCode, BadRequestError,
 } from 'routing-controllers';
-import { Promotion } from '../entities/Promotion';
+import { Promotion } from '@entities/Promotion';
 
 @JsonController()
 export class PromotionController {
