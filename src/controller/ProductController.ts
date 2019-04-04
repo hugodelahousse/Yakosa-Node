@@ -25,4 +25,13 @@ export class ProductController {
   async create(@Body() products: Product) {
     return this.repository.save(products);
   }
+
+  @Delete('/products/:barcode')
+  async remove(@Param('barcode') barcode: string) {
+    const productToRemove = await this.repository.findOne(barcode);
+    if (productToRemove) {
+      await this.repository.remove(productToRemove);
+    }
+    return productToRemove;
+  }
 }
