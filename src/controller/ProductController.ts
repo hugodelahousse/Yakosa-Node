@@ -11,7 +11,6 @@ import {
 } from 'routing-controllers';
 import { Product } from '../entities/Product';
 
-
 @JsonController()
 export class ProductController {
   private repository = getRepository(Product);
@@ -19,5 +18,11 @@ export class ProductController {
   @Get('/products/')
   async all() {
     return this.repository.find();
+  }
+
+  @Post('/products/')
+  @HttpCode(201)
+  async create(@Body() products: Product) {
+    return this.repository.save(products);
   }
 }
