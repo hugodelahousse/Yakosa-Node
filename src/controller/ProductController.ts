@@ -34,4 +34,10 @@ export class ProductController {
     }
     return productToRemove;
   }
+
+  @Patch('/products/:barcode')
+  async update(@Param('barcode') barcode: string,
+               @Body() product: Product) {
+    return this.repository.update(barcode, product);
+  }
 }
