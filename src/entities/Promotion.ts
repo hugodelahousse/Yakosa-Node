@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { Product } from './Product';
 import { User } from './User';
 import { Vote } from './Vote';
@@ -29,16 +35,16 @@ export class Promotion {
   @Column({ nullable: true })
   brandId: number;
 
-  @ManyToOne(type => Product, product => product.barcode)
+  @ManyToOne(type => Product, product => product.barcode, { onDelete:'CASCADE' })
   product: Product;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete:'CASCADE' })
   user: User;
 
-  @ManyToOne(type => Store, { nullable: true })
+  @ManyToOne(type => Store, { nullable: true, onDelete: 'CASCADE' })
   store: Store;
 
-  @ManyToOne(type => Brand, { nullable: true })
+  @ManyToOne(type => Brand, { nullable: true, onDelete: 'CASCADE' })
   brand: Brand;
 
   @OneToMany(type => Vote, vote => vote.promotion)

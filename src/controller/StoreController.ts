@@ -7,7 +7,10 @@ import {
   Param,
   Post,
   Patch,
-  HttpCode, QueryParam, BadRequestError,
+  HttpCode,
+  QueryParam,
+  OnUndefined,
+  BadRequestError,
 } from 'routing-controllers';
 import { Store } from '@entities/Store';
 import { connection } from '@utils/createApp';
@@ -55,10 +58,14 @@ export class StoreController {
   }
 
   @Delete('/stores/:id')
+  @OnUndefined(404)
   async remove(@Param('id') id: number) {
     const storeToRemove = await this.repository.findOne(id);
+    console.debug(storeToRemove);
     if (storeToRemove) {
-      await this.repository.remove(storeToRemove);
+      storeToRemove.managers.splice(0, storeToRemove.managers.length);
+      storeToRemove.promotions.splice(0, storeToRemove.promotions.length);
+      return await this.repository.remove(storeToRemove);
     }
     return storeToRemove;
   }

@@ -70,8 +70,12 @@ describe('PromotionController delete a promotion', () => {
   it('Should delete a promotion', async () => {
     let res = await chai.request(app).delete('/promotions/1');
     expect(res).to.have.status(200);
-    console.debug(res.body);
     res = await chai.request(app).get('/promotions/');
     expect(res.body.length).to.be.equal(promotions.length);
+  });
+
+  it('Should not find the desired promotion', async () => {
+    const res = await chai.request(app).delete('/promotions/10000');
+    expect(res).to.have.status(404);
   });
 });

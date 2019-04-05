@@ -51,18 +51,19 @@ export class PromotionController {
   }
 
   @Delete('/promotions/:id')
+  @OnUndefined(404)
   async remove(@Param('id') id: number) {
     const promotionToRemove = await this.repository.findOne(id);
     if (promotionToRemove) {
-      await this.repository.remove(promotionToRemove);
+      return await this.repository.remove(promotionToRemove);
     }
     return promotionToRemove;
   }
 
   @OnUndefined(404)
   @Patch('/promotions/:id')
-  async patch(@Param('id') id: number,
-              @Body() promotion: Promotion) {
+  async update(@Param('id') id: number,
+               @Body() promotion: Promotion) {
     const existing = await this.repository.findOne(id);
     if (existing === undefined) {
       return undefined;

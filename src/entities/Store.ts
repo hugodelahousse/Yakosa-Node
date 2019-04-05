@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { Brand } from './Brand';
 import { User } from './User';
 import { Promotion } from './Promotion';
@@ -13,15 +20,15 @@ export class Store {
   position: string;
 
   @Column()
-  brandId: number
+  brandId: number;
 
-  @ManyToOne(type => Brand)
+  @ManyToOne(type => Brand, { onDelete:'CASCADE' })
   brand: Brand;
 
   @OneToMany(type => Promotion, promotion => promotion.store)
   promotions: Promotion[];
 
-  @ManyToMany(type => User, user => user.id)
+  @ManyToMany(type => User, user => user.managedStore)
   managers: User[];
 
 }

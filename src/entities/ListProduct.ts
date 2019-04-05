@@ -12,10 +12,10 @@ export class ListProduct {
   @Column()
   quantity: number;
 
-  @ManyToOne(type => ShoppingList)
+  @ManyToOne(type => ShoppingList, { onDelete:'CASCADE' })
   list: ShoppingList;
 
-  @ManyToOne(type => Product)
+  @ManyToOne(type => Product, { onDelete:'CASCADE' })
   product: Product;
 
 }
