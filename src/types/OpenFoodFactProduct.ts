@@ -252,3 +252,11 @@ export interface OpenFoodFactProductResponse {
   status: number;
   code: string;
 }
+
+export interface OpenFoodFactProductsResponse {
+  products: OpenFoodFactProduct[];
+  page: string;
+  count: number;
+  page_size: string;
+  skip: number;
+}
