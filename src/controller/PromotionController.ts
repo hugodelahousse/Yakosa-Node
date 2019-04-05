@@ -69,7 +69,8 @@ export class PromotionController {
     }
     const fieldsToChange = ['store', 'beginDate', 'endDate', 'description', 'user', 'product',
       'brand'];
-    for (const field in fieldsToChange) {
+    for (let i = 0; i < fieldsToChange.length; i += 1) {
+      const field = fieldsToChange[i];
       if (promotion.hasOwnProperty(field)) { existing[field] = promotion[field]; }
     }
     return this.repository.save(existing);

@@ -26,13 +26,14 @@ export class StoreController {
             @QueryParam('position') position: string,
             @QueryParam('limit') limit: number) {
     if (position === undefined) {
-      return await connection.createQueryBuilder(Store, 'store').getMany();
+      return await connection.createQueryBuilder(Store, 'store')
+          .getMany();
     }
     return await connection.createQueryBuilder(Store, 'store')
         .where(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`
                    + `< ${distance || 1000}`)
         .orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`)
-        .limit(limit || 20)
+        .limit(limit || 100)
         .getMany();
   }
 
