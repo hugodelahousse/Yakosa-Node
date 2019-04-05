@@ -73,9 +73,18 @@ export class ProductController {
     return productToRemove;
   }
 
+  // Useless now because product only have his barcode.
   @Patch('/products/:barcode')
   async update(@Param('barcode') barcode: string,
                @Body() product: Product) {
-    return this.repository.update(barcode, product);
+    const existing = await this.repository.findOne(barcode);
+    if (existing === undefined) {
+      return undefined;
+    }
+    const fieldsToChange = [];
+    for (const field in fieldsToChange) {
+      if (product.hasOwnProperty(field)) { existing[field] = product[field]; }
+    }
+    return this.repository.save(existing);
   }
 }
