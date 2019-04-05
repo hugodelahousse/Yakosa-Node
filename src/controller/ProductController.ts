@@ -1,13 +1,13 @@
 import { getRepository } from 'typeorm';
 import {
-    Body,
-    Delete,
-    Get,
-    JsonController,
-    Param,
-    Post,
-    Patch,
-    HttpCode,
+  Body,
+  Delete,
+  Get,
+  JsonController,
+  Param,
+  Post,
+  Patch,
+  HttpCode, OnUndefined,
 } from 'routing-controllers';
 import { Product } from '../entities/Product';
 import * as request from 'request-promise';
@@ -63,6 +63,7 @@ export class ProductController {
     return this.repository.save(products);
   }
 
+  @OnUndefined(404)
   @Delete('/products/:barcode')
   async remove(@Param('barcode') barcode: string) {
     const productToRemove = await this.repository.findOne(barcode);
