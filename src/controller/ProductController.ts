@@ -11,8 +11,10 @@ import {
 } from 'routing-controllers';
 import { Product } from '../entities/Product';
 import * as request from 'request-promise';
-import { debuglog } from 'util';
-import { OpenFoodFactProductResponse } from '../types/OpenFoodFactProduct';
+import {
+  OpenFoodFactProductResponse,
+  OpenFoodFactProductsResponse,
+} from '../types/OpenFoodFactProduct';
 
 @JsonController()
 export class ProductController {
@@ -31,9 +33,23 @@ export class ProductController {
     }
     const object : OpenFoodFactProductResponse =
       await request(`https://fr.openfoodfacts.org/api/v0/produit/${barcode}`, { json : true });
-    const newProd : Product = { barcode: object.code, listProducts: [], promotions: [] };
-    await this.create({ barcode: object.code } as Product);
-    return newProd;
+    return await this.create({ barcode: object.code } as Product);
+  }
+
+  @Get('/products/name/:name')
+  async find(@Param('name') name: string) {
+    const url = 'https://world.openfoodfacts.org/cgi/search.pl' +
+      `?search_terms=${name}&search_simple=1&action=process&json=1`;
+    const object : OpenFoodFactProductsResponse =
+      await request(url, { json : true });
+    if (object.products.length === 0) {
+      return null;
+    }
+    const product = await this.repository.findOne(object.products[0].code);
+    if (product) {
+      return product;
+    }
+    return await this.create({ barcode: object.products[0].code } as Product);
   }
 
   @Post('/products/')
