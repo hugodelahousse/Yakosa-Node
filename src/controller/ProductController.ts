@@ -36,6 +36,11 @@ export class ProductController {
     return await this.create({ barcode: object.code } as Product);
   }
 
+  /*
+   * Get a product by name.
+   * Because a name is not precise the product returned should be close to the real product
+   * but not always the product researched.
+   */
   @Get('/products/name/:name')
   async find(@Param('name') name: string) {
     const url = 'https://world.openfoodfacts.org/cgi/search.pl' +
