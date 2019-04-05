@@ -5,6 +5,7 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  JoinTable,
 } from 'typeorm';
 import { Brand } from './Brand';
 import { User } from './User';
@@ -26,9 +27,11 @@ export class Store {
   brand: Brand;
 
   @OneToMany(type => Promotion, promotion => promotion.store)
+  @JoinTable()
   promotions: Promotion[];
 
   @ManyToMany(type => User, user => user.managedStore)
+  @JoinTable()
   managers: User[];
 
 }

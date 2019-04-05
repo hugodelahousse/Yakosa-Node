@@ -92,15 +92,12 @@ describe('StoreController POST', () => {
 });
 
 describe('StoreController DELETE', () => {
-  /*
-  Problem with oneToMany / manyToMany relations
   it('Should delete the 1 store', async () => {
     let res = await chai.request(app).delete('/stores/3');
     expect(res).to.have.status(200);
     res = await chai.request(app).get('/stores/');
     expect(res.body.length).to.be.equal(stores.length);
   });
-  */
 
   it('Should not find the desired store', async () => {
     const res = await chai.request(app).delete('/stores/1000');

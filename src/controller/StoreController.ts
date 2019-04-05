@@ -63,8 +63,6 @@ export class StoreController {
     const storeToRemove = await this.repository.findOne(id);
     console.debug(storeToRemove);
     if (storeToRemove) {
-      storeToRemove.managers.splice(0, storeToRemove.managers.length);
-      storeToRemove.promotions.splice(0, storeToRemove.promotions.length);
       return await this.repository.remove(storeToRemove);
     }
     return storeToRemove;

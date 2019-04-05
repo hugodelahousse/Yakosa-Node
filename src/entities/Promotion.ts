@@ -4,6 +4,7 @@ import {
   Column,
   ManyToOne,
   OneToMany,
+  JoinTable,
 } from 'typeorm';
 import { Product } from './Product';
 import { User } from './User';
@@ -48,6 +49,7 @@ export class Promotion {
   brand: Brand;
 
   @OneToMany(type => Vote, vote => vote.promotion)
+  @JoinTable()
   votes: Vote[];
 
 }

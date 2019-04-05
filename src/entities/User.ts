@@ -4,6 +4,7 @@ import {
   Column,
   ManyToMany,
   OneToMany,
+  JoinTable,
 } from 'typeorm';
 import { Store } from './Store';
 import { Promotion } from '@entities/Promotion';
@@ -32,9 +33,11 @@ export class User {
   votes: Vote[];
 
   @OneToMany(type => Promotion, promotion => promotion.user)
+  @JoinTable()
   postedPromotions: Promotion[];
 
   @OneToMany(type => ShoppingList, shoppingList => shoppingList.user)
+  @JoinTable()
   shoppingLists: ShoppingList[];
 
   @ManyToMany(type => Store, store => store.managers)
