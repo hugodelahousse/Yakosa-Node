@@ -9,11 +9,16 @@ import {
   Param,
   Post,
   UseBefore,
+<<<<<<< HEAD
   BadRequestError,
   Patch,
   HttpCode } from 'routing-controllers';
 import { checkJwt } from '../middlewares/checkJwt';
 
+=======
+} from 'routing-controllers';
+import { checkJwt } from '../middlewares/checkJwt';
+>>>>>>> jwt: add middleware and token creation
 @UseBefore(checkJwt)
 @JsonController()
 export class UserController {
