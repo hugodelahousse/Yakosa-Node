@@ -6,9 +6,12 @@ import {
   JsonController,
   Param, Patch,
   Post,
+  UseBefore
 } from 'routing-controllers';
 import ShoppingList from '@entities/ShoppingList';
+import { checkJwt } from '../middlewares/checkJwt';
 
+@UseBefore(checkJwt)
 @JsonController()
 export class ShoppingListController {
 

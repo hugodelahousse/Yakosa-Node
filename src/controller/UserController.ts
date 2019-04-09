@@ -1,7 +1,9 @@
 import { getRepository } from 'typeorm';
 import { User } from '../entities/User';
-import { Body, Delete, Get, JsonController, OnUndefined, Param, Post } from 'routing-controllers';
+import { Body, Delete, Get, JsonController, OnUndefined, Param, Post, UseBefore } from 'routing-controllers';
+import { checkJwt } from '../middlewares/checkJwt';
 
+@UseBefore(checkJwt)
 @JsonController()
 export class UserController {
 
@@ -14,6 +16,7 @@ export class UserController {
 
   @Get('/users/:id')
   async one(@Param('id') id: number) {
+    console.log('Getting user id ' + id);
     return this.userRepository.findOne(id);
   }
 

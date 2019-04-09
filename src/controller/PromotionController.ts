@@ -9,9 +9,13 @@ import {
   QueryParam,
   OnUndefined,
   Patch, HttpCode,
+  UseBefore,
 } from 'routing-controllers';
 import { Promotion } from '../entities/Promotion';
 
+import { checkJwt } from '../middlewares/checkJwt';
+
+@UseBefore(checkJwt)
 @JsonController()
 export class PromotionController {
 

@@ -1,6 +1,9 @@
 import createApp from '@utils/createApp';
 import passport from '@utils/passport';
 
+import * as jwt from 'jsonwebtoken'
+import config from 'config'
+
 createApp().then((app) => {
   const port = process.env.PORT || 3000;
   console.log(`App starting on ${port}`);
@@ -12,7 +15,11 @@ createApp().then((app) => {
     scope: 'profile',
   }));
 
-  app.get('/auth/google/callback', passport.authenticate('google'),
-          (req, res) => res.redirect(`/users/${req.user.id}/`),
-  );
+  app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
+    const token = jwt.sign({ userId: req.user.id, googleId: req.user.googleId },
+      config.JWT_SECRET, { expiresIn: '1h' }
+      );
+
+    res.send({googleId: req.user.googleId, token});
+  });
 });

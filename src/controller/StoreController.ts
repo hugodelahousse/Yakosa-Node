@@ -8,9 +8,12 @@ import {
   Post,
   Patch,
   HttpCode,
+  UseBefore
 } from 'routing-controllers';
 import { Store } from '../entities/Store';
+import { checkJwt } from '../middlewares/checkJwt';
 
+@UseBefore(checkJwt)
 @JsonController()
 export class StoreController {
 
