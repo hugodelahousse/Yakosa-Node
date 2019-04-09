@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
-import { app, stores } from './setup';
+import { app, jwtToken, stores } from './setup';
 
 chai.use(chaiHttp);
 
@@ -8,12 +8,12 @@ const expect = chai.expect;
 
 describe('StoreController should be able to list items', () => {
   it('Should respond with 200', async () => {
-    const res = await chai.request(app).get('/stores/');
+    const res = await chai.request(app).get('/stores/').set('Authorization', jwtToken);
     expect(res).to.have.status(200);
   });
 
   it('Should list existing shopping lists', async () => {
-    const res = await chai.request(app).get('/stores/');
+    const res = await chai.request(app).get('/stores/').set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(stores.length);
