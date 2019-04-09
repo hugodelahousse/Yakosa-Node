@@ -54,9 +54,6 @@ jobs:
       - image: circleci/postgres:alpine-postgis
         environment:
           POSTGRES_DB: test
-          JWT_SECRET: jwt_secret
-          GOOGLE_CONSUMER_KEY: google_key
-          GOOGLE_CONSUMER_SECRET: google_secret
     steps:
       - checkout
       - restore_cache: # Get cache based on node_modules
