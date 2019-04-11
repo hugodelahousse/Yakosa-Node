@@ -18,10 +18,10 @@ export class Vote {
   @Column()
   promotionId: number;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete:'CASCADE' })
   user: User;
 
-  @ManyToOne(type => Promotion)
+  @ManyToOne(type => Promotion, { onDelete:'CASCADE' })
   promotion: Promotion;
 
 }

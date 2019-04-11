@@ -3,12 +3,12 @@ items:
   store1:
     brand: '@brand1'
     position:
-      coordinates: ['48.825398799999995', '2.3536142']
+      coordinates: ['1.304389', '103.831709']
       type: 'Point'
   store2:
     brand: '@brand2'
     position:
-      coordinates: ['60.825398799999995', '23.3536142']
+      coordinates: ['103.832342', '103.832342']
       type: 'Point'
   store3:
     brand: '@brand3'

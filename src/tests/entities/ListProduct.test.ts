@@ -1,14 +1,14 @@
 import { User } from 'entities/User';
 import { ListProduct } from 'entities/ListProduct';
 import ShoppingList from 'entities/ShoppingList';
-import { connection } from './setup';
+import { testConnection } from './setup';
 import { fail } from 'assert';
 
 describe('ListProduct Entity', () => {
   it('Should be able to be created', async () => {
-    const userRepository = connection.getRepository(User);
-    const userListRepository = connection.getRepository(ShoppingList);
-    const listProductRepository = connection.getRepository(ListProduct);
+    const userRepository = testConnection.getRepository(User);
+    const userListRepository = testConnection.getRepository(ShoppingList);
+    const listProductRepository = testConnection.getRepository(ListProduct);
 
     let user = userRepository.create({
       firstName: 'Login',
@@ -33,9 +33,9 @@ describe('ListProduct Entity', () => {
   });
 
   it('Should NOT be able to be created', async () => {
-    const userRepository = connection.getRepository(User);
-    const userListRepository = connection.getRepository(ShoppingList);
-    const listProductRepository = connection.getRepository(ListProduct);
+    const userRepository = testConnection.getRepository(User);
+    const userListRepository = testConnection.getRepository(ShoppingList);
+    const listProductRepository = testConnection.getRepository(ListProduct);
 
     let user = userRepository.create({
       firstName: 'Login',
