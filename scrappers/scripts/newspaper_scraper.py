@@ -2,7 +2,7 @@ import json
 
 from bs4 import BeautifulSoup
 
-from models.Promotion import Promotion, ScrapperPromotion
+from models.Promotion import Promotion, MetaPromotion
 from scripts.utils import simple_get, promotion_post
 
 USER_ID = 1
@@ -16,23 +16,23 @@ def extract_information(page, store_name, begin_date, end_date):
         .find_all("tr")
     promotion_array = promotion_array[1:]
 
-    scrapped_promotions = []
+    scraped_promotions = []
 
     for promotion_data in promotion_array:
         cell = promotion_data.find_all("td")
         product_name = cell[1].string
         product_price = cell[3].string.replace("€", "")
         product_promo = cell[4].string.replace("€", "")
-        promotion = ScrapperPromotion(store_name, begin_date, end_date, product_name, product_price, product_promo)
-        scrapped_promotions.append(promotion)
+        promotion = Promotion(store_name, begin_date, end_date, product_name, product_price, product_promo)
+        scraped_promotions.append(promotion)
 
-    return scrapped_promotions
+    return scraped_promotions
 
 
 def scrap_newspaper(url, store_name, begin_date, end_date):
     page = BeautifulSoup(simple_get(url), 'html.parser')
     promotions = extract_information(page, store_name, begin_date, end_date)
-    for scrapped_promotion in promotions:
-        promotion = scrapped_promotion.convertToPromotion(API_URL, USER_ID)
+    for scraped_promotion in promotions:
+        promotion = scraped_promotion.convertToPromotion(API_URL, USER_ID)
         promotion = json.dumps(promotion.__dict__)
         promotion_post(API_URL + "promotions/", promotion)

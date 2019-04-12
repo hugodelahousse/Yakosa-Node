@@ -1,7 +1,7 @@
 from scripts.utils import brand_by_name_get, product_by_name_get
 
 
-class ScrapperPromotion:
+class Promotion:
     def __init__(self, store_name, begin_date, end_date, name, price, promo):
         self.store_name = store_name
         self.beginDate = begin_date
@@ -21,10 +21,10 @@ class ScrapperPromotion:
         product = product_by_name_get(url + "products/name/" + self.name)
         if product is not None:
             product = product["barcode"]
-        return Promotion("", self.beginDate, self.endDate, user_id, None, brand_id, product, self.price, self.promo)
+        return MetaPromotion("", self.beginDate, self.endDate, user_id, None, brand_id, product, self.price, self.promo)
 
 
-class Promotion:
+class MetaPromotion:
     def __init__(self, description, begin_date, end_date, user_id, store_id, brand_id, product, price, promo):
         self.description = description
         self.beginDate = begin_date
