@@ -2,6 +2,8 @@ entity: Promotion
 items:
   promotionOne{1..100}:
     description: '{{lorem.sentence}}'
+    price: 100
+    promotion: 50
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
     product: '@productOne($current)'
@@ -9,6 +11,8 @@ items:
     brand: '@brand($current)'
   promotionTwo{1..100}:
     description: '{{lorem.sentence}}'
+    price: 100
+    promotion: 50
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
     product: '@productTwo($current)'
@@ -16,6 +20,8 @@ items:
     brand: '@brand($current)'
   promotionThree{1..3}:
     description: '{{lorem.sentence}}'
+    price: 100
+    promotion: 50
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
     product: '@productOne($current)'

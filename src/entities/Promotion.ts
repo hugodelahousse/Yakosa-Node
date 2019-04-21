@@ -21,6 +21,12 @@ export class Promotion {
   @Column()
   description: string;
 
+  @Column('decimal', { precision: 6, scale: 2 })
+  price: number;
+
+  @Column('decimal', { precision: 6, scale: 2 })
+  promotion: number;
+
   @Column()
   beginDate: Date;
 

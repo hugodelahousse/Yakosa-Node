@@ -22,6 +22,8 @@ describe('Vote Entity', () => {
 
     let promotion = promotionRepository.create({
       description: 'Description',
+      price: 50,
+      promotion: 10.5,
       beginDate: new Date(),
       endDate: new Date(),
       userId: user.id,
@@ -50,6 +52,8 @@ describe('Vote Entity', () => {
 
     let promotion = promotionRepository.create({
       description: 'Description',
+      price: 50,
+      promotion: 10.5,
       beginDate: new Date(),
       endDate: new Date(),
       userId: user.id,
@@ -98,6 +102,8 @@ describe('Vote Entity', () => {
 
     let promotion = promotionRepository.create({
       product,
+      price: 50,
+      promotion: 10.5,
       user: user1,
       description: 'test',
       beginDate: new Date(),
