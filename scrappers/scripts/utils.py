@@ -29,10 +29,9 @@ def simple_get(url):
         return None
 
 
-def brand_by_name_get(url, brand_name):
-    param = {'name': brand_name}
+def brand_by_name_get(url):
     try:
-        with closing(requests.get(url, params=param)) as resp:
+        with closing(requests.get(url)) as resp:
             if resp.status_code == 200:
                 return json.loads(resp.content)
             else:

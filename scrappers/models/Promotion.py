@@ -15,7 +15,7 @@ class Promotion:
             .format(self.store_name, self.name, self.price, self.promo)
 
     def convertToPromotion(self, url, user_id):
-        brand_id = brand_by_name_get(url + "brands", self.store_name)
+        brand_id = brand_by_name_get(url + "brands/" + self.store_name)
         if brand_id is not None:
             brand_id = brand_id["id"]
         product = product_by_name_get(url + "products/name/" + self.name)
