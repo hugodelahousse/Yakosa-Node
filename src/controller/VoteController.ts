@@ -9,9 +9,7 @@ export class VoteController {
 
   @Get('/votes/')
   async all() {
-    return await this.voteRepository.find({
-      relations: ['user', 'promotion']
-    });
+    return await this.voteRepository.find();
   }
 
   @Get('/votes/:id')

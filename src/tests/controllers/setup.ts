@@ -25,7 +25,7 @@ before(async () => {
   app = await createApp();
   this.connection = await createTypeormConnection();
   await loadFixtures('User.yml', 'ShoppingList.yml', 'Brand.yml', 'Store.yml', 'Product.yml',
-  'Promotion.yml', 'vote.yml');
+  'Promotion.yml', 'vote.yml', 'ListProduct.yml');
 });
 
 beforeEach(fillDb)
@@ -50,9 +50,6 @@ async function clearDb() {
   await getRepository(Product).delete({});
 }
 
-
-
 after(async () => {
-  await clearDb()
+  await clearDb();
 })
-
