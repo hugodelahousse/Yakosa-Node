@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { Body, Delete, Get, JsonController, OnUndefined, Param, Post, Patch } from 'routing-controllers';
+import { Body, Delete, Get, JsonController, OnUndefined, Param, Post, Patch, HttpCode } from 'routing-controllers';
 import { Vote } from '@entities/Vote';
 
 @JsonController()
@@ -22,6 +22,7 @@ export class VoteController {
   }
 
   @Post('/votes/')
+  @HttpCode(201)
   async save(@Body() vote: Vote) {
     return await this.voteRepository.save(vote);
   }

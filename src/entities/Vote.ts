@@ -3,7 +3,7 @@ import { User } from './User';
 import { Promotion } from './Promotion';
 
 @Entity()
-@Unique(['userId', 'promotionId'])
+@Unique(['user', 'promotion'])
 export class Vote {
 
   @PrimaryGeneratedColumn()
