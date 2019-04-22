@@ -3,7 +3,7 @@ import { Body, Delete, Get, JsonController, OnUndefined, Param, Post, Patch } fr
 import { Vote } from '@entities/Vote';
 
 @JsonController()
-export class BrandController {
+export class VoteController {
 
   private voteRepository = getRepository(Vote);
 
