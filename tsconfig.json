@@ -13,6 +13,7 @@
       "paths": {
          "@entities/*": ["entities/*"],
          "@utils/*": ["utils/*"],
+         "@graphql/*": ["graphql/*"],
          "config": ["config.ts"]
       }
    }
