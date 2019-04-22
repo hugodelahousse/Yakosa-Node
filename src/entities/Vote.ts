@@ -12,12 +12,6 @@ export class Vote {
   @Column()
   upvote: boolean;
 
-  @Column()
-  userId: number;
-
-  @Column()
-  promotionId: number;
-
   @ManyToOne(type => User, { onDelete:'CASCADE' })
   user: User;
 
