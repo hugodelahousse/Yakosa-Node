@@ -26,7 +26,7 @@ describe('ListProduct Entity', () => {
     userList = await userListRepository.save(userList);
 
     const listProduct = listProductRepository.create({
-      userList,
+      list: userList,
       quantity: 10,
     });
     await listProductRepository.save(listProduct);
@@ -53,12 +53,12 @@ describe('ListProduct Entity', () => {
     userList = await userListRepository.save(userList);
 
     let listProduct = listProductRepository.create({
-      userList,
+      list: userList,
       quantity: 10,
     });
     await listProductRepository.save(listProduct);
     listProduct = listProductRepository.create({
-      userList,
+      list: userList,
       quantity: 10,
     });
     listProductRepository.save(listProduct).then(() => fail()).catch(() => {});

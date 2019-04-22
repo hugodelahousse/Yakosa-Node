@@ -96,7 +96,7 @@ describe('StoreController DELETE', () => {
     let res = await chai.request(app).delete('/stores/3');
     expect(res).to.have.status(200);
     res = await chai.request(app).get('/stores/');
-    expect(res.body.length).to.be.equal(stores.length);
+    expect(res.body.length).to.be.equal(stores.length - 1);
   });
 
   it('Should not find the desired store', async () => {
