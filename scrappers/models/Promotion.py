@@ -11,8 +11,7 @@ class Promotion:
         self.promotion = float(promo.replace(",", ".")) if "," in promo else float(promo)
 
     def __str__(self):
-        return "Store: {} / Product name: {} / Product price: {} / Promotion: {}" \
-            .format(self.store_name, self.name, self.price, self.promo)
+        return f'Store: {self.store_name} / Product name: {self.name} / Product price: {self.price} / Promotion: {self.promotion}'
 
     def convertToPromotion(self, url, user_id):
         brand_id = brand_by_name_get(url + "brands/" + self.store_name)

@@ -1,4 +1,5 @@
 import json
+import logging
 
 from requests.exceptions import RequestException
 from contextlib import closing
@@ -12,10 +13,6 @@ def is_good_response(resp):
             and content_type.find('html') > -1)
 
 
-def log_error(e):
-    print(e)
-
-
 def simple_get(url):
     try:
         with closing(requests.get(url, stream=True)) as resp:
@@ -25,7 +22,7 @@ def simple_get(url):
                 return None
 
     except RequestException as e:
-        log_error('Error during requests to {0} : {1}'.format(url, str(e)))
+        logging.exception("simple_get")
         return None
 
 
@@ -37,7 +34,7 @@ def brand_by_name_get(url):
             else:
                 return None
     except RequestException as e:
-        log_error('Error during requests to {0} : {1}'.format(url, str(e)))
+        logging.exception("brand_by_name_get")
         return None
 
 
@@ -49,7 +46,7 @@ def product_by_name_get(url):
             else:
                 return None
     except RequestException as e:
-        log_error('Error during requests to {0} : {1}'.format(url, str(e)))
+        logging.exception("product_by_name_get")
         return None
 
 
@@ -61,5 +58,5 @@ def promotion_post(url, promotion):
             else:
                 return None
     except RequestException as e:
-        log_error('Error during requests to {0} : {1}'.format(url, str(e)))
+        logging.exception("product_by_name_get")
         return None
