@@ -15,7 +15,7 @@ export class VoteController {
   @Get('/votes/:id')
   async one(@Param('id') id: number) {
     return await this.voteRepository.findOne(id, {
-      relations: ['user', 'promotion']
+      relations: ['user', 'promotion'],
     });
   }
 
@@ -28,11 +28,11 @@ export class VoteController {
   @OnUndefined(404)
   @Delete('/votes/:id')
   async remove(@Param('id') id: number) {
-    const VoteToRemove = await this.voteRepository.findOne(id);
-    if (VoteToRemove) {
-      await this.voteRepository.remove(VoteToRemove);
+    const voteToRemove = await this.voteRepository.findOne(id);
+    if (voteToRemove) {
+      await this.voteRepository.remove(voteToRemove);
     }
-    return VoteToRemove;
+    return voteToRemove;
   }
 
   @OnUndefined(404)

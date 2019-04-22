@@ -21,7 +21,7 @@ export default async function createApp() {
       StoreController,
       PromotionController,
       ProductController,
-      VoteController
+      VoteController,
     ],
   });
   app.use(bodyParser.json());

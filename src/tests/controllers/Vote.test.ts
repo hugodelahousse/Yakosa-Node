@@ -10,14 +10,12 @@ const expect = chai.expect;
 
 describe('VoteController GET', () => {
   it('Should respond with 200', async () => {
-    const res = await chai.request(app)
-        .get('/votes');
+    const res = await chai.request(app).get('/votes');
     expect(res).to.have.status(200);
   });
 
   it('Should return existing votes', async () => {
-    const res = await chai.request(app)
-        .get('/votes');
+    const res = await chai.request(app).get('/votes');
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(votes.length);
@@ -26,7 +24,6 @@ describe('VoteController GET', () => {
     expect(responseIds).to.have.members(dbIds);
   });
 });
-
 
 describe('VoteController DELETE Then POST', () => {
   it('Should delete the 1 vote', async () => {
@@ -52,8 +49,7 @@ describe('VoteController Post', () => {
     vote.promotion = tmp.promotion;
     vote.upvote = false;
     await getRepository(Vote).remove(tmp);
-    let res = await chai.request(app).post('/votes/')
-        .send(vote);
+    let res = await chai.request(app).post('/votes/').send(vote);
     expect(res).to.have.status(201);
     res = await chai.request(app).get('/votes/');
     expect(res.body.length).to.be.equal(votes.length);

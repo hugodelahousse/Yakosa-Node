@@ -25,13 +25,13 @@ before(async () => {
   app = await createApp();
   this.connection = await createTypeormConnection();
   await loadFixtures('User.yml', 'ShoppingList.yml', 'Brand.yml', 'Store.yml', 'Product.yml',
-  'Promotion.yml', 'vote.yml', 'ListProduct.yml');
+                     'Promotion.yml', 'vote.yml', 'ListProduct.yml');
 });
 
 beforeEach(fillDb)
 
 async function fillDb() {
-  votes = await getRepository(Vote).find({ relations: ['user', 'promotion']})
+  votes = await getRepository(Vote).find({ relations: ['user', 'promotion'] });
   lists = await getRepository(ShoppingList).find();
   stores = await getRepository(Store).find();
   users = await getRepository(User).find({ relations: ['shoppingLists', 'postedPromotions'] });
@@ -52,4 +52,4 @@ async function clearDb() {
 
 after(async () => {
   await clearDb();
-})
+});
