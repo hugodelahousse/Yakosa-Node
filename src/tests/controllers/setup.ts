@@ -6,6 +6,7 @@ import ShoppingList from '@entities/ShoppingList';
 import { User } from '@entities/User';
 import { Store } from '@entities/Store';
 import { Promotion } from '@entities/Promotion';
+import { Brand } from '@entities/Brand';
 
 export let app;
 
@@ -13,6 +14,7 @@ export let lists: ShoppingList[];
 export let stores: Store[];
 export let users: User[];
 export let promotions: Promotion[];
+export let brands: Brand[];
 
 before(async () => {
   app = await createApp();
@@ -23,4 +25,5 @@ before(async () => {
   stores = await getRepository(Store).find();
   users = await getRepository(User).find({ relations: ['shoppingLists', 'postedPromotions'] });
   promotions = await getRepository(Promotion).find() ;
+  brands = await getRepository(Brand).find();
 });
