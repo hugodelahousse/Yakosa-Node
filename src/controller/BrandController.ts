@@ -12,10 +12,23 @@ export class BrandController {
     return await this.brandRepository.find();
   }
 
-  @Get('/brands/:id')
-  async one(@Param('id') id: number) {
-    return await this.brandRepository.findOne(id);
+  @Get('/brands/:idOrName')
+    async one(@Param('idOrName') idOrName: string) {
+    let where : {name: string} | {id: number} = { name: idOrName };
+    if (idOrName.match(/[0-9]+/)) {
+      where = { id: parseFloat(idOrName) };
+    }
+    const brand = await this.brandRepository.findOne(where);
+    if (brand === undefined && !idOrName.match(/[0-9]+/)) {
+      const brand = {
+        name: idOrName,
+      };
+      return await this.brandRepository.save(brand);
+    }
+    return brand;
   }
+
+  
 
   @Post('/brands/')
   async save(@Body() brand: Brand) {
