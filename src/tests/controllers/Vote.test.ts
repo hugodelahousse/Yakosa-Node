@@ -2,6 +2,7 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import { app, votes } from './setup';
 import { Vote } from '@entities/Vote';
+import { getRepository } from 'typeorm';
 
 chai.use(chaiHttp);
 
@@ -27,13 +28,13 @@ describe('VoteController GET', () => {
 });
 
 
-describe('VoteController DELETE', () => {
+describe('VoteController DELETE Then POST', () => {
   it('Should delete the 1 vote', async () => {
     const id = votes[0].id;
     let res = await chai.request(app).delete(`/votes/${id}`);
     expect(res).to.have.status(200);
     res = await chai.request(app).get('/votes/');
-    expect(res.body.length).to.be.equal(votes.length);
+    expect(res.body.length).to.be.equal(votes.length - 1);
   });
 
   it('Should not find the desired vote', async () => {
@@ -42,13 +43,15 @@ describe('VoteController DELETE', () => {
   });
 });
 
-describe('VoteController POST', () => {
+describe('VoteController Post', () => {
   it('Should add a vote', async () => {
     const tmp = votes[0];
     const vote = new Vote();
+
     vote.user = tmp.user;
     vote.promotion = tmp.promotion;
     vote.upvote = false;
+    await getRepository(Vote).remove(tmp);
     let res = await chai.request(app).post('/votes/')
         .send(vote);
     expect(res).to.have.status(201);

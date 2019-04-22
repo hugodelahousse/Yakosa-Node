@@ -7,6 +7,10 @@ import { User } from '@entities/User';
 import { Store } from '@entities/Store';
 import { Promotion } from '@entities/Promotion';
 import { Vote } from '@entities/Vote';
+import { beforeEach } from 'mocha';
+import { Brand } from '@entities/Brand';
+import { Product } from '@entities/Product';
+import { ListProduct } from '@entities/ListProduct';
 
 export let app;
 
@@ -20,10 +24,33 @@ before(async () => {
   app = await createApp();
   this.connection = await createTypeormConnection();
   await loadFixtures('User.yml', 'ShoppingList.yml', 'Brand.yml', 'Store.yml', 'Product.yml',
-                     'Promotion.yml', 'vote.yml');
+  'Promotion.yml', 'vote.yml');
+});
+
+beforeEach(fillDb)
+
+async function fillDb() {
+  votes = await getRepository(Vote).find({ relations: ['user', 'promotion']})
   lists = await getRepository(ShoppingList).find();
   stores = await getRepository(Store).find();
   users = await getRepository(User).find({ relations: ['shoppingLists', 'postedPromotions'] });
   promotions = await getRepository(Promotion).find() ;
-  votes = await getRepository(Vote).find({ relations: ['user', 'promotion']})
-});
+}
+
+async function clearDb() {
+  await getRepository(ListProduct).delete({});
+  await getRepository(Promotion).delete({});
+  await getRepository(Vote).delete({});
+  await getRepository(ShoppingList).delete({});
+  await getRepository(Store).delete({});
+  await getRepository(User).delete({});
+  await getRepository(Brand).delete({});
+  await getRepository(Product).delete({});
+}
+
+
+
+after(async () => {
+  await clearDb()
+})
+
