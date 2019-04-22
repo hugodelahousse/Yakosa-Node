@@ -81,9 +81,10 @@ export class ProductController {
     if (existing === undefined) {
       return undefined;
     }
-    const fieldsToChange = [];
-    for (const field in fieldsToChange) {
-      if (product.hasOwnProperty(field)) { existing[field] = product[field]; }
+    const fieldsToChange : string[] = [];
+    for (let index = 0; index < fieldsToChange.length; index++) {
+      const element = fieldsToChange[index];
+      if (product.hasOwnProperty(element)) { existing[element] = product[element]; }
     }
     return this.repository.save(existing);
   }
