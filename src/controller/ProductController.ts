@@ -22,7 +22,7 @@ export class ProductController {
 
   @Get('/products/')
   async all() {
-    return this.repository.find();
+    return await this.repository.find();
   }
 
   @Get('/products/:barcode')
