@@ -7,8 +7,8 @@ class Promotion:
         self.beginDate = begin_date
         self.endDate = end_date
         self.name = name
-        self.price = price
-        self.promo = promo
+        self.price = float(price.replace(",", ".")) if "," in price else float(price)
+        self.promotion = float(promo.replace(",", ".")) if "," in promo else float(promo)
 
     def __str__(self):
         return "Store: {} / Product name: {} / Product price: {} / Promotion: {}" \
@@ -21,17 +21,19 @@ class Promotion:
         product = product_by_name_get(url + "products/name/" + self.name)
         if product is not None:
             product = product["barcode"]
-        return MetaPromotion("", self.beginDate, self.endDate, user_id, None, brand_id, product, self.price, self.promo)
+        else:
+            return None
+        return MetaPromotion("", self.beginDate, self.endDate, user_id, None, brand_id, product, self.price, self.promotion)
 
 
 class MetaPromotion:
-    def __init__(self, description, begin_date, end_date, user_id, store_id, brand_id, product, price, promo):
+    def __init__(self, description, begin_date, end_date, user_id, store_id, brand_id, product, price, promotion):
         self.description = description
         self.beginDate = begin_date
         self.endDate = end_date
-        self.user_id = user_id
-        self.store_id = store_id
-        self.brand_id = brand_id
+        self.userId = user_id
+        self.storeId = store_id
+        self.brandId = brand_id
         self.product = product
         self.price = price
-        self.promo = promo
+        self.promotion = promotion

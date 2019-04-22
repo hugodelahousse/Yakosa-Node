@@ -1,3 +1,5 @@
+import datetime
+
 from bs4 import BeautifulSoup
 
 from scripts.newspaper_scraper import scrap_newspaper
@@ -30,8 +32,8 @@ def run():
 
             for newspaper in newspapers:
                 dates = newspaper.find("h6").text.split("-")
-                begin_date = dates[0].strip()
-                end_date = dates[1].strip()
+                begin_date = datetime.datetime.strptime(dates[0].strip(), '%d/%m/%Y').isoformat()
+                end_date = datetime.datetime.strptime(dates[1].strip(), '%d/%m/%Y').isoformat()
                 id = '{}-{}-{}'.format(brand_names[i], begin_date, end_date)
 
                 if id not in history:

@@ -55,8 +55,8 @@ def product_by_name_get(url):
 
 def promotion_post(url, promotion):
     try:
-        with closing(requests.post(url, data=promotion)) as resp:
-            if resp.status_code == 200:
+        with closing(requests.post(url, json=promotion.__dict__)) as resp:
+            if resp.status_code == 201:
                 return json.loads(resp.content)
             else:
                 return None

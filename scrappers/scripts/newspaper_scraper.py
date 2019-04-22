@@ -1,5 +1,3 @@
-import json
-
 from bs4 import BeautifulSoup
 
 from models.Promotion import Promotion, MetaPromotion
@@ -34,5 +32,5 @@ def scrap_newspaper(url, store_name, begin_date, end_date):
     promotions = extract_information(page, store_name, begin_date, end_date)
     for scraped_promotion in promotions:
         promotion = scraped_promotion.convertToPromotion(API_URL, USER_ID)
-        promotion = json.dumps(promotion.__dict__)
-        promotion_post(API_URL + "promotions/", promotion)
+        if promotion is not None:
+            promotion_post(API_URL + "promotions/", promotion)
