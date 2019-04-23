@@ -5,6 +5,7 @@ import { User } from '@entities/User';
 import { Promotion } from '@entities/Promotion';
 import { Product } from '@entities/Product';
 import { testConnection } from './setup';
+import { votes } from 'tests/controllers/setup';
 
 describe('Vote Entity', () => {
   it('Should be able to be created vote', async () => {
@@ -30,7 +31,6 @@ describe('Vote Entity', () => {
     let vote = voteRepository.create({
       user,
       promotion,
-      userId: user.id,
       upvote: true,
     });
     vote = await voteRepository.save(vote);
@@ -60,7 +60,6 @@ describe('Vote Entity', () => {
       user,
       promotion,
       upvote: true,
-      userId: user.id,
     });
 
     await voteRepository.save(vote);
@@ -68,7 +67,6 @@ describe('Vote Entity', () => {
       user,
       promotion,
       upvote: true,
-      userId: user.id,
     });
     voteRepository.save(vote).then(() => fail()).catch(() => {});
   });
@@ -78,6 +76,7 @@ describe('Vote Entity', () => {
     const promotionRepository = testConnection.getRepository(Promotion);
     const userRepository = testConnection.getRepository(User);
     const voteRepository = testConnection.getRepository(Vote);
+    voteRepository.delete({});
 
     let user1 = userRepository.create({
       firstName: 'Login',
@@ -109,7 +108,6 @@ describe('Vote Entity', () => {
     let vote = voteRepository.create({
       promotion,
       user: user1,
-      userId: user1.id,
       upvote: true,
     });
     await voteRepository.save(vote);
@@ -117,7 +115,6 @@ describe('Vote Entity', () => {
     vote = voteRepository.create({
       promotion,
       user: user2,
-      userId: user2.id,
       upvote: true,
     });
     await voteRepository.save(vote);
@@ -126,6 +123,6 @@ describe('Vote Entity', () => {
       where: { upvote: true },
     });
 
-    expect(4).to.equal(data.length);
+    expect(data.length).to.equal(2);
   });
 });
