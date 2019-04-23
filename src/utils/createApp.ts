@@ -14,7 +14,13 @@ export default async function createApp() {
 
   const app = express();
   useExpressServer(app, {
-    controllers: [UserController, ShoppingListController, StoreController, PromotionController, BrandController],
+    controllers: [
+      UserController,
+      ShoppingListController,
+      StoreController,
+      PromotionController,
+      BrandController,
+    ],
   });
   app.use(bodyParser.json());
 

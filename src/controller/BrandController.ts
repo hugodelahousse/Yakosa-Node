@@ -28,8 +28,6 @@ export class BrandController {
     return brand;
   }
 
-  
-
   @Post('/brands/')
   async save(@Body() brand: Brand) {
     return await this.brandRepository.save(brand);
