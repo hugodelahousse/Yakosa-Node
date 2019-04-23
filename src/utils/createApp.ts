@@ -1,18 +1,18 @@
-import * as bodyParser from 'body-parser';
-import * as express from 'express';
-import { useExpressServer } from 'routing-controllers';
-import { UserController } from '../controller/UserController';
-import { ShoppingListController } from '../controller/ShoppingListController';
-import { StoreController } from '../controller/StoreController';
-import { PromotionController } from '../controller/PromotionController';
-import { ProductController} from '../controller/ProductController';
-import createTypeormConnection from './createTypeormConnection';
-import { VoteController } from 'controller/VoteController';
+import * as bodyParser from "body-parser";
+import * as express from "express";
+import { useExpressServer } from "routing-controllers";
+import { UserController } from "../controller/UserController";
+import { ShoppingListController } from "../controller/ShoppingListController";
+import { StoreController } from "../controller/StoreController";
+import { PromotionController } from "../controller/PromotionController";
+import { ProductController } from "../controller/ProductController";
+import createTypeormConnection from "./createTypeormConnection";
+import { VoteController } from "controller/VoteController";
+import { ListProductController } from "controller/ListProductController";
 
 export let connection;
 
 export default async function createApp() {
-
   const app = express();
   useExpressServer(app, {
     controllers: [
@@ -22,7 +22,8 @@ export default async function createApp() {
       PromotionController,
       ProductController,
       VoteController,
-    ],
+      ListProductController
+    ]
   });
   app.use(bodyParser.json());
 
