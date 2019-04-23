@@ -27,7 +27,7 @@ describe("ListProductController GET", () => {
   it("should return existing listProduct from specific list", async () => {
     const id = listProduct[0].listId;
     const productListFromList = listProduct.filter(l => l.listId == id);
-    const res = await chai.request(app).get(`/listProduct/fromList/${id}`);
+    const res = await chai.request(app).get(`/listproduct/fromlist/${id}`);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(productListFromList.length);

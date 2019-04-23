@@ -16,6 +16,14 @@ import { ListProduct } from "@entities/ListProduct";
 export class ListProductController {
   private repository = getRepository(ListProduct);
 
+  @Get("/listproduct/fromlist/:id")
+  async fromList(@Param("id") id: number) {
+    return await this.repository.find({
+      relations: ["list", "product"],
+      where: { list: { id: id } }
+    });
+  }
+
   @Get("/listproduct/")
   async all() {
     return await this.repository.find();
@@ -25,14 +33,6 @@ export class ListProductController {
   async one(@Param("id") id: number) {
     return await this.repository.findOne(id, {
       relations: ["list", "product"]
-    });
-  }
-
-  @Get("/listproduct/fromlist/:id")
-  async fromList(@Param("id") id: number) {
-    return await this.repository.find({
-      relations: ["list", "product"],
-      where: { listId: id }
     });
   }
 
