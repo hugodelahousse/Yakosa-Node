@@ -6,7 +6,6 @@ import {
   resolvers as shoppingListResolvers,
 } from '@graphql/shoppingList';
 import { all as deepmerge } from 'deepmerge';
-import { UUIDDirective } from '@graphql/utils';
 
 const typeDef = gql`
   directive @UUID (
@@ -42,9 +41,7 @@ const schema = makeExecutableSchema({
     typeDef,
   ],
   resolvers: deepmerge([dateResolver, userResolvers, shoppingListResolvers]),
-  schemaDirectives: {
-    UUID: UUIDDirective,
-  },
+  schemaDirectives: {},
 });
 
 const apollo = new ApolloServer({ schema });

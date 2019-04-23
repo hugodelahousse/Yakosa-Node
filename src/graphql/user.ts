@@ -5,8 +5,8 @@ import ShoppingList from '@entities/ShoppingList';
 import { graphQLFindList } from '@graphql/utils';
 
 export const typeDefs = gql`
-  type User @UUID {
-      id: ID!
+  type User {
+      id: Int
       firstName: String!
       lastName: String!
       age: Int
@@ -22,14 +22,11 @@ export const typeDefs = gql`
 
 export const resolvers = {
   Query: {
-    allUsers: async (parent, args, context, info) =>
-      graphQLFindList(User, args),
-    user: async (parent, args) => {
-      return await getRepository(User).findOne(args.id);
-    },
+    allUsers: async (parent, args) => await graphQLFindList(User, args),
+    user: async (parent, args) => await getRepository(User).findOne(args.id),
   },
   User: {
-    shoppingLists: async (parent: User, args) =>
-      graphQLFindList(ShoppingList, args, { userId: parent.id }),
+    shoppingLists: async ({ id: userId }, args) =>
+      graphQLFindList(ShoppingList, args, { userId }),
   },
 };
