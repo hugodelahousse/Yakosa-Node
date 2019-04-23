@@ -61,7 +61,6 @@ export class StoreController {
   @OnUndefined(404)
   async remove(@Param('id') id: number) {
     const storeToRemove = await this.repository.findOne(id);
-    console.debug(storeToRemove);
     if (storeToRemove) {
       return await this.repository.remove(storeToRemove);
     }
