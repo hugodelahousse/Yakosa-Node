@@ -1,7 +1,5 @@
 import { getRepository, ObjectLiteral, ObjectType } from 'typeorm';
-import { SchemaDirectiveVisitor } from 'graphql-tools';
-import { createHash } from 'crypto';
-import { GraphQLID } from 'graphql';
+import { GraphQLScalarType, Kind } from 'graphql';
 
 interface FindListOptions {
   limit?: number;
@@ -19,3 +17,22 @@ export function graphQLFindList<Entity>(
   }
   return query.getMany();
 }
+
+export const dateResolver = {
+  Date: new GraphQLScalarType({
+    name: 'Date',
+    description: 'Date object',
+    parseValue(value) {
+      return new Date(value);
+    },
+    serialize(value) {
+      return value.toISOString();
+    },
+    parseLiteral(ast) {
+      if (ast.kind === Kind.String) {
+        return new Date(ast.value);
+      }
+      return null;
+    },
+  }),
+};
