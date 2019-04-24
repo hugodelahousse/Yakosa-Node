@@ -29,7 +29,7 @@ export const dateResolver = {
       return value.toISOString();
     },
     parseLiteral(ast) {
-      if (ast.kind === Kind.String) {
+      if (ast.kind === Kind.STRING) {
         return new Date(ast.value);
       }
       return null;
