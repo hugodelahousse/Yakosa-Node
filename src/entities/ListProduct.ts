@@ -18,4 +18,10 @@ export class ListProduct {
   @ManyToOne(type => Product, { onDelete:'CASCADE' })
   product: Product;
 
+  @Column()
+  listId: number;
+
+  @Column()
+  productBarcode: number;
+
 }
