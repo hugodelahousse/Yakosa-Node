@@ -60,6 +60,6 @@
     "fixtures": "ts-node -r tsconfig-paths/register node_modules/.bin/fixtures",
     "migrations:run": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:run",
     "build": "tsc",
-    "test": "NODE_ENV=test mocha -r ts-node/register -r tsconfig-paths/register src/tests/**/*.test.ts"
+    "test": "NODE_ENV=test mocha --timeout 5000 -r ts-node/register -r tsconfig-paths/register src/tests/**/*.test.ts"
   }
 }
