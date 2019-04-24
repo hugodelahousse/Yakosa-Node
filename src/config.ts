@@ -13,11 +13,15 @@ function getEnv(variable: string, defaultValue = undefined): string {
 interface Config {
   GOOGLE_CONSUMER_KEY: string;
   GOOGLE_CONSUMER_SECRET: string;
+  FACEBOOK_APP_ID: string;
+  FACEBOOK_APP_SECRET: string;
 }
 
 const config: Config = {
   GOOGLE_CONSUMER_KEY: getEnv('GOOGLE_CONSUMER_KEY'),
   GOOGLE_CONSUMER_SECRET: getEnv('GOOGLE_CONSUMER_SECRET'),
+  FACEBOOK_APP_ID: getEnv('FACEBOOK_APP_ID'),
+  FACEBOOK_APP_SECRET: getEnv('FACEBOOK_APP_SECRET'),
 };
 
 export default config;

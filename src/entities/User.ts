@@ -22,6 +22,9 @@ export class User {
   @Column({ unique: true, nullable: true })
   googleId: string;
 
+  @Column({ unique: true, nullable: true })
+  facebookId: string;
+
   @OneToMany(type => Vote, vote => vote => vote.user)
   votes: Vote[];
 
