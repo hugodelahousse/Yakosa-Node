@@ -2,6 +2,10 @@ version: 2
 
 defaults: &defaults
   working_directory: ~/app
+  environment:
+    GOOGLE_CONSUMER_KEY: google
+    GOOGLE_CONSUMER_SECRET: google
+    JWT_SECRET: jwt
 
 jobs:
   build:

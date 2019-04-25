@@ -2,7 +2,7 @@
 require('dotenv').config();
 
 function getEnv(variable: string): string {
-  let value = process.env[variable];
+  const value = process.env[variable];
   if (value === undefined) {
     throw new Error(`Invalid value for configuration variable: ${variable}`);
   }
