@@ -16,7 +16,6 @@ export class UserController {
 
   @Get('/users/:id')
   async one(@Param('id') id: number) {
-    console.log('Getting user id ' + id);
     return this.userRepository.findOne(id);
   }
 
