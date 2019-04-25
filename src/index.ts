@@ -19,7 +19,7 @@ createApp().then((app) => {
 
   app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
     const token = jwt.sign({ userId: req.user.id, googleId: req.user.googleId },
-                           config.JWT_SECRET, { expiresIn: 10 },
+                           config.JWT_SECRET, { expiresIn: 1800 },
       );
     const refresh = crypto.randomBytes(Math.ceil(128 / 2)).toString('hex').slice(0, 128);
     refreshTokens[refresh] = req.user.id;

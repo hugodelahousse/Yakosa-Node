@@ -2549,14 +2549,6 @@ passport-google-oauth@^2.0.0:
     passport-google-oauth1 "1.x.x"
     passport-google-oauth20 "2.x.x"
 
-passport-google-token@^0.1.2:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/passport-google-token/-/passport-google-token-0.1.2.tgz#2596042a09c0c070f2fc397d35937256a81779fd"
-  integrity sha1-JZYEKgnAwHDy/Dl9NZNyVqgXef0=
-  dependencies:
-    passport-oauth "^1.0.0"
-    pkginfo "0.2.x"
-
 passport-local@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/passport-local/-/passport-local-1.0.0.tgz#1fe63268c92e75606626437e3b906662c15ba6ee"
@@ -2596,6 +2588,14 @@ passport-strategy@1.x.x:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/passport-strategy/-/passport-strategy-1.0.0.tgz#b5539aa8fc225a3d1ad179476ddf236b440f52e4"
   integrity sha1-tVOaqPwiWj0a0XlHbd8ja0QPUuQ=
+
+passport-token-google@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/passport-token-google/-/passport-token-google-0.1.2.tgz#aa655376e0270e0db44b07402bba9945989df91a"
+  integrity sha512-DBCYAlEMjM7R8Qc/6Nxg8lIvl+xKM5RlHdAFyvcDARQ89+lkE7Ho9nC732cj/oov4GmeP0d6ats7b3feW15Dqw==
+  dependencies:
+    passport-oauth "^1.0.0"
+    pkginfo "0.2.x"
 
 passport@^0.4.0:
   version "0.4.0"

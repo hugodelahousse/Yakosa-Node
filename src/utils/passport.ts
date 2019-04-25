@@ -3,7 +3,7 @@ import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import config from 'config';
 import { getRepository } from 'typeorm';
 import { User } from '@entities/User';
-import {Strategy as GoogleTokenStrategy } from 'passport-google-token';
+import {Strategy as GoogleTokenStrategy } from 'passport-token-google';
 
 passport.use(new GoogleStrategy(
   {
@@ -34,7 +34,7 @@ passport.use(new GoogleTokenStrategy({
 },
 async function(accessToken, refreshToken, profile, done) {
   const userRepository = getRepository(User);
-    let user = await userRepository.findOne({ googleId: profile.id });
+    let user = await userRepository.findOne({ googleId: profile._json.sub });
     if (user === undefined) {
       if (profile.name === undefined) {
         return done(new Error('No name information'), null);
@@ -42,7 +42,7 @@ async function(accessToken, refreshToken, profile, done) {
       user = await userRepository.save({
         firstName: profile.name.givenName,
         lastName: profile.name.familyName,
-        googleId: profile.id,
+        googleId: profile._json.sub,
       });
     }
     return done(null, user);
