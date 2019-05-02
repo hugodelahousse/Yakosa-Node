@@ -1,10 +1,16 @@
-import { Entity, OneToMany, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
-import { User } from './User';
-import { ListProduct } from './ListProduct';
+import {
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  RelationId
+} from "typeorm";
+import { User } from "./User";
+import { ListProduct } from "./ListProduct";
 
 @Entity()
 export default class ShoppingList {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -14,7 +20,7 @@ export default class ShoppingList {
   @Column({ nullable: true })
   lastUsed: Date;
 
-  @Column()
+  @RelationId((shopl: ShoppingList) => shopl.user)
   userId: number;
 
   @ManyToOne(type => User)
@@ -22,5 +28,4 @@ export default class ShoppingList {
 
   @OneToMany(type => ListProduct, listProduct => listProduct.list)
   products: ListProduct[];
-
 }

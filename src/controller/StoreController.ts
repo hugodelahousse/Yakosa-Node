@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { getRepository } from "typeorm";
 import {
   Body,
   Delete,
@@ -7,37 +7,39 @@ import {
   Param,
   Post,
   Patch,
-  HttpCode,
-} from 'routing-controllers';
-import { Store } from '../entities/Store';
+  HttpCode
+} from "routing-controllers";
+import { Store } from "../entities/Store";
 
 @JsonController()
 export class StoreController {
-
   private repository = getRepository(Store);
 
-  @Get('/stores/')
+  @Get("/stores/")
   async all() {
     return this.repository.find({
-      relations: ['brand'],
+      relations: ["brand"]
     });
   }
 
-  @Get('/stores/:id')
-  async one(@Param('id') id: number) {
-    return this.repository.findOne({ id }, {
-      relations: ['brand'],
-    });
+  @Get("/stores/:id")
+  async one(@Param("id") id: number) {
+    return this.repository.findOne(
+      { id },
+      {
+        relations: ["brand"]
+      }
+    );
   }
 
-  @Post('/stores/')
+  @Post("/stores/")
   @HttpCode(201)
   async create(@Body() store: Store) {
     return this.repository.save(store);
   }
 
-  @Delete('/stores/:id')
-  async remove(@Param('id') id: number) {
+  @Delete("/stores/:id")
+  async remove(@Param("id") id: number) {
     const storeToRemove = await this.repository.findOne(id);
     if (storeToRemove) {
       await this.repository.remove(storeToRemove);
@@ -45,9 +47,13 @@ export class StoreController {
     return storeToRemove;
   }
 
-  @Patch('/stores/:id')
-  async update(@Param('id') id: number,
-               @Body() store: Store) {
+  @Patch("/stores/:id")
+  async update(@Param("id") id: number, @Body() store: Store) {
     return this.repository.update(id, store);
+  }
+
+  async hasUserRight(userId: number, storeId: number) {
+    const store = await this.repository.findOne(storeId);
+    return store && store.managersId.includes(userId);
   }
 }

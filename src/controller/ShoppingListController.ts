@@ -1,35 +1,38 @@
-import { getRepository } from 'typeorm';
+import { getRepository } from "typeorm";
 import {
   BadRequestError,
   Body,
-  Get, HttpCode,
+  Get,
+  HttpCode,
   JsonController,
-  Param, Patch,
-  Post,
-} from 'routing-controllers';
-import ShoppingList from '@entities/ShoppingList';
+  Param,
+  Patch,
+  Post
+} from "routing-controllers";
+import ShoppingList from "@entities/ShoppingList";
 
 @JsonController()
 export class ShoppingListController {
-
   private repository = getRepository(ShoppingList);
 
-  @Get('/lists/')
+  @Get("/lists/")
   async all() {
     return this.repository.find();
   }
 
-  @Get('/lists/:id')
-  async one(@Param('id') id: number) {
-    return this.repository.findOne(id, { relations: ['products', 'products.product'] });
+  @Get("/lists/:id")
+  async one(@Param("id") id: number) {
+    return this.repository.findOne(id, {
+      relations: ["products", "products.product"]
+    });
   }
 
-  @Get('/lists/for/:userId')
-  async allForUser(@Param('userId') userId: number) {
-    return this.repository.find({ userId });
+  @Get("/lists/for/:userId")
+  async allForUser(@Param("userId") userId: number) {
+    return this.repository.find({ userId: userId });
   }
 
-  @Post('/lists/')
+  @Post("/lists/")
   @HttpCode(201)
   async create(@Body() list: ShoppingList) {
     try {
@@ -39,8 +42,8 @@ export class ShoppingListController {
     }
   }
 
-  @Patch('/lists/:id/')
-  async patch(@Param('id') id: number, @Body() list: ShoppingList) {
+  @Patch("/lists/:id/")
+  async patch(@Param("id") id: number, @Body() list: ShoppingList) {
     const existing = await this.repository.findOne(id);
     if (existing === undefined) {
       return undefined;
@@ -48,5 +51,10 @@ export class ShoppingListController {
     existing.creationDate = list.creationDate || existing.creationDate;
     existing.lastUsed = list.lastUsed || existing.lastUsed;
     return this.repository.save(existing);
+  }
+
+  async hasUserRight(userId: number, listId: number) {
+    const list = await this.repository.findOne(listId);
+    return list && list.userId == userId;
   }
 }
