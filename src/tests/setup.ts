@@ -18,6 +18,7 @@ export let lists: ShoppingList[];
 export let stores: Store[];
 export let users: User[];
 export let promotions: Promotion[];
+export let brands: Brand[];
 export let votes: Vote[];
 export let products: Product[];
 
@@ -36,7 +37,8 @@ async function fillDb() {
   stores = await getRepository(Store).find();
   users = await getRepository(User).find({ relations: ['shoppingLists', 'postedPromotions'] });
   products = await getRepository(Product).find();
-  promotions = await getRepository(Promotion).find() ;
+  promotions = await getRepository(Promotion).find();
+  brands = await getRepository(Brand).find();
 }
 
 async function clearDb() {
