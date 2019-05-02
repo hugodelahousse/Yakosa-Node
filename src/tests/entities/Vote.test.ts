@@ -5,7 +5,7 @@ import { User } from '@entities/User';
 import { Promotion } from '@entities/Promotion';
 import { Product } from '@entities/Product';
 import { testConnection } from './setup';
-import { votes } from 'tests/controllers/setup';
+import { votes } from 'tests/setup';
 
 describe('Vote Entity', () => {
   it('Should be able to be created vote', async () => {

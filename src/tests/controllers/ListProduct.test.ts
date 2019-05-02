@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
-import { app, listProduct } from './setup';
+import { app, listProduct } from '../setup';
 import { getRepository } from 'typeorm';
 import { ListProduct } from '@entities/ListProduct';
 

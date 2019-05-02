@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
-import { app, users } from './setup';
+import { app, users } from '../setup';
 
 chai.use(chaiHttp);
 

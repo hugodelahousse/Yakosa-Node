@@ -29,4 +29,8 @@ export class ListProduct {
 
   @ManyToOne(type => Product, { onDelete: 'CASCADE' })
   product: Product;
+
+  @RelationId((listProduct: ListProduct) => listProduct.product)
+  productBarcode: string;
+
 }

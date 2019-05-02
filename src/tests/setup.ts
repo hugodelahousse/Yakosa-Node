@@ -1,6 +1,6 @@
 import createApp from '@utils/createApp';
 import createTypeormConnection from '@utils/createTypeormConnection';
-import loadFixtures from '../utils/loadFixtures';
+import loadFixtures from './utils/loadFixtures';
 import { getRepository } from 'typeorm';
 import ShoppingList from '@entities/ShoppingList';
 import { User } from '@entities/User';

@@ -10,9 +10,11 @@
       "sourceMap": true,
       "strictNullChecks": true,
       "baseUrl": "src",
+      "allowSyntheticDefaultImports": true,
       "paths": {
          "@entities/*": ["entities/*"],
          "@utils/*": ["utils/*"],
+         "@graphql/*": ["graphql/*"],
          "config": ["config.ts"]
       }
    }
