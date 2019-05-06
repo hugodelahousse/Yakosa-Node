@@ -1,4 +1,4 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, Unique, RelationId } from 'typeorm';
 import ShoppingList from './ShoppingList';
 import { Product } from './Product';
 
@@ -12,10 +12,16 @@ export class ListProduct {
   @Column()
   quantity: number;
 
-  @ManyToOne(type => ShoppingList)
+  @ManyToOne(type => ShoppingList, { onDelete:'CASCADE' })
   list: ShoppingList;
 
-  @ManyToOne(type => Product)
+  @ManyToOne(type => Product, { onDelete:'CASCADE' })
   product: Product;
+
+  @RelationId((listProduct: ListProduct) => listProduct.list)
+  listId: number;
+
+  @RelationId((listProduct: ListProduct) => listProduct.product)
+  productBarcode: string;
 
 }

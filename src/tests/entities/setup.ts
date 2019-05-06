@@ -1,7 +1,8 @@
 import { getOrCreateConnection } from '@utils/createTypeormConnection';
+import { Connection } from 'typeorm';
 
-export let connection;
+export let testConnection : Connection;
 
 before(async () => {
-  connection = await getOrCreateConnection('test');
+  testConnection = await getOrCreateConnection('test');
 });

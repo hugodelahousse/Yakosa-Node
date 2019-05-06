@@ -5,11 +5,13 @@ import crypto = require('crypto');
 import * as jwt from 'jsonwebtoken';
 import config from 'config';
 import { refreshTokens } from 'middlewares/checkJwt';
+import apollo from '@graphql/apollo';
 
 createApp().then((app) => {
   const port = process.env.PORT || 3000;
   console.log(`App starting on ${port}`);
   app.listen(port);
+  apollo.applyMiddleware({ app });
   app.use(passport.initialize());
   app.use(passport.session());
 

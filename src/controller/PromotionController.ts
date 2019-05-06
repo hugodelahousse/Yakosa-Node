@@ -9,9 +9,9 @@ import {
   QueryParam,
   OnUndefined,
   Patch, HttpCode,
-  UseBefore,
+  UseBefore, BadRequestError,
 } from 'routing-controllers';
-import { Promotion } from '../entities/Promotion';
+import { Promotion } from '@entities/Promotion';
 
 import { checkJwt } from '../middlewares/checkJwt';
 
@@ -47,29 +47,35 @@ export class PromotionController {
   @Post('/promotions/')
   @HttpCode(201)
   async create(@Body() promotion: Promotion) {
-    return await this.repository.save(promotion);
+    try {
+      return await this.repository.save(promotion);
+    } catch (e) {
+      throw new BadRequestError(e.detail);
+    }
   }
 
   @Delete('/promotions/:id')
+  @OnUndefined(404)
   async remove(@Param('id') id: number) {
     const promotionToRemove = await this.repository.findOne(id);
     if (promotionToRemove) {
-      await this.repository.remove(promotionToRemove);
+      return await this.repository.remove(promotionToRemove);
     }
     return promotionToRemove;
   }
 
   @OnUndefined(404)
   @Patch('/promotions/:id')
-  async patch(@Param('id') id: number,
-              @Body() promotion: Promotion) {
+  async update(@Param('id') id: number,
+               @Body() promotion: Promotion) {
     const existing = await this.repository.findOne(id);
     if (existing === undefined) {
       return undefined;
     }
     const fieldsToChange = ['store', 'beginDate', 'endDate', 'description', 'user', 'product',
       'brand'];
-    for (const field in fieldsToChange) {
+    for (let i = 0; i < fieldsToChange.length; i += 1) {
+      const field = fieldsToChange[i];
       if (promotion.hasOwnProperty(field)) { existing[field] = promotion[field]; }
     }
     return this.repository.save(existing);
