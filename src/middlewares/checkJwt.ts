@@ -5,8 +5,6 @@ import * as jwt from 'jsonwebtoken'
 import config from 'config'
 import crypto = require('crypto');
 
-export var refreshTokens = {};
-
 interface JWT {
     userId: string;
     googleId: string;

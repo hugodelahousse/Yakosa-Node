@@ -1,10 +1,9 @@
 import createApp from '@utils/createApp';
 import passport from '@utils/passport';
-import crypto = require('crypto');
 
 import * as jwt from 'jsonwebtoken';
 import config from 'config';
-import { refreshTokens, addRefreshToken } from 'middlewares/checkJwt';
+import { addRefreshToken } from 'middlewares/checkJwt';
 import apollo from '@graphql/apollo';
 
 createApp().then((app) => {
