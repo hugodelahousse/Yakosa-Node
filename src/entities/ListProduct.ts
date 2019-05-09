@@ -18,14 +18,17 @@ export class ListProduct {
   @Column()
   quantity: number;
 
+  @RelationId((listProduct: ListProduct) => listProduct.list)
+  listId: number;
+
   @ManyToOne(type => ShoppingList, { onDelete: 'CASCADE' })
   list: ShoppingList;
 
+  @RelationId((listProduct: ListProduct) => listProduct.product)
+  productId: number;
+
   @ManyToOne(type => Product, { onDelete: 'CASCADE' })
   product: Product;
-
-  @RelationId((listProduct: ListProduct) => listProduct.list)
-  listId: number;
 
   @RelationId((listProduct: ListProduct) => listProduct.product)
   productBarcode: string;
