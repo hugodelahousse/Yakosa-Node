@@ -25,22 +25,22 @@ describe('BrandController GET', () => {
 });
 
 describe('BrandController DELETE', () => {
-  it('Should delete the 1 listProduct', async () => {
-    const id = brands[0].id;
+  it('Should delete one Brand', async () => {
+    const id = brands[2].id;
     let res = await chai.request(app).delete(`/brands/${id}`);
     expect(res).to.have.status(200);
     res = await chai.request(app).get('/brands/');
     expect(res.body.length).to.be.equal(brands.length - 1);
   });
 
-  it('Should not find the desired listProduct', async () => {
+  it('Should not find the desired Brand', async () => {
     const res = await chai.request(app).delete('/brands/1000');
     expect(res).to.have.status(404);
   });
 });
 
 describe('BrandController Post', () => {
-  it('Should add a listProduct', async () => {
+  it('Should add a Brand', async () => {
     const brand = new Brand();
 
     brand.name = 'Hedghehog';
