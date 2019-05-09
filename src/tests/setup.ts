@@ -20,23 +20,37 @@ export let users: User[];
 export let promotions: Promotion[];
 export let votes: Vote[];
 export let products: Product[];
+export let listProduct: ListProduct[];
 
 before(async () => {
   app = await createApp();
   this.connection = await createTypeormConnection();
-  await loadFixtures('User.yml', 'ShoppingList.yml', 'Brand.yml', 'Store.yml', 'Product.yml',
-                     'Promotion.yml', 'vote.yml', 'ListProduct.yml');
+  await loadFixtures(
+    'User.yml',
+    'ShoppingList.yml',
+    'Brand.yml',
+    'Store.yml',
+    'Product.yml',
+    'Promotion.yml',
+    'vote.yml',
+    'ListProduct.yml',
+  );
 });
 
-beforeEach(fillDb)
+beforeEach(fillDb);
 
 async function fillDb() {
   votes = await getRepository(Vote).find({ relations: ['user', 'promotion'] });
   lists = await getRepository(ShoppingList).find();
   stores = await getRepository(Store).find();
-  users = await getRepository(User).find({ relations: ['shoppingLists', 'postedPromotions'] });
+  users = await getRepository(User).find({
+    relations: ['shoppingLists', 'postedPromotions'],
+  });
   products = await getRepository(Product).find();
-  promotions = await getRepository(Promotion).find() ;
+  promotions = await getRepository(Promotion).find();
+  listProduct = await getRepository(ListProduct).find({
+    relations: ['list', 'product'],
+  });
 }
 
 async function clearDb() {
