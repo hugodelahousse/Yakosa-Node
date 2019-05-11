@@ -99,6 +99,6 @@ export class PromotionController {
 
   async hasUserRight(userId: number, promotionId: number) {
     const promotion = await this.repository.findOne(promotionId);
-    return promotion && promotion.userId == userId;
+    return promotion && promotion.userId === userId;
   }
 }

@@ -34,6 +34,9 @@ export class Promotion {
   endDate: Date;
 
   @Column()
+  quantity: number;
+
+  @Column()
   userId: number;
 
   @Column({ nullable: true })
