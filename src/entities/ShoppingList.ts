@@ -23,7 +23,7 @@ export default class ShoppingList {
   @RelationId((shopl: ShoppingList) => shopl.user)
   userId: number;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete:'CASCADE' })
   user: User;
 
   @OneToMany(type => ListProduct, listProduct => listProduct.list)

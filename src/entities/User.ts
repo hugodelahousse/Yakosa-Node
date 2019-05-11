@@ -4,13 +4,14 @@ import {
   Column,
   ManyToMany,
   OneToMany,
-  RelationId
-} from "typeorm";
-import { Store } from "./Store";
-import { Promotion } from "@entities/Promotion";
-import { Vote } from "./Vote";
-import ShoppingList from "@entities/ShoppingList";
-import { Brand } from "./Brand";
+  RelationId,
+  JoinTable,
+} from 'typeorm';
+import { Store } from './Store';
+import { Promotion } from '@entities/Promotion';
+import { Vote } from './Vote';
+import ShoppingList from '@entities/ShoppingList';
+import { Brand } from './Brand';
 
 @Entity()
 export class User {
@@ -33,12 +34,14 @@ export class User {
   votes: Vote[];
 
   @OneToMany(type => Promotion, promotion => promotion.user)
+  @JoinTable()
   postedPromotions: Promotion[];
 
   @RelationId((user: User) => user.shoppingLists)
   ShoppingListId: number[];
 
   @OneToMany(type => ShoppingList, shoppingList => shoppingList.user)
+  @JoinTable()
   shoppingLists: ShoppingList[];
 
   @RelationId((user: User) => user.managedStore)

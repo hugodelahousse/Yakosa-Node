@@ -1,9 +1,9 @@
-import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import { Entity, Column, ManyToOne, PrimaryGeneratedColumn, Unique, RelationId } from 'typeorm';
 import { User } from './User';
 import { Promotion } from './Promotion';
 
 @Entity()
-@Unique(['userId', 'promotionId'])
+@Unique(['user', 'promotion'])
 export class Vote {
 
   @PrimaryGeneratedColumn()
@@ -12,16 +12,16 @@ export class Vote {
   @Column()
   upvote: boolean;
 
-  @Column()
-  userId: number;
-
-  @Column()
-  promotionId: number;
-
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete:'CASCADE' })
   user: User;
 
-  @ManyToOne(type => Promotion)
+  @RelationId((vote: Vote) => vote.user)
+  userId: number;
+
+  @ManyToOne(type => Promotion, { onDelete:'CASCADE' })
   promotion: Promotion;
+
+  @RelationId((vote: Vote) => vote.promotion)
+  promotionId: number;
 
 }
