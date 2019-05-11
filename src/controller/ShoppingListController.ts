@@ -23,19 +23,11 @@ export class ShoppingListController {
 
   @Get('/lists/for/:userId')
   async allForUser(@Param('userId') userId: number) {
-    let products;
-    try {
-      products = await this.repository
-        .createQueryBuilder('shopingList')
-        .innerJoin('shopingList.user', 'user')
-        .where('user.id = :id', { id: userId })
-        .getMany();
-      console.log(products);
-    } catch (e) {
-      console.log(e);
-      return e;
-    }
-    return products;
+    return await this.repository
+      .createQueryBuilder('shopingList')
+      .innerJoin('shopingList.user', 'user')
+      .where('user.id = :id', { id: userId })
+      .getMany();
   }
 
   @Get('/lists/:id')
