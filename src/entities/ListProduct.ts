@@ -32,5 +32,4 @@ export class ListProduct {
 
   @RelationId((listProduct: ListProduct) => listProduct.product)
   productBarcode: string;
-
 }
