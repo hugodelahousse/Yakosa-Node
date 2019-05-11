@@ -8,24 +8,33 @@ import {
   Post,
   QueryParam,
   OnUndefined,
-  Patch, HttpCode, BadRequestError,
+  Patch,
+  HttpCode,
+  BadRequestError,
 } from 'routing-controllers';
 import { Promotion } from '@entities/Promotion';
 
 @JsonController()
 export class PromotionController {
-
   private repository = getRepository(Promotion);
 
   @Get('/promotions/')
-  async all(@QueryParam('limit') limit: number,
-            @QueryParam('storeId') storeId: number,
-            @QueryParam('brandId') brandId: number,
-            @QueryParam('userId') userId: number) {
-    const filter: {[key: string]: number}[] = [];
-    if (storeId) { filter.push({ storeId }); }
-    if (brandId) { filter.push({ brandId }); }
-    if (userId) { filter.push({ userId }); }
+  async all(
+    @QueryParam('limit') limit: number,
+    @QueryParam('storeId') storeId: number,
+    @QueryParam('brandId') brandId: number,
+    @QueryParam('userId') userId: number,
+  ) {
+    const filter: { [key: string]: number }[] = [];
+    if (storeId) {
+      filter.push({ storeId });
+    }
+    if (brandId) {
+      filter.push({ brandId });
+    }
+    if (userId) {
+      filter.push({ userId });
+    }
 
     return this.repository.find({
       where: filter,
@@ -35,9 +44,12 @@ export class PromotionController {
 
   @Get('/promotions/:id')
   async one(@Param('id') id: number) {
-    return this.repository.findOne({ id }, {
-      relations: ['store', 'brand', 'user'],
-    });
+    return this.repository.findOne(
+      { id },
+      {
+        relations: ['store', 'brand', 'user'],
+      },
+    );
   }
 
   @Post('/promotions/')
@@ -62,18 +74,31 @@ export class PromotionController {
 
   @OnUndefined(404)
   @Patch('/promotions/:id')
-  async update(@Param('id') id: number,
-               @Body() promotion: Promotion) {
+  async update(@Param('id') id: number, @Body() promotion: Promotion) {
     const existing = await this.repository.findOne(id);
     if (existing === undefined) {
       return undefined;
     }
-    const fieldsToChange = ['store', 'beginDate', 'endDate', 'description', 'user', 'product',
-      'brand'];
+    const fieldsToChange = [
+      'store',
+      'beginDate',
+      'endDate',
+      'description',
+      'user',
+      'product',
+      'brand',
+    ];
     for (let i = 0; i < fieldsToChange.length; i += 1) {
       const field = fieldsToChange[i];
-      if (promotion.hasOwnProperty(field)) { existing[field] = promotion[field]; }
+      if (promotion.hasOwnProperty(field)) {
+        existing[field] = promotion[field];
+      }
     }
     return this.repository.save(existing);
+  }
+
+  async hasUserRight(userId: number, promotionId: number) {
+    const promotion = await this.repository.findOne(promotionId);
+    return promotion && promotion.userId == userId;
   }
 }
