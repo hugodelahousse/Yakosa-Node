@@ -1,4 +1,4 @@
-import { getRepository } from "typeorm";
+import { getRepository } from 'typeorm';
 import {
   BadRequestError,
   Body,
@@ -7,32 +7,45 @@ import {
   JsonController,
   Param,
   Patch,
-  Post
-} from "routing-controllers";
-import ShoppingList from "@entities/ShoppingList";
+  Post,
+} from 'routing-controllers';
+import ShoppingList from '@entities/ShoppingList';
+import { User } from '@entities/User';
 
 @JsonController()
 export class ShoppingListController {
   private repository = getRepository(ShoppingList);
 
-  @Get("/lists/")
+  @Get('/lists/')
   async all() {
-    return this.repository.find();
+    return await this.repository.find();
   }
 
-  @Get("/lists/:id")
-  async one(@Param("id") id: number) {
-    return this.repository.findOne(id, {
-      relations: ["products", "products.product"]
+  @Get('/lists/for/:userId')
+  async allForUser(@Param('userId') userId: number) {
+    let products;
+    try {
+      products = await this.repository
+        .createQueryBuilder('shopingList')
+        .innerJoin('shopingList.user', 'user')
+        .where('user.id = :id', { id: userId })
+        .getMany();
+      console.log(products);
+    } catch (e) {
+      console.log(e);
+      return e;
+    }
+    return products;
+  }
+
+  @Get('/lists/:id')
+  async one(@Param('id') id: number) {
+    return await this.repository.findOne(id, {
+      relations: ['products', 'products.product'],
     });
   }
 
-  @Get("/lists/for/:userId")
-  async allForUser(@Param("userId") userId: number) {
-    return this.repository.find({ userId: userId });
-  }
-
-  @Post("/lists/")
+  @Post('/lists/')
   @HttpCode(201)
   async create(@Body() list: ShoppingList) {
     try {
@@ -42,15 +55,15 @@ export class ShoppingListController {
     }
   }
 
-  @Patch("/lists/:id/")
-  async patch(@Param("id") id: number, @Body() list: ShoppingList) {
+  @Patch('/lists/:id/')
+  async patch(@Param('id') id: number, @Body() list: ShoppingList) {
     const existing = await this.repository.findOne(id);
     if (existing === undefined) {
       return undefined;
     }
     existing.creationDate = list.creationDate || existing.creationDate;
     existing.lastUsed = list.lastUsed || existing.lastUsed;
-    return this.repository.save(existing);
+    return await this.repository.save(existing);
   }
 
   async hasUserRight(userId: number, listId: number) {

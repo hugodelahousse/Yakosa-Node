@@ -34,14 +34,12 @@ export class User {
   votes: Vote[];
 
   @OneToMany(type => Promotion, promotion => promotion.user)
-  @JoinTable()
   postedPromotions: Promotion[];
 
   @RelationId((user: User) => user.shoppingLists)
   ShoppingListId: number[];
 
   @OneToMany(type => ShoppingList, shoppingList => shoppingList.user)
-  @JoinTable()
   shoppingLists: ShoppingList[];
 
   @RelationId((user: User) => user.managedStore)
