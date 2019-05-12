@@ -17,7 +17,7 @@ export default class ShoppingList {
   @Column()
   userId: number;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete:'CASCADE' })
   user: User;
 
   @OneToMany(type => ListProduct, listProduct => listProduct.list)
