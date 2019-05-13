@@ -14,8 +14,8 @@ import {
   BadRequestError,
 } from 'routing-controllers';
 import { Store } from '@entities/Store';
-import { connection } from '@utils/createApp';
 import { checkJwt } from '../middlewares/checkJwt';
+import { connection } from '@utils/createApp';
 
 @UseBefore(checkJwt)
 @JsonController()

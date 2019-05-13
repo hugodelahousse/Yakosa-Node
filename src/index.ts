@@ -1,10 +1,9 @@
 import createApp from '@utils/createApp';
 import passport from '@utils/passport';
-import crypto = require('crypto');
 
 import * as jwt from 'jsonwebtoken';
 import config from 'config';
-import { refreshTokens } from 'middlewares/checkJwt';
+import { addRefreshToken } from 'middlewares/checkJwt';
 import apollo from '@graphql/apollo';
 
 createApp().then((app) => {
@@ -19,21 +18,19 @@ createApp().then((app) => {
     scope: 'profile',
   }));
 
-  app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
+  app.get('/auth/google/callback', passport.authenticate('google'), async (req, res) => {
     const token = jwt.sign({ userId: req.user.id, googleId: req.user.googleId },
                            config.JWT_SECRET, { expiresIn: 1800 },
       );
-    const refresh = crypto.randomBytes(Math.ceil(128 / 2)).toString('hex').slice(0, 128);
-    refreshTokens[refresh] = req.user.id;
+    const refresh = await addRefreshToken(req.user.id);
     res.send({ token, refresh, googleId: req.user.googleId });
   });
 
-  app.get('/auth/google/token', passport.authenticate('google-token'), (req, res) => {
+  app.get('/auth/google/token', passport.authenticate('google-token'), async (req, res) => {
     const token = jwt.sign({ userId: req.user.id, googleId: req.user.googleId },
                            config.JWT_SECRET, { expiresIn: 1800 },
       );
-    const refresh = crypto.randomBytes(Math.ceil(128 / 2)).toString('hex').slice(0, 128);
-    refreshTokens[refresh] = req.user.id;
+    const refresh = await addRefreshToken(req.user.id);
     res.send({ token, refresh, googleId: req.user.googleId });
   });
 });

@@ -12,7 +12,6 @@ import {
 } from 'routing-controllers';
 import ShoppingList from '@entities/ShoppingList';
 import { checkJwt } from '../middlewares/checkJwt';
-import { User } from '@entities/User';
 
 @UseBefore(checkJwt)
 @JsonController()

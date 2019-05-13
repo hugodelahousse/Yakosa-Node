@@ -8,14 +8,12 @@ const expect = chai.expect;
 
 describe('StoreController GET', () => {
   it('Should respond with 200', async () => {
-    const res = await chai.request(app)
-        .get('/stores').set('Authorization', jwtToken);
+    const res = await chai.request(app).get('/stores/').set('Authorization', jwtToken);
     expect(res).to.have.status(200);
   });
 
-  it('Should return existing stores', async () => {
-    const res = await chai.request(app)
-        .get('/stores').set('Authorization', jwtToken);
+  it('Should list existing shopping lists', async () => {
+    const res = await chai.request(app).get('/stores/').set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(stores.length);
