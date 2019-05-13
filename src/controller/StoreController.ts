@@ -13,7 +13,7 @@ import {
   OnUndefined,
   BadRequestError,
 } from 'routing-controllers';
-import { Store } from '../entities/Store';
+import { Store } from '@entities/Store';
 import { connection } from '@utils/createApp';
 import { checkJwt } from '../middlewares/checkJwt';
 
