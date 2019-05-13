@@ -7,12 +7,13 @@ import { StoreController } from '../controller/StoreController';
 import { PromotionController } from '../controller/PromotionController';
 import { ProductController } from '../controller/ProductController';
 import createTypeormConnection from './createTypeormConnection';
-import { VoteController } from 'controller/VoteController';
+import { BrandController } from '../controller/BrandController';
+import { VoteController } from '../controller/VoteController';
+import { ListProductController } from '../controller/ListProductController';
 
 export let connection;
 
 export default async function createApp() {
-
   const app = express();
   useExpressServer(app, {
     controllers: [
@@ -20,8 +21,10 @@ export default async function createApp() {
       ShoppingListController,
       StoreController,
       PromotionController,
+      BrandController,
       ProductController,
       VoteController,
+      ListProductController,
     ],
   });
   app.use(bodyParser.json());

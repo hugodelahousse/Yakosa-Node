@@ -5,6 +5,7 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
+  RelationId,
   JoinTable,
 } from 'typeorm';
 import { Brand } from './Brand';
@@ -13,7 +14,6 @@ import { Promotion } from './Promotion';
 
 @Entity()
 export class Store {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -23,15 +23,17 @@ export class Store {
   @Column()
   brandId: number;
 
-  @ManyToOne(type => Brand, { onDelete:'CASCADE' })
+  @ManyToOne(type => Brand, { onDelete: 'CASCADE' })
   brand: Brand;
 
   @OneToMany(type => Promotion, promotion => promotion.store)
   @JoinTable()
   promotions: Promotion[];
 
+  @RelationId((store: Store) => store.managers)
+  managersId: number[];
+
   @ManyToMany(type => User, user => user.managedStore)
   @JoinTable()
   managers: User[];
-
 }

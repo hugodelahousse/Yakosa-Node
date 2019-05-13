@@ -53,6 +53,9 @@ describe('PromotionController post a promotion', () => {
     const tmp = promotions[0];
     const promotion = {
       description: tmp.description,
+      price: 50,
+      type: 1,
+      promotion: 10.5,
       beginDate: tmp.beginDate,
       endDate: tmp.endDate,
       userId: tmp.userId,

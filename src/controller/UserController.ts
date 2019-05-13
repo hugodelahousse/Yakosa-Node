@@ -1,6 +1,17 @@
 import { getRepository } from 'typeorm';
 import { User } from '../entities/User';
-import { Body, Delete, Get, JsonController, OnUndefined, Param, Post, UseBefore, BadRequestError, Patch, HttpCode } from 'routing-controllers';
+import {
+  Body,
+  Delete,
+  Get,
+  JsonController,
+  OnUndefined,
+  Param,
+  Post,
+  UseBefore,
+  BadRequestError,
+  Patch,
+  HttpCode } from 'routing-controllers';
 import { checkJwt } from '../middlewares/checkJwt';
 
 @UseBefore(checkJwt)

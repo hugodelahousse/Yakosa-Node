@@ -12,6 +12,13 @@ import { Vote } from './Vote';
 import { Brand } from './Brand';
 import { Store } from './Store';
 
+enum PromotionType {
+  SIMPLE = 0,
+  TWOSECONDHALF = 1,
+  TWOFORTHREE = 2,
+  UNDEFINE = 3,
+}
+
 @Entity()
 export class Promotion {
 
@@ -21,13 +28,22 @@ export class Promotion {
   @Column()
   description: string;
 
+  @Column('decimal', { precision: 6, scale: 2 })
+  price: number;
+
+  @Column('decimal', { precision: 6, scale: 2 })
+  promotion: number;
+
   @Column()
   beginDate: Date;
 
   @Column({ nullable: true })
   endDate: Date;
 
-  @Column()
+  @Column('enum', { enum: PromotionType, default: PromotionType.SIMPLE })
+  type: number;
+
+  @Column({ nullable: true })
   userId: number;
 
   @Column({ nullable: true })
@@ -39,7 +55,7 @@ export class Promotion {
   @ManyToOne(type => Product, product => product.barcode, { onDelete:'CASCADE' })
   product: Product;
 
-  @ManyToOne(type => User, { onDelete:'CASCADE' })
+  @ManyToOne(type => User, { nullable: true, onDelete:'CASCADE' })
   user: User;
 
   @ManyToOne(type => Store, { nullable: true, onDelete: 'CASCADE' })
