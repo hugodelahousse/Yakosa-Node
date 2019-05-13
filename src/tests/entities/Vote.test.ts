@@ -22,7 +22,7 @@ describe('Vote Entity', () => {
     let promotion = promotionRepository.create({
       description: 'Description',
       price: 50,
-      quantity: 2,
+      type: 2,
       promotion: 10.5,
       beginDate: new Date(),
       endDate: new Date(),
@@ -30,7 +30,7 @@ describe('Vote Entity', () => {
     });
     promotion = await promotionRepository.save(promotion);
 
-    let vote = voteRepository.create({
+    const vote = voteRepository.create({
       user,
       promotion,
       upvote: true,
@@ -53,7 +53,7 @@ describe('Vote Entity', () => {
     let promotion = promotionRepository.create({
       description: 'Description',
       price: 50,
-      quantity: 30,
+      type: 0,
       promotion: 10.5,
       beginDate: new Date(),
       endDate: new Date(),
@@ -105,7 +105,7 @@ describe('Vote Entity', () => {
       product,
       price: 50,
       promotion: 10.5,
-      quantity: 1,
+      type: 1,
       user: user1,
       description: 'test',
       beginDate: new Date(),

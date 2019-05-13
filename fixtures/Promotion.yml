@@ -4,7 +4,7 @@ items:
     description: '{{lorem.sentence}}'
     price: 100
     promotion: 50
-    quantity: 1
+    type: 1
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
     product: '@productOne($current)'
@@ -14,7 +14,7 @@ items:
     description: '{{lorem.sentence}}'
     price: 100
     promotion: 50
-    quantity: 2
+    type: 2
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
     product: '@productTwo($current)'
@@ -24,7 +24,7 @@ items:
     description: '{{lorem.sentence}}'
     price: 100
     promotion: 50
-    quantity: 3
+    type: 0
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
     product: '@productOne($current)'
