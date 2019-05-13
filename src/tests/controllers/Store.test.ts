@@ -26,7 +26,8 @@ describe('StoreController GET', () => {
 
   it('Should return one store', async () => {
     const res = await chai.request(app)
-        .get('/stores?position={"type":"Point","coordinates":[1.304389,103.831709]}').set('Authorization', jwtToken);
+        .get('/stores?position={"type":"Point","coordinates":[1.304389,103.831709]}')
+        .set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(1);
@@ -39,7 +40,7 @@ describe('StoreController GET', () => {
              + '&distance=100000000').set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
-    expect(res.body).to.have.length(3);
+    expect(res.body).to.have.length(stores.length);
   });
 
   it('Should return two stores', async () => {
@@ -63,15 +64,17 @@ describe('StoreController GET', () => {
 });
 
 describe('StoreController UPDATE', () => {
-  it('Should update the 3 store position', async () => {
+  it('Should update the 2 store position', async () => {
     const position = {
-      type:'Point',
+      type: 'Point',
       coordinates: [-48.23456, 20.12345],
     };
-    let res = await chai.request(app).patch('/stores/3')
-        .send({ position }).set('Authorization', jwtToken);
+    let res = await chai
+      .request(app)
+      .patch('/stores/2')
+      .send({ position }).set('Authorization', jwtToken);;
     expect(res).to.have.status(200);
-    res = await chai.request(app).get('/stores/3').set('Authorization', jwtToken);
+    res = await chai.request(app).get('/stores/2').set('Authorization', jwtToken);;
     expect(res.body.position).to.be.deep.equal(position);
   });
 });
@@ -92,8 +95,8 @@ describe('StoreController POST', () => {
 });
 
 describe('StoreController DELETE', () => {
-  it('Should delete the 1 store', async () => {
-    let res = await chai.request(app).delete('/stores/3').set('Authorization', jwtToken);
+  it('Should delete the 2 store', async () => {
+    let res = await chai.request(app).delete('/stores/2').set('Authorization', jwtToken);
     expect(res).to.have.status(200);
     res = await chai.request(app).get('/stores/').set('Authorization', jwtToken);
     expect(res.body.length).to.be.equal(stores.length - 1);
