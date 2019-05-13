@@ -3,6 +3,7 @@ import { OAuth2Strategy as GoogleStrategy } from 'passport-google-oauth';
 import config from 'config';
 import { getRepository } from 'typeorm';
 import { User } from '@entities/User';
+import {Strategy as GoogleTokenStrategy } from 'passport-token-google';
 
 passport.use(new GoogleStrategy(
   {
@@ -25,6 +26,27 @@ passport.use(new GoogleStrategy(
     }
     return done(null, user);
   },
+));
+
+passport.use(new GoogleTokenStrategy({
+  clientID: config.GOOGLE_CONSUMER_KEY,
+  clientSecret: config.GOOGLE_CONSUMER_SECRET,
+},
+async function(accessToken, refreshToken, profile, done) {
+  const userRepository = getRepository(User);
+    let user = await userRepository.findOne({ googleId: profile._json.sub });
+    if (user === undefined) {
+      if (profile.name === undefined) {
+        return done(new Error('No name information'), null);
+      }
+      user = await userRepository.save({
+        firstName: profile.name.givenName,
+        lastName: profile.name.familyName,
+        googleId: profile._json.sub,
+      });
+    }
+    return done(null, user);
+}
 ));
 
 passport.serializeUser((user: User, done) => {

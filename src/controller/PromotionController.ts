@@ -10,10 +10,14 @@ import {
   OnUndefined,
   Patch,
   HttpCode,
+  UseBefore,
   BadRequestError,
 } from 'routing-controllers';
 import { Promotion } from '@entities/Promotion';
 
+import { checkJwt } from '../middlewares/checkJwt';
+
+@UseBefore(checkJwt)
 @JsonController()
 export class PromotionController {
   private repository = getRepository(Promotion);

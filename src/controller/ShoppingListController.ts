@@ -8,10 +8,13 @@ import {
   Param,
   Patch,
   Post,
+  UseBefore
 } from 'routing-controllers';
 import ShoppingList from '@entities/ShoppingList';
+import { checkJwt } from '../middlewares/checkJwt';
 import { User } from '@entities/User';
 
+@UseBefore(checkJwt)
 @JsonController()
 export class ShoppingListController {
   private repository = getRepository(ShoppingList);

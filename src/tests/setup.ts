@@ -11,6 +11,8 @@ import { beforeEach } from 'mocha';
 import { Brand } from '@entities/Brand';
 import { Product } from '@entities/Product';
 import { ListProduct } from '@entities/ListProduct';
+import * as jwt from 'jsonwebtoken';
+import config from 'config';
 
 export let app;
 
@@ -23,19 +25,28 @@ export let votes: Vote[];
 export let products: Product[];
 export let listProduct: ListProduct[];
 
+export let jwtToken: string;
+
 before(async () => {
-  app = await createApp();
-  this.connection = await createTypeormConnection();
-  await loadFixtures(
-    'User.yml',
-    'ShoppingList.yml',
-    'Brand.yml',
-    'Store.yml',
-    'Product.yml',
-    'Promotion.yml',
-    'vote.yml',
-    'ListProduct.yml',
-  );
+  try {
+    app = await createApp();
+    this.connection = await createTypeormConnection();
+    await loadFixtures(
+      'User.yml',
+      'ShoppingList.yml',
+      'Brand.yml',
+      'Store.yml',
+      'Product.yml',
+      'Promotion.yml',
+      'vote.yml',
+      'ListProduct.yml',
+    );
+    jwtToken = jwt.sign({ userId: 1, googleId: 1 },
+        config.JWT_SECRET, { expiresIn: '1h' },
+    );
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 beforeEach(fillDb);

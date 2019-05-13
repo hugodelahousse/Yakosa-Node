@@ -1,17 +1,20 @@
 import { getRepository } from 'typeorm';
 import { User } from '../entities/User';
 import {
-  BadRequestError,
   Body,
   Delete,
-  Get, HttpCode,
+  Get,
   JsonController,
   OnUndefined,
   Param,
-  Patch,
   Post,
-} from 'routing-controllers';
+  UseBefore,
+  BadRequestError,
+  Patch,
+  HttpCode } from 'routing-controllers';
+import { checkJwt } from '../middlewares/checkJwt';
 
+@UseBefore(checkJwt)
 @JsonController()
 export class UserController {
 

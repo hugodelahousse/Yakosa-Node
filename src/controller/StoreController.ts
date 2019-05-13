@@ -8,13 +8,16 @@ import {
   Post,
   Patch,
   HttpCode,
+  UseBefore,
   QueryParam,
   OnUndefined,
   BadRequestError,
 } from 'routing-controllers';
 import { Store } from '@entities/Store';
 import { connection } from '@utils/createApp';
+import { checkJwt } from '../middlewares/checkJwt';
 
+@UseBefore(checkJwt)
 @JsonController()
 export class StoreController {
   private repository = getRepository(Store);
