@@ -66,8 +66,4 @@ export async function checkJwt(request: Request, response: Response, next: NextF
     rt.userId = userId;
     repository.save(rt);
     return token;
-<<<<<<< HEAD
   }
-=======
-  }
->>>>>>> jwt: refresh token in db

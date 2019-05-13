@@ -12,12 +12,10 @@ import {
   QueryParam,
   OnUndefined,
   BadRequestError,
-  UseBefore,
 } from 'routing-controllers';
 import { Store } from '@entities/Store';
 import { checkJwt } from '../middlewares/checkJwt';
 import { connection } from '@utils/createApp';
-import { checkJwt } from '../middlewares/checkJwt';
 
 @UseBefore(checkJwt)
 @JsonController()

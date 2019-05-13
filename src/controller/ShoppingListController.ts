@@ -12,10 +12,6 @@ import {
 } from 'routing-controllers';
 import ShoppingList from '@entities/ShoppingList';
 import { checkJwt } from '../middlewares/checkJwt';
-<<<<<<< HEAD
-import { User } from '@entities/User';
-=======
->>>>>>> jwt: add middleware and token creation
 
 @UseBefore(checkJwt)
 @JsonController()

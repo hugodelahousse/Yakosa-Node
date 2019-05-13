@@ -1,8 +1,9 @@
 // Load config from `.env` file
 require('dotenv').config();
 
-function getEnv(variable: string): string {
+function getEnv(variable: string, defaultValue = undefined): string {
   let value = process.env[variable];
+  if (value === undefined) { value = defaultValue; }
   if (value === undefined) {
     throw new Error(`Invalid value for configuration variable: ${variable}`);
   }
