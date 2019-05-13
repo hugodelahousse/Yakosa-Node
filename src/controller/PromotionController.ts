@@ -24,6 +24,7 @@ export class PromotionController {
     @QueryParam('storeId') storeId: number,
     @QueryParam('brandId') brandId: number,
     @QueryParam('userId') userId: number,
+    @QueryParam('type') type: number,
   ) {
     const filter: { [key: string]: number }[] = [];
     if (storeId) {
@@ -34,6 +35,9 @@ export class PromotionController {
     }
     if (userId) {
       filter.push({ userId });
+    }
+    if (type) {
+      filter.push({ type });
     }
 
     return this.repository.find({
@@ -99,6 +103,6 @@ export class PromotionController {
 
   async hasUserRight(userId: number, promotionId: number) {
     const promotion = await this.repository.findOne(promotionId);
-    return promotion && promotion.userId == userId;
+    return promotion && promotion.userId === userId;
   }
 }
