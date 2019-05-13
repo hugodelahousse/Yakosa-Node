@@ -17,4 +17,12 @@ createApp().then((app) => {
   app.get('/auth/google/callback', passport.authenticate('google'),
           (req, res) => res.redirect(`/users/${req.user.id}/`),
   );
+
+  app.get('/auth/facebook', passport.authenticate('facebook', {
+    scope: 'profile',
+  }));
+
+  app.get('/auth/facebook/callback', passport.authenticate('facebook'),
+          (req, res) => res.redirect(`/users/${req.user.id}/`),
+  );
 });
