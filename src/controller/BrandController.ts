@@ -14,11 +14,11 @@ import { Brand } from '@entities/Brand';
 
 @JsonController()
 export class BrandController {
-  private brandRepository = getRepository(Brand);
+  private repository = getRepository(Brand);
 
   @Get('/brands/')
   async all() {
-    return await this.brandRepository.find();
+    return await this.repository.find();
   }
 
   @Get('/brands/:idOrName')
@@ -27,12 +27,12 @@ export class BrandController {
     if (idOrName.match(/[0-9]+/)) {
       where = { id: parseFloat(idOrName) };
     }
-    const brand = await this.brandRepository.findOne(where);
+    const brand = await this.repository.findOne(where);
     if (brand === undefined && !idOrName.match(/[0-9]+/)) {
       const brand = {
         name: idOrName,
       };
-      return await this.brandRepository.save(brand);
+      return await this.repository.save(brand);
     }
     return brand;
   }
@@ -40,15 +40,15 @@ export class BrandController {
   @Post('/brands/')
   @HttpCode(201)
   async save(@Body() brand: Brand) {
-    return await this.brandRepository.save(brand);
+    return await this.repository.save(brand);
   }
 
   @OnUndefined(404)
   @Delete('/brands/:id')
   async remove(@Param('id') id: number) {
-    const brandToRemove = await this.brandRepository.findOne(id);
+    const brandToRemove = await this.repository.findOne(id);
     if (brandToRemove) {
-      await this.brandRepository.remove(brandToRemove);
+      await this.repository.remove(brandToRemove);
     }
     return brandToRemove;
   }
@@ -56,7 +56,7 @@ export class BrandController {
   @OnUndefined(404)
   @Patch('/brands/:id')
   async update(@Param('id') id: number, @Body() promotion: Brand) {
-    const existing = await this.brandRepository.findOne(id);
+    const existing = await this.repository.findOne(id);
     if (existing === undefined) {
       return undefined;
     }
@@ -67,6 +67,11 @@ export class BrandController {
         existing[field] = promotion[field];
       }
     }
-    return await this.brandRepository.save(existing);
+    return await this.repository.save(existing);
+  }
+
+  async hasUserRight(userId: number, brandId: number) {
+    const brand = await this.repository.findOne(brandId);
+    return brand && brand.managersId.includes(userId);
   }
 }

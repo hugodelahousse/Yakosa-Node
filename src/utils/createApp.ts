@@ -7,9 +7,9 @@ import { StoreController } from '../controller/StoreController';
 import { PromotionController } from '../controller/PromotionController';
 import { ProductController } from '../controller/ProductController';
 import createTypeormConnection from './createTypeormConnection';
-import { BrandController } from 'controller/BrandController';
-import { VoteController } from 'controller/VoteController';
-import { ListProductController } from 'controller/ListProductController';
+import { BrandController } from '../controller/BrandController';
+import { VoteController } from '../controller/VoteController';
+import { ListProductController } from '../controller/ListProductController';
 
 export let connection;
 

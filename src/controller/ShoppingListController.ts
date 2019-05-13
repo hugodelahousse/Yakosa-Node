@@ -2,34 +2,42 @@ import { getRepository } from 'typeorm';
 import {
   BadRequestError,
   Body,
-  Get, HttpCode,
+  Get,
+  HttpCode,
   JsonController,
-  Param, Patch,
+  Param,
+  Patch,
   Post,
   UseBefore
 } from 'routing-controllers';
 import ShoppingList from '@entities/ShoppingList';
 import { checkJwt } from '../middlewares/checkJwt';
+import { User } from '@entities/User';
 
 @UseBefore(checkJwt)
 @JsonController()
 export class ShoppingListController {
-
   private repository = getRepository(ShoppingList);
 
   @Get('/lists/')
   async all() {
-    return this.repository.find();
-  }
-
-  @Get('/lists/:id')
-  async one(@Param('id') id: number) {
-    return this.repository.findOne(id, { relations: ['products', 'products.product'] });
+    return await this.repository.find();
   }
 
   @Get('/lists/for/:userId')
   async allForUser(@Param('userId') userId: number) {
-    return this.repository.find({ userId });
+    return await this.repository
+      .createQueryBuilder('shopingList')
+      .innerJoin('shopingList.user', 'user')
+      .where('user.id = :id', { id: userId })
+      .getMany();
+  }
+
+  @Get('/lists/:id')
+  async one(@Param('id') id: number) {
+    return await this.repository.findOne(id, {
+      relations: ['products', 'products.product'],
+    });
   }
 
   @Post('/lists/')
@@ -50,6 +58,11 @@ export class ShoppingListController {
     }
     existing.creationDate = list.creationDate || existing.creationDate;
     existing.lastUsed = list.lastUsed || existing.lastUsed;
-    return this.repository.save(existing);
+    return await this.repository.save(existing);
+  }
+
+  async hasUserRight(userId: number, listId: number) {
+    const list = await this.repository.findOne(listId);
+    return list && list.userId == userId;
   }
 }

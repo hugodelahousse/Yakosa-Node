@@ -5,7 +5,6 @@ import { User } from '@entities/User';
 import { Promotion } from '@entities/Promotion';
 import { Product } from '@entities/Product';
 import { testConnection } from './setup';
-import { votes } from 'tests/setup';
 
 describe('Vote Entity', () => {
   it('Should be able to be created vote', async () => {
@@ -22,18 +21,21 @@ describe('Vote Entity', () => {
 
     let promotion = promotionRepository.create({
       description: 'Description',
+      price: 50,
+      type: 2,
+      promotion: 10.5,
       beginDate: new Date(),
       endDate: new Date(),
       userId: user.id,
     });
     promotion = await promotionRepository.save(promotion);
 
-    let vote = voteRepository.create({
+    const vote = voteRepository.create({
       user,
       promotion,
       upvote: true,
     });
-    vote = await voteRepository.save(vote);
+    await voteRepository.save(vote);
   });
 
   it('Should NOT be able to be created vote', async () => {
@@ -50,6 +52,9 @@ describe('Vote Entity', () => {
 
     let promotion = promotionRepository.create({
       description: 'Description',
+      price: 50,
+      type: 0,
+      promotion: 10.5,
       beginDate: new Date(),
       endDate: new Date(),
       userId: user.id,
@@ -98,6 +103,9 @@ describe('Vote Entity', () => {
 
     let promotion = promotionRepository.create({
       product,
+      price: 50,
+      promotion: 10.5,
+      type: 1,
       user: user1,
       description: 'test',
       beginDate: new Date(),

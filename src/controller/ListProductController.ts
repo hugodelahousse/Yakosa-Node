@@ -68,4 +68,11 @@ export class ListProductController {
     }
     return await this.repository.save(existing);
   }
+
+  async hasUserRight(userId: number, listproductId: number) {
+    const listProduct = await this.repository.findOne(listproductId, {
+      relations: ['list'],
+    });
+    return listProduct && listProduct.list.userId == userId;
+  }
 }
