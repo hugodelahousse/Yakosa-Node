@@ -43,7 +43,7 @@ export class Promotion {
   @Column('enum', { enum: PromotionType, default: PromotionType.SIMPLE })
   type: number;
 
-  @Column()
+  @Column({ nullable: true })
   userId: number;
 
   @Column({ nullable: true })
@@ -55,7 +55,7 @@ export class Promotion {
   @ManyToOne(type => Product, product => product.barcode, { onDelete:'CASCADE' })
   product: Product;
 
-  @ManyToOne(type => User, { onDelete:'CASCADE' })
+  @ManyToOne(type => User, { nullable: true, onDelete:'CASCADE' })
   user: User;
 
   @ManyToOne(type => Store, { nullable: true, onDelete: 'CASCADE' })
