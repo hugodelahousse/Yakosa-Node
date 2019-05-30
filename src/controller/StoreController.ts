@@ -1,4 +1,4 @@
-import { getRepository } from 'typeorm';
+import { getRepository, Repository, Brackets } from 'typeorm';
 import {
   Body,
   Delete,
@@ -44,6 +44,38 @@ export class StoreController {
       .orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`)
       .limit(limit || 100)
       .getMany();
+  }
+
+  @Get('/stores/withPromotion/:barcode')
+  async storesWithPromotion(
+    @QueryParam('distance') distance: string,
+    @QueryParam('position') position: string,
+    @QueryParam('limit') limit: number,
+    @Param('barcode') barcode: string,
+  ) {
+    let query = this.repository
+      .createQueryBuilder('store')
+      .leftJoin('store.promotions', 'shopPromotion')
+      .leftJoin('shopPromotion.product', 'shopProduct')
+      .leftJoin('store.brand', 'brand')
+      .leftJoin('brand.promotions', 'brandPromotion')
+      .leftJoin('brandPromotion.product', 'brandProduct')
+      .where(
+        new Brackets(qb => {
+          qb.where('shopProduct.barcode = :barcode', {
+            barcode,
+          }).orWhere('brandProduct.barcode = :barcode2', { barcode2: barcode });
+        }),
+      );
+    if (position != null) {
+      query = query
+        .andWhere(
+          `ST_Distance(position, ST_GeomFromGeoJSON('${position}'))` +
+            `< ${distance || 1000}`,
+        )
+        .orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`);
+    }
+    return await query.limit(limit | 100).getMany();
   }
 
   @Get('/stores/:id')
