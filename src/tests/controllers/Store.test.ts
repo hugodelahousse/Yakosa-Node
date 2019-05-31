@@ -88,7 +88,7 @@ describe('storeController get Relevant Store', () => {
     const res = await chai
       .request(app)
       .get(
-        `/stores/withPromotion/${barcode}` +
+        `/stores/withProduct/${barcode}` +
           '?position={"type":"Point","coordinates":[-48.23456,20.12345]}' +
           '&distance=100000000&limit=2',
       )
@@ -101,7 +101,7 @@ describe('storeController get Relevant Store', () => {
     const res = await chai
       .request(app)
       .get(
-        `/stores/withPromotion/${barcode}` +
+        `/stores/withProduct/${barcode}` +
           '?position={"type":"Point","coordinates":[-48.23456,20.12345]}' +
           '&distance=100000000&limit=300',
       )

@@ -46,7 +46,10 @@ export class StoreController {
       .getMany();
   }
 
-  @Get('/stores/withPromotion/:barcode')
+  /* Query example
+    http://localhost:3000/stores/withProduct/12343124aef45
+    ?position={"type":"Point","coordinates":[-48.23456,20.12345]}&distance=100000000&limit=5 */
+  @Get('/stores/withProduct/:barcode')
   async storesWithPromotion(
     @QueryParam('distance') distance: string,
     @QueryParam('position') position: string,
@@ -56,15 +59,53 @@ export class StoreController {
     let query = this.repository
       .createQueryBuilder('store')
       .leftJoin('store.promotions', 'shopPromotion')
-      .leftJoin('shopPromotion.product', 'shopProduct')
+      .leftJoinAndSelect('shopPromotion.product', 'shopProduct')
       .leftJoin('store.brand', 'brand')
       .leftJoin('brand.promotions', 'brandPromotion')
-      .leftJoin('brandPromotion.product', 'brandProduct')
+      .leftJoinAndSelect('brandPromotion.product', 'brandProduct')
       .where(
         new Brackets(qb => {
           qb.where('shopProduct.barcode = :barcode', {
             barcode,
           }).orWhere('brandProduct.barcode = :barcode2', { barcode2: barcode });
+        }),
+      );
+    if (position != null) {
+      query = query
+        .andWhere(
+          `ST_Distance(position, ST_GeomFromGeoJSON('${position}'))` +
+            `< ${distance || 1000}`,
+        )
+        .orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`);
+    }
+    return await query.limit(limit | 100).getMany();
+  }
+
+  /* Query example
+    http://localhost:3000/stores/withList/3
+    ?position={"type":"Point","coordinates":[-48.23456,20.12345]}&distance=100000000&limit=5 */
+  @Get('/stores/withList/:id')
+  async storesWithPromotionInList(
+    @QueryParam('distance') distance: string,
+    @QueryParam('position') position: string,
+    @QueryParam('limit') limit: number,
+    @Param('id') id: number,
+  ) {
+    let query = this.repository
+      .createQueryBuilder('store')
+      .leftJoin('store.promotions', 'shopPromotion')
+      .leftJoinAndSelect('shopPromotion.product', 'shopProduct')
+      .leftJoin('shopProduct.listProducts', 'shopListProduct')
+      .leftJoin('store.brand', 'brand')
+      .leftJoin('brand.promotions', 'brandPromotion')
+      .leftJoinAndSelect('brandPromotion.product', 'brandProduct')
+      .leftJoin('brandProduct.listProducts', 'brandListProduct')
+      .where(
+        new Brackets(qb => {
+          qb.where('shopListProduct.id = :id', { id }).orWhere(
+            'brandListProduct.id = :id2',
+            { id2: id },
+          );
         }),
       );
     if (position != null) {
