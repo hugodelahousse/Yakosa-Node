@@ -1,4 +1,10 @@
-import { FindManyOptions, FindOneOptions, getRepository, ObjectLiteral, ObjectType } from 'typeorm';
+import {
+  FindManyOptions,
+  FindOneOptions,
+  getRepository,
+  ObjectLiteral,
+  ObjectType,
+} from 'typeorm';
 import {
   FieldNode,
   FragmentDefinitionNode,
@@ -12,7 +18,10 @@ interface FindListOptions {
   offset?: number;
 }
 
-function getQueryFields<Entity>(entityClass: ObjectType<Entity>, node: FieldNode) {
+function getQueryFields<Entity>(
+  entityClass: ObjectType<Entity>,
+  node: FieldNode,
+) {
   const metadata = getRepository(entityClass).metadata;
   const columns = metadata.columns.map(f => f.propertyName);
 
@@ -22,9 +31,11 @@ function getQueryFields<Entity>(entityClass: ObjectType<Entity>, node: FieldNode
     return queryFields;
   }
 
-  return queryFields.push(...node.selectionSet.selections.map(
-    <FieldNode>({ name: { value } }) => value,
-  ).filter(field => columns.includes(field)));
+  return queryFields.push(
+    ...node.selectionSet.selections
+      .map(<FieldNode>({ name: { value } }) => value)
+      .filter(field => columns.includes(field)),
+  );
 }
 
 function getQueryRelations<Entity>(
@@ -37,18 +48,23 @@ function getQueryRelations<Entity>(
   }
 
   const relationMap: Map<string, any> = new Map<string, any>();
-  getRepository(entityClass).metadata.relations.forEach(
-    (r) => { relationMap[r.propertyPath] = r.type; },
-  );
+  getRepository(entityClass).metadata.relations.forEach(r => {
+    relationMap[r.propertyPath] = r.type;
+  });
 
   const relations: string[] = [];
 
   for (const selection of node.selectionSet.selections) {
     if (selection.kind === 'FragmentSpread') {
-      relations.push(...getQueryRelations(entityClass, info, info.fragments[selection.name.value]));
+      relations.push(
+        ...getQueryRelations(
+          entityClass,
+          info,
+          info.fragments[selection.name.value],
+        ),
+      );
       continue;
     }
-
 
     if (selection.kind !== 'Field' || !selection.selectionSet) {
       continue;
@@ -61,7 +77,11 @@ function getQueryRelations<Entity>(
     }
     relations.push(relationName);
 
-    for (const subRelation of getQueryRelations(relationMap[relationName], info, selection)) {
+    for (const subRelation of getQueryRelations(
+      relationMap[relationName],
+      info,
+      selection,
+    )) {
       relations.push(`${relationName}.${subRelation}`);
     }
   }
@@ -74,7 +94,6 @@ export function graphQLFindList<Entity>(
   info: GraphQLResolveInfo,
   where?: ObjectLiteral,
 ) {
-
   const relations = getQueryRelations(entityClass, info, info.fieldNodes[0]);
 
   const options: FindManyOptions<Entity> = {
