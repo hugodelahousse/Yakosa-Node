@@ -1,4 +1,12 @@
-import { FindManyOptions, FindOneOptions, getRepository, ObjectLiteral, ObjectType } from 'typeorm';
+import {
+  FindManyOptions,
+  FindOneOptions,
+  getRepository,
+  ObjectLiteral,
+  ObjectType,
+  FindConditions,
+  Raw,
+} from 'typeorm';
 import {
   FieldNode,
   FragmentDefinitionNode,
@@ -6,13 +14,26 @@ import {
   GraphQLScalarType,
   Kind,
 } from 'graphql';
+import { Store } from '@entities/Store';
+import { isArray } from 'util';
+import { func } from 'joi';
 
 interface FindListOptions {
   limit?: number;
   offset?: number;
 }
 
-function getQueryFields<Entity>(entityClass: ObjectType<Entity>, node: FieldNode) {
+interface FindStoreOptions {
+  distance?: string;
+  position?: string;
+  limit?: number;
+  offset?: number;
+}
+
+function getQueryFields<Entity>(
+  entityClass: ObjectType<Entity>,
+  node: FieldNode,
+) {
   const metadata = getRepository(entityClass).metadata;
   const columns = metadata.columns.map(f => f.propertyName);
 
@@ -22,9 +43,11 @@ function getQueryFields<Entity>(entityClass: ObjectType<Entity>, node: FieldNode
     return queryFields;
   }
 
-  return queryFields.push(...node.selectionSet.selections.map(
-    <FieldNode>({ name: { value } }) => value,
-  ).filter(field => columns.includes(field)));
+  return queryFields.push(
+    ...node.selectionSet.selections
+      .map(<FieldNode>({ name: { value } }) => value)
+      .filter(field => columns.includes(field)),
+  );
 }
 
 function getQueryRelations<Entity>(
@@ -37,18 +60,23 @@ function getQueryRelations<Entity>(
   }
 
   const relationMap: Map<string, any> = new Map<string, any>();
-  getRepository(entityClass).metadata.relations.forEach(
-    (r) => { relationMap[r.propertyPath] = r.type; },
-  );
+  getRepository(entityClass).metadata.relations.forEach(r => {
+    relationMap[r.propertyPath] = r.type;
+  });
 
   const relations: string[] = [];
 
   for (const selection of node.selectionSet.selections) {
     if (selection.kind === 'FragmentSpread') {
-      relations.push(...getQueryRelations(entityClass, info, info.fragments[selection.name.value]));
+      relations.push(
+        ...getQueryRelations(
+          entityClass,
+          info,
+          info.fragments[selection.name.value],
+        ),
+      );
       continue;
     }
-
 
     if (selection.kind !== 'Field' || !selection.selectionSet) {
       continue;
@@ -61,7 +89,11 @@ function getQueryRelations<Entity>(
     }
     relations.push(relationName);
 
-    for (const subRelation of getQueryRelations(relationMap[relationName], info, selection)) {
+    for (const subRelation of getQueryRelations(
+      relationMap[relationName],
+      info,
+      selection,
+    )) {
       relations.push(`${relationName}.${subRelation}`);
     }
   }
@@ -74,7 +106,6 @@ export function graphQLFindList<Entity>(
   info: GraphQLResolveInfo,
   where?: ObjectLiteral,
 ) {
-
   const relations = getQueryRelations(entityClass, info, info.fieldNodes[0]);
 
   const options: FindManyOptions<Entity> = {
@@ -97,6 +128,150 @@ export function graphQLFindOne<Entity>(
   const options: FindOneOptions<Entity> = { where, relations };
 
   return getRepository(entityClass).findOne(options);
+}
+
+export function graphQlFindNearShopRelatedToPromotion(
+  args: FindStoreOptions,
+  info: GraphQLResolveInfo,
+  id: number,
+) {
+  return graphQlFindNearShop(args, info, [
+    {
+      promotions: [
+        {
+          id,
+        },
+      ],
+    },
+    {
+      brand: {
+        promotions: [
+          {
+            id,
+          },
+        ],
+      },
+    },
+  ]);
+}
+
+export function graphQlFindNearShopRelatedToShoppingList(
+  args: FindStoreOptions,
+  info: GraphQLResolveInfo,
+  id: number,
+) {
+  return graphQlFindNearShop(args, info, [
+    {
+      promotions: [
+        {
+          product: {
+            listProducts: [
+              {
+                list: {
+                  id,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+    {
+      brand: {
+        promotions: [
+          {
+            product: {
+              listProducts: [
+                {
+                  list: {
+                    id,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ]);
+}
+
+export function graphQlFindNearShopRelatedToProduct(
+  args: FindStoreOptions,
+  info: GraphQLResolveInfo,
+  barcode: string,
+) {
+  return graphQlFindNearShop(args, info, [
+    {
+      promotions: [
+        {
+          product: {
+            listProducts: [
+              {
+                list: {
+                  products: [
+                    {
+                      productBarcode: barcode,
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+    {
+      brand: {
+        promotions: [
+          {
+            product: {
+              listProducts: [
+                {
+                  list: {
+                    products: [
+                      {
+                        productBarcode: barcode,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ]);
+}
+
+export function graphQlFindNearShop(
+  { distance, position, limit, offset }: FindStoreOptions,
+  info: GraphQLResolveInfo,
+  where: FindConditions<Store> | FindConditions<Store>[],
+) {
+  const relations = getQueryRelations(Store, info, info.fieldNodes[0]);
+  const CheckDistanceOperator = Raw(
+    alias =>
+      `ST_Distance(${alias}, ST_GeomFromGeoJSON('${position}'))` +
+      `< ${distance || 1000}`,
+  );
+  if (isArray(where)) {
+    where.forEach(element => {
+      element.position = CheckDistanceOperator;
+    });
+  } else {
+    where.position = CheckDistanceOperator;
+  }
+
+  const options: FindManyOptions<Store> = {
+    where,
+    relations,
+    take: limit,
+    skip: offset,
+  };
+
+  return getRepository(Store).find(options);
 }
 
 export const dateResolver = {
