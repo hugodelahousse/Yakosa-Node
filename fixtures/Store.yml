@@ -1,17 +1,1360 @@
 entity: Store
 items:
   store1:
-    brand: '@brand1'
+    brand: '@brand20'
     position:
-      coordinates: ['1.304389', '103.831709']
-      type: 'Point'
+      coordinates:
+        - 2.33386
+        - 48.866503
+      type: Point
+  store10:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.342088
+        - 48.866658
+      type: Point
+  store100:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.333388
+        - 48.883776
+      type: Point
+  store101:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.347567
+        - 48.881663
+      type: Point
+  store102:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.307885
+        - 48.871171
+      type: Point
+  store103:
+    brand: '@brand24'
+    position:
+      coordinates:
+        - 2.350502
+        - 48.880061
+      type: Point
+  store104:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.317903
+        - 48.851788
+      type: Point
+  store105:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.354682
+        - 48.877246
+      type: Point
+  store106:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.342488
+        - 48.849648
+      type: Point
+  store107:
+    brand: '@brand15'
+    position:
+      coordinates:
+        - 2.354132
+        - 48.878154
+      type: Point
+  store108:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.356348
+        - 48.857491
+      type: Point
+  store109:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.320545
+        - 48.848369
+      type: Point
+  store11:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.333128
+        - 48.873004
+      type: Point
+  store110:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.362288
+        - 48.869614
+      type: Point
+  store111:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.357806
+        - 48.874058
+      type: Point
+  store112:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.337291
+        - 48.884999
+      type: Point
+  store113:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.360069
+        - 48.868131
+      type: Point
+  store114:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.348175
+        - 48.850831
+      type: Point
+  store115:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.330546
+        - 48.848032
+      type: Point
+  store116:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.347468
+        - 48.850712
+      type: Point
+  store117:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.306683
+        - 48.870439
+      type: Point
+  store118:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.306627
+        - 48.871186
+      type: Point
+  store119:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.320329
+        - 48.883423
+      type: Point
+  store12:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.339388
+        - 48.861628
+      type: Point
+  store120:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.343015
+        - 48.884283
+      type: Point
+  store121:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.357077
+        - 48.87623
+      type: Point
+  store122:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.361349
+        - 48.866148
+      type: Point
+  store123:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.348254
+        - 48.85073
+      type: Point
+  store124:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.306826
+        - 48.85951
+      type: Point
+  store125:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.357017
+        - 48.8563
+      type: Point
+  store126:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.352911
+        - 48.880511
+      type: Point
+  store127:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.326014
+        - 48.88567
+      type: Point
+  store128:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.31571
+        - 48.881985
+      type: Point
+  store129:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.316262
+        - 48.882341
+      type: Point
+  store13:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.335693
+        - 48.876255
+      type: Point
+  store130:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.36126
+        - 48.863436
+      type: Point
+  store131:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.306755
+        - 48.859612
+      type: Point
+  store132:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.309229
+        - 48.877394
+      type: Point
+  store133:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.304808
+        - 48.869421
+      type: Point
+  store134:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.305992
+        - 48.873478
+      type: Point
+  store135:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.356587
+        - 48.879147
+      type: Point
+  store136:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.321189
+        - 48.884869
+      type: Point
+  store137:
+    brand: '@brand15'
+    position:
+      coordinates:
+        - 2.347321
+        - 48.884738
+      type: Point
+  store138:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.349906
+        - 48.849595
+      type: Point
+  store139:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.363321
+        - 48.868902
+      type: Point
+  store14:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.333025
+        - 48.873834
+      type: Point
+  store140:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.323958
+        - 48.846128
+      type: Point
+  store141:
+    brand: '@brand5'
+    position:
+      coordinates:
+        - 2.347091
+        - 48.885028
+      type: Point
+  store142:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.362255
+        - 48.873103
+      type: Point
+  store143:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.36284
+        - 48.871418
+      type: Point
+  store144:
+    brand: '@brand15'
+    position:
+      coordinates:
+        - 2.306534
+        - 48.856745
+      type: Point
+  store145:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.306036
+        - 48.857626
+      type: Point
+  store146:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.359543
+        - 48.855945
+      type: Point
+  store147:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.302559
+        - 48.866749
+      type: Point
+  store148:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.359779
+        - 48.855249
+      type: Point
+  store149:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.322544
+        - 48.892305
+      type: Point
+  store15:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.32741
+        - 48.872483
+      type: Point
+  store150:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.323287
+        - 48.887203
+      type: Point
+  store151:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.319037
+        - 48.886165
+      type: Point
+  store152:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.315866
+        - 48.884654
+      type: Point
+  store153:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.348435
+        - 48.848221
+      type: Point
+  store154:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.305758
+        - 48.856362
+      type: Point
+  store155:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.352157
+        - 48.848427
+      type: Point
+  store156:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.334694
+        - 48.888643
+      type: Point
+  store157:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.363524
+        - 48.874364
+      type: Point
+  store158:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.313135
+        - 48.848897
+      type: Point
+  store159:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.326091
+        - 48.888781
+      type: Point
+  store16:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.332447
+        - 48.874205
+      type: Point
+  store160:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.330245
+        - 48.844171
+      type: Point
+  store161:
+    brand: '@brand27'
+    position:
+      coordinates:
+        - 2.366168
+        - 48.870849
+      type: Point
+  store162:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.304254
+        - 48.855178
+      type: Point
+  store163:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.367045
+        - 48.866928
+      type: Point
+  store164:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.345375
+        - 48.845055
+      type: Point
+  store165:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.35371
+        - 48.885042
+      type: Point
+  store166:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.333814
+        - 48.889934
+      type: Point
+  store167:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.355722
+        - 48.869552
+      type: Point
+  store168:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.311627
+        - 48.884831
+      type: Point
+  store169:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.321308
+        - 48.844532
+      type: Point
+  store17:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.328509
+        - 48.87462
+      type: Point
+  store170:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.367911
+        - 48.868694
+      type: Point
+  store171:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.3487
+        - 48.888007
+      type: Point
+  store172:
+    brand: '@brand18'
+    position:
+      coordinates:
+        - 2.367783
+        - 48.867632
+      type: Point
+  store173:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.362869
+        - 48.879408
+      type: Point
+  store174:
+    brand: '@brand5'
+    position:
+      coordinates:
+        - 2.351664
+        - 48.846071
+      type: Point
+  store175:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.333951
+        - 48.890665
+      type: Point
+  store176:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.367662
+        - 48.861738
+      type: Point
+  store177:
+    brand: '@brand28'
+    position:
+      coordinates:
+        - 2.322097
+        - 48.889339
+      type: Point
+  store178:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.311973
+        - 48.885818
+      type: Point
+  store179:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.363315
+        - 48.854309
+      type: Point
+  store18:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.343055
+        - 48.872028
+      type: Point
+  store180:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.31936
+        - 48.888687
+      type: Point
+  store181:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.343475
+        - 48.85353
+      type: Point
+  store182:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.36715
+        - 48.860292
+      type: Point
+  store183:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.310584
+        - 48.885345
+      type: Point
+  store184:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.300409
+        - 48.876217
+      type: Point
+  store185:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.369522
+        - 48.864307
+      type: Point
+  store186:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.332091
+        - 48.890922
+      type: Point
+  store187:
+    brand: '@brand5'
+    position:
+      coordinates:
+        - 2.349805
+        - 48.888797
+      type: Point
+  store188:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.368667
+        - 48.871856
+      type: Point
+  store189:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.354062
+        - 48.887109
+      type: Point
+  store19:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.343815
+        - 48.861795
+      type: Point
+  store190:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.328278
+        - 48.841652
+      type: Point
+  store191:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.316388
+        - 48.889253
+      type: Point
+  store192:
+    brand: '@brand24'
+    position:
+      coordinates:
+        - 2.352879
+        - 48.88834
+      type: Point
+  store193:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.368572
+        - 48.876449
+      type: Point
+  store194:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.365148
+        - 48.880081
+      type: Point
   store2:
-    brand: '@brand2'
+    brand: '@brand11'
     position:
-      coordinates: ['103.832342', '103.832342']
-      type: 'Point'
+      coordinates:
+        - 2.331915
+        - 48.866396
+      type: Point
+  store20:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.343222
+        - 48.872857
+      type: Point
+  store21:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.321097
+        - 48.870888
+      type: Point
+  store22:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.347691
+        - 48.869458
+      type: Point
+  store23:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.346534
+        - 48.864234
+      type: Point
+  store24:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.330363
+        - 48.875921
+      type: Point
+  store25:
+    brand: '@brand26'
+    position:
+      coordinates:
+        - 2.347019
+        - 48.866038
+      type: Point
+  store26:
+    brand: '@brand27'
+    position:
+      coordinates:
+        - 2.34719
+        - 48.866907
+      type: Point
+  store27:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.347814
+        - 48.867361
+      type: Point
+  store28:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.347876
+        - 48.867014
+      type: Point
+  store29:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.325343
+        - 48.875987
+      type: Point
   store3:
-    brand: '@brand3'
+    brand: '@brand4'
     position:
-      coordinates: ['8.825398799999995', '50.3536142']
-      type: 'Point'
+      coordinates:
+        - 2.331507
+        - 48.865049
+      type: Point
+  store30:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.343515
+        - 48.873379
+      type: Point
+  store31:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.323718
+        - 48.859277
+      type: Point
+  store32:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.341739
+        - 48.87548
+      type: Point
+  store33:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.340524
+        - 48.875953
+      type: Point
+  store34:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.326844
+        - 48.876851
+      type: Point
+  store35:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.327624
+        - 48.856962
+      type: Point
+  store36:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.345057
+        - 48.859056
+      type: Point
+  store37:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.338759
+        - 48.877309
+      type: Point
+  store38:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.342902
+        - 48.875802
+      type: Point
+  store39:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.332483
+        - 48.878316
+      type: Point
+  store4:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.336946
+        - 48.869403
+      type: Point
+  store40:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.349573
+        - 48.870167
+      type: Point
+  store41:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.322051
+        - 48.875729
+      type: Point
+  store42:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.349734
+        - 48.863302
+      type: Point
+  store43:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.320039
+        - 48.874554
+      type: Point
+  store44:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.340003
+        - 48.877772
+      type: Point
+  store45:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.324531
+        - 48.85488
+      type: Point
+  store46:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.349424
+        - 48.860264
+      type: Point
+  store47:
+    brand: '@brand21'
+    position:
+      coordinates:
+        - 2.350482
+        - 48.864293
+      type: Point
+  store48:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.351947
+        - 48.865595
+      type: Point
+  store49:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.319626
+        - 48.858219
+      type: Point
+  store5:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.33782
+        - 48.869234
+      type: Point
+  store50:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.3381
+        - 48.854569
+      type: Point
+  store51:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.335774
+        - 48.879766
+      type: Point
+  store52:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.317628
+        - 48.873145
+      type: Point
+  store53:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.332648
+        - 48.853464
+      type: Point
+  store54:
+    brand: '@brand5'
+    position:
+      coordinates:
+        - 2.337062
+        - 48.853542
+      type: Point
+  store55:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.351329
+        - 48.861217
+      type: Point
+  store56:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.353049
+        - 48.870303
+      type: Point
+  store57:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.353049
+        - 48.870735
+      type: Point
+  store58:
+    brand: '@brand5'
+    position:
+      coordinates:
+        - 2.344912
+        - 48.878327
+      type: Point
+  store59:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.348381
+        - 48.876327
+      type: Point
+  store6:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.336691
+        - 48.871457
+      type: Point
+  store60:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.315547
+        - 48.873961
+      type: Point
+  store61:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.338082
+        - 48.873923
+      type: Point
+  store62:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.353506
+        - 48.869313
+      type: Point
+  store63:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.353591
+        - 48.86297
+      type: Point
+  store64:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.354316
+        - 48.864954
+      type: Point
+  store65:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.351039
+        - 48.858637
+      type: Point
+  store66:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.333989
+        - 48.880206
+      type: Point
+  store67:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.351279
+        - 48.858535
+      type: Point
+  store68:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.353542
+        - 48.873019
+      type: Point
+  store69:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.343891
+        - 48.880081
+      type: Point
+  store7:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.336691
+        - 48.871457
+      type: Point
+  store70:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.354164
+        - 48.861059
+      type: Point
+  store71:
+    brand: '@brand18'
+    position:
+      coordinates:
+        - 2.356089
+        - 48.872448
+      type: Point
+  store72:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.330887
+        - 48.851122
+      type: Point
+  store73:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.351543
+        - 48.875288
+      type: Point
+  store74:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.331586
+        - 48.8816
+      type: Point
+  store75:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.346948
+        - 48.87883
+      type: Point
+  store76:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.327201
+        - 48.881846
+      type: Point
+  store77:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.355955
+        - 48.865631
+      type: Point
+  store78:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.34117
+        - 48.852033
+      type: Point
+  store79:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.337675
+        - 48.882004
+      type: Point
+  store8:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.339911
+        - 48.869522
+      type: Point
+  store80:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.328086
+        - 48.8819
+      type: Point
+  store81:
+    brand: '@brand6'
+    position:
+      coordinates:
+        - 2.353481
+        - 48.874689
+      type: Point
+  store82:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.344363
+        - 48.852259
+      type: Point
+  store83:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.329358
+        - 48.88244
+      type: Point
+  store84:
+    brand: '@brand5'
+    position:
+      coordinates:
+        - 2.340071
+        - 48.88186
+      type: Point
+  store85:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.31969
+        - 48.880126
+      type: Point
+  store86:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.357378
+        - 48.867527
+      type: Point
+  store87:
+    brand: '@brand8'
+    position:
+      coordinates:
+        - 2.310703
+        - 48.85988
+      type: Point
+  store88:
+    brand: '@brand5'
+    position:
+      coordinates:
+        - 2.346329
+        - 48.880668
+      type: Point
+  store89:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.332831
+        - 48.883413
+      type: Point
+  store9:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.326737
+        - 48.869527
+      type: Point
+  store90:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.355076
+        - 48.87408
+      type: Point
+  store91:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.357876
+        - 48.866108
+      type: Point
+  store92:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.342732
+        - 48.850955
+      type: Point
+  store93:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.352271
+        - 48.87796
+      type: Point
+  store94:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.357758
+        - 48.870489
+      type: Point
+  store95:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.324738
+        - 48.882768
+      type: Point
+  store96:
+    brand: '@brand23'
+    position:
+      coordinates:
+        - 2.325999
+        - 48.883024
+      type: Point
+  store97:
+    brand: '@brand20'
+    position:
+      coordinates:
+        - 2.357554
+        - 48.861535
+      type: Point
+  store98:
+    brand: '@brand4'
+    position:
+      coordinates:
+        - 2.342107
+        - 48.88356
+      type: Point
+  store99:
+    brand: '@brand11'
+    position:
+      coordinates:
+        - 2.309995
+        - 48.874011
+      type: Point
