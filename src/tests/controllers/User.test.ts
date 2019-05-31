@@ -52,7 +52,7 @@ describe('UserController post a user', () => {
 
 describe('UserController delete a user', () => {
   it('Should delete a user', async () => {
-    let res = await chai.request(app).delete('/users/60').set('Authorization', jwtToken);
+    let res = await chai.request(app).delete('/users/40').set('Authorization', jwtToken);
     expect(res).to.have.status(200);
     res = await chai.request(app).get('/users').set('Authorization', jwtToken);
     expect(res.body.length).to.be.equal(users.length - 1);

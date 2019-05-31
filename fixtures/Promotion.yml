@@ -1,6 +1,6 @@
 entity: Promotion
 items:
-  promotionOne{1..100}:
+  promotionOne{1..30}:
     description: '{{lorem.sentence}}'
     price: 100
     promotion: 50
@@ -10,7 +10,7 @@ items:
     product: '@productOne($current)'
     user: '@user($current)'
     brand: '@brand($current)'
-  promotionTwo{1..100}:
+  promotionTwo{1..30}:
     description: '{{lorem.sentence}}'
     price: 100
     promotion: 50

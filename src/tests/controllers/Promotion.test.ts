@@ -33,7 +33,7 @@ describe('PromotionController should be able to list items', () => {
     const res = await chai.request(app).get('/promotions?storeId=1').set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
-    const dbId = promotions.filter(promotions => promotions.storeId === 1)
+    const dbId = promotions.filter(promotions => promotions.storeId === 1);
     expect(res.body).to.have.length(dbId.length);
   });
 });

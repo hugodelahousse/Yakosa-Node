@@ -1,4 +1,64 @@
 entity: Brand
 items:
-  brand{1..100}:
-    name: '{{name.firstName}}'
+  brand1:
+    name: 'Atac'
+  brand2:
+    name: 'Auchan Drive'
+  brand3:
+    name: 'Carrefour Contact'
+  brand4:
+    name: 'Carrefour Express'
+  brand5:
+    name: 'Carrefour Market'
+  brand6:
+    name: 'Carrefour'
+  brand7:
+    name: 'Casino Drive'
+  brand8:
+    name: 'Casino Shop'
+  brand9:
+    name: 'Colruyt'
+  brand10:
+    name: 'Cora'
+  brand11:
+    name: 'Franprix'
+  brand12:
+    name: 'Geant Casino'
+  brand13:
+    name: 'Geant'
+  brand14:
+    name: 'Intermarche'
+  brand15:
+    name: 'Leader Price'
+  brand16:
+    name: 'Leclerc Drive'
+  brand17:
+    name: 'Leclerc'
+  brand18:
+    name: 'Lidl'
+  brand19:
+    name: 'Magasin U'
+  brand20:
+    name: 'Monoprix'
+  brand21:
+    name: 'Petit Casino'
+  brand22:
+    name: 'Sherpa'
+  brand23:
+    name: 'Simply Market'
+  brand24:
+    name: 'Spar'
+  brand25:
+    name: 'Vival'
+  brand26:
+    name: 'Marche U'
+  brand27:
+    name: 'U Express'
+  brand28:
+    name: 'Super U'
+  brand29:
+    name: 'Aldi'
+  brand30:
+    name: 'Match'
+  brand31:
+    name: 'Netto'
