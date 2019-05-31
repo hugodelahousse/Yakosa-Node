@@ -3,6 +3,9 @@ import { graphQLFindList, graphQLFindOne } from '@graphql/utils';
 import { User } from '@entities/User';
 import { ListProduct } from '@entities/ListProduct';
 import { Product } from '@entities/Product';
+import * as jwt from 'jsonwebtoken';
+import { JWT } from '../middlewares/checkJwt';
+import config from 'config';
 
 const typeDefs = gql`
   directive @UUID (
@@ -42,6 +45,7 @@ const typeDefs = gql`
   type Query {
       allUsers(offset: Int, limit: Int): [User!]!
       user(id: ID!): User
+      currentUser: User
 
       listProduct(id: ID!): ListProduct
 
@@ -54,6 +58,13 @@ const resolvers = {
   Query: {
     allUsers: async (parent, args, _, info) => await graphQLFindList(User, args, info),
     user: async (parent, args, _, info) => await graphQLFindOne(User, info, { id: args.id }),
+    currentUser: async (parent, args, context, info) => {
+      if (!context.user) {
+        return null;
+      }
+      return await graphQLFindOne(User, info, { id: context.user });
+    },
+
     allProducts: async (parent, args, _, info) => await graphQLFindList(Product, args, info),
     product: async (parent, args, _, info) =>
       await graphQLFindOne(ListProduct, info,  { barcode: args.barcode }),
@@ -79,6 +90,25 @@ const schema = makeExecutableSchema({
   schemaDirectives: {},
 });
 
-const apollo = new ApolloServer({ schema });
+const apollo = new ApolloServer({
+  schema,
+  context: ({ req }) => {
+    const token = req.headers.authorization;
+    if (!token) {
+      return { user: null };
+    }
+
+    // The token is passed as a header in the form JWT <TOKEN> or Bearer <TOKEN>
+    const jwtDecoded = jwt.verify(token.split(' ')[1], config.JWT_SECRET) as JWT;
+
+    if (!jwtDecoded) {
+      return { user: null };
+    }
+
+    return {
+      user: jwtDecoded.userId,
+    };
+  },
+});
 
 export default apollo;
