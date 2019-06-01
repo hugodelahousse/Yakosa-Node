@@ -21,7 +21,6 @@ enum PromotionType {
 
 @Entity()
 export class Promotion {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -52,10 +51,12 @@ export class Promotion {
   @Column({ nullable: true })
   brandId: number;
 
-  @ManyToOne(type => Product, product => product.barcode, { onDelete:'CASCADE' })
+  @ManyToOne(type => Product, product => product.barcode, {
+    onDelete: 'CASCADE',
+  })
   product: Product;
 
-  @ManyToOne(type => User, { nullable: true, onDelete:'CASCADE' })
+  @ManyToOne(type => User, { nullable: true, onDelete: 'CASCADE' })
   user: User;
 
   @ManyToOne(type => Store, { nullable: true, onDelete: 'CASCADE' })
@@ -67,5 +68,4 @@ export class Promotion {
   @OneToMany(type => Vote, vote => vote.promotion)
   @JoinTable()
   votes: Vote[];
-
 }

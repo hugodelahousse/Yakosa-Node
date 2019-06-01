@@ -7,7 +7,8 @@ import {
   Param,
   Post,
   Patch,
-  HttpCode, OnUndefined,
+  HttpCode,
+  OnUndefined,
 } from 'routing-controllers';
 import { Product } from '../entities/Product';
 import * as request from 'request-promise';
@@ -31,8 +32,10 @@ export class ProductController {
     if (product) {
       return product;
     }
-    const object : OpenFoodFactProductResponse =
-      await request(`https://fr.openfoodfacts.org/api/v0/produit/${barcode}`, { json : true });
+    const object: OpenFoodFactProductResponse = await request(
+      `https://fr.openfoodfacts.org/api/v0/produit/${barcode}`,
+      { json: true },
+    );
     return await this.create({ barcode: object.code } as Product);
   }
 
@@ -43,10 +46,12 @@ export class ProductController {
    */
   @Get('/products/name/:name')
   async find(@Param('name') name: string) {
-    const url = 'https://world.openfoodfacts.org/cgi/search.pl' +
+    const url =
+      'https://world.openfoodfacts.org/cgi/search.pl' +
       `?search_terms=${name}&search_simple=1&action=process&json=1`;
-    const object : OpenFoodFactProductsResponse =
-      await request(url, { json : true });
+    const object: OpenFoodFactProductsResponse = await request(url, {
+      json: true,
+    });
     if (object.products.length === 0) {
       return null;
     }
@@ -75,16 +80,17 @@ export class ProductController {
 
   // Useless now because product only have his barcode.
   @Patch('/products/:barcode')
-  async update(@Param('barcode') barcode: string,
-               @Body() product: Product) {
+  async update(@Param('barcode') barcode: string, @Body() product: Product) {
     const existing = await this.repository.findOne(barcode);
     if (existing === undefined) {
       return undefined;
     }
-    const fieldsToChange : string[] = [];
+    const fieldsToChange: string[] = [];
     for (let index = 0; index < fieldsToChange.length; index++) {
       const element = fieldsToChange[index];
-      if (product.hasOwnProperty(element)) { existing[element] = product[element]; }
+      if (product.hasOwnProperty(element)) {
+        existing[element] = product[element];
+      }
     }
     return this.repository.save(existing);
   }

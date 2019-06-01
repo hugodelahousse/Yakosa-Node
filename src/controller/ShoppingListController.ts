@@ -8,7 +8,7 @@ import {
   Param,
   Patch,
   Post,
-  UseBefore
+  UseBefore,
 } from 'routing-controllers';
 import ShoppingList from '@entities/ShoppingList';
 import { checkJwt } from '../middlewares/checkJwt';

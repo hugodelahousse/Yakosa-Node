@@ -4,7 +4,6 @@ import { ListProduct } from './ListProduct';
 
 @Entity()
 export class Product {
-
   @PrimaryColumn()
   barcode: string;
 

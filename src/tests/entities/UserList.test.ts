@@ -20,7 +20,7 @@ describe('UserList Entity', () => {
     });
     userList = await userListRepository.save(userList);
 
-    const filter: {[key: string]: any}[] = [];
+    const filter: { [key: string]: any }[] = [];
     filter.push({ user });
     const data = await userListRepository.findOne({
       relations: ['user'],

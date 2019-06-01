@@ -73,7 +73,10 @@ describe('Vote Entity', () => {
       promotion,
       upvote: true,
     });
-    voteRepository.save(vote).then(() => fail()).catch(() => {});
+    voteRepository
+      .save(vote)
+      .then(() => fail())
+      .catch(() => {});
   });
 
   it('The vote status of the promotion should be +2', async () => {
