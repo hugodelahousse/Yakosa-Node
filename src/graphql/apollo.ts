@@ -55,6 +55,10 @@ const typeDefs = gql`
   type Mutation {
     createList: ShoppingList
     deleteList(id: ID!): Boolean!
+
+    addListProduct(list: ID!, product: ID!, quantity: Int): ListProduct
+    updateListProduct(id: ID!, quantity: Int!): ListProduct
+    removeListProduct(id: ID!): Boolean!
   }
 `;
 
@@ -113,6 +117,42 @@ const resolvers = {
         id,
         user: { id: user },
       });
+      return !!result.raw[1];
+    },
+
+    addListProduct: async (
+      parent,
+      { list, product, quantity },
+      { user },
+      info,
+    ) => {
+      if (user === null) {
+        return null;
+      }
+
+      const result = await getRepository(ListProduct).save({
+        list: { id: list },
+        product: { barcode: product },
+        quantity: quantity || 1,
+      });
+
+      return await graphQLFindOne(ListProduct, info, { id: result.id });
+    },
+
+    updateListProduct: async (parent, { id, quantity }, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      await getRepository(ListProduct).update(id, { quantity });
+
+      return await graphQLFindOne(ListProduct, info, { id });
+    },
+
+    removeListProduct: async (parent, { id }, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      const result = await getRepository(ListProduct).delete(id);
       return !!result.raw[1];
     },
   },
