@@ -5,11 +5,11 @@ import {
   OneToMany,
   ManyToMany,
   RelationId,
-  JoinTable
-} from "typeorm";
-import { Store } from "./Store";
-import { Promotion } from "./Promotion";
-import { User } from "./User";
+  JoinTable,
+} from 'typeorm';
+import { Store } from './Store';
+import { Promotion } from './Promotion';
+import { User } from './User';
 
 @Entity()
 export class Brand {

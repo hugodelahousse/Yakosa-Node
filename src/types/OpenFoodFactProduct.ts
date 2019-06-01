@@ -93,7 +93,7 @@ export interface OpenFoodFactProduct {
   ingredients_from_palm_oil_n: number;
   countries_tags: string[];
   image_front_url: string;
-  selected_images: { front: object, ingredient: object, nutrition: object };
+  selected_images: { front: object; ingredient: object; nutrition: object };
   ingredients_text_debug: string;
   allergens_debug_tags: (string | null)[];
   origins_tags: string[];
@@ -121,7 +121,7 @@ export interface OpenFoodFactProduct {
   pnns_groups_1: string;
   product_quantity: number;
   emb_codes_debug_tags: (string | null)[];
-  languages_codes: { country : number};
+  languages_codes: { country: number };
   pnns_groups_1_tags: string[];
   lang: string;
   image_front_small_url: string;
@@ -161,9 +161,9 @@ export interface OpenFoodFactProduct {
   rev: number;
   categories_lc: string;
   serving_quantity: number;
-  nutrient_levels: { nutrient : 'low' | 'moderate' | 'high' };
+  nutrient_levels: { nutrient: 'low' | 'moderate' | 'high' };
   manufacturing_places_debug_tags: (string | null)[];
-  languages: { lang : number };
+  languages: { lang: number };
   minerals_tags: string[];
   additives_debug_tags: (string | null)[];
   editors: string[];
