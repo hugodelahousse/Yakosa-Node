@@ -6,6 +6,8 @@ import { Product } from '@entities/Product';
 import * as jwt from 'jsonwebtoken';
 import { JWT } from '../middlewares/checkJwt';
 import config from 'config';
+import { getRepository } from 'typeorm';
+import ShoppingList from '@entities/ShoppingList';
 
 const typeDefs = gql`
   directive @UUID(name: String! = "uid", from: [String!]! = ["id"]) on OBJECT
@@ -49,6 +51,11 @@ const typeDefs = gql`
     allProducts(offset: Int, limit: Int): [Product!]!
     product(barcode: String!): Product
   }
+
+  type Mutation {
+    createList: ShoppingList
+    deleteList(id: ID!): Boolean!
+  }
 `;
 
 const resolvers = {
@@ -81,6 +88,33 @@ const resolvers = {
   ListProduct: {
     product: async parent => parent.product,
     list: async parent => parent.list,
+  },
+
+  Mutation: {
+    createList: async (parent, args, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      const newList = await getRepository(ShoppingList).save({
+        creationDate: new Date(),
+        user: {
+          id: user,
+        },
+      });
+
+      return await graphQLFindOne(ShoppingList, info, { id: newList.id });
+    },
+
+    deleteList: async (parent, { id }, { user }) => {
+      if (user === null) {
+        return null;
+      }
+      const result = await getRepository(ShoppingList).delete({
+        id,
+        user: { id: user },
+      });
+      return !!result.raw[1];
+    },
   },
 };
 
