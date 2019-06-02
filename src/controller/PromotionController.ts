@@ -8,24 +8,41 @@ import {
   Post,
   QueryParam,
   OnUndefined,
-  Patch, HttpCode,
+  Patch,
+  HttpCode,
+  UseBefore,
+  BadRequestError,
 } from 'routing-controllers';
-import { Promotion } from '../entities/Promotion';
+import { Promotion } from '@entities/Promotion';
 
+import { checkJwt } from '../middlewares/checkJwt';
+
+@UseBefore(checkJwt)
 @JsonController()
 export class PromotionController {
-
   private repository = getRepository(Promotion);
 
   @Get('/promotions/')
-  async all(@QueryParam('limit') limit: number,
-            @QueryParam('storeId') storeId: number,
-            @QueryParam('brandId') brandId: number,
-            @QueryParam('userId') userId: number) {
-    const filter: {[key: string]: number}[] = [];
-    if (storeId) { filter.push({ storeId }); }
-    if (brandId) { filter.push({ brandId }); }
-    if (userId) { filter.push({ userId }); }
+  async all(
+    @QueryParam('limit') limit: number,
+    @QueryParam('storeId') storeId: number,
+    @QueryParam('brandId') brandId: number,
+    @QueryParam('userId') userId: number,
+    @QueryParam('type') type: number,
+  ) {
+    const filter: { [key: string]: number }[] = [];
+    if (storeId) {
+      filter.push({ storeId });
+    }
+    if (brandId) {
+      filter.push({ brandId });
+    }
+    if (userId) {
+      filter.push({ userId });
+    }
+    if (type) {
+      filter.push({ type });
+    }
 
     return this.repository.find({
       where: filter,
@@ -35,39 +52,61 @@ export class PromotionController {
 
   @Get('/promotions/:id')
   async one(@Param('id') id: number) {
-    return this.repository.findOne({ id }, {
-      relations: ['store', 'brand', 'user'],
-    });
+    return this.repository.findOne(
+      { id },
+      {
+        relations: ['store', 'brand', 'user'],
+      },
+    );
   }
 
   @Post('/promotions/')
   @HttpCode(201)
   async create(@Body() promotion: Promotion) {
-    return await this.repository.save(promotion);
+    try {
+      return await this.repository.save(promotion);
+    } catch (e) {
+      throw new BadRequestError(e.detail);
+    }
   }
 
   @Delete('/promotions/:id')
+  @OnUndefined(404)
   async remove(@Param('id') id: number) {
     const promotionToRemove = await this.repository.findOne(id);
     if (promotionToRemove) {
-      await this.repository.remove(promotionToRemove);
+      return await this.repository.remove(promotionToRemove);
     }
     return promotionToRemove;
   }
 
   @OnUndefined(404)
   @Patch('/promotions/:id')
-  async patch(@Param('id') id: number,
-              @Body() promotion: Promotion) {
+  async update(@Param('id') id: number, @Body() promotion: Promotion) {
     const existing = await this.repository.findOne(id);
     if (existing === undefined) {
       return undefined;
     }
-    const fieldsToChange = ['store', 'beginDate', 'endDate', 'description', 'user', 'product',
-      'brand'];
-    for (const field in fieldsToChange) {
-      if (promotion.hasOwnProperty(field)) { existing[field] = promotion[field]; }
+    const fieldsToChange = [
+      'store',
+      'beginDate',
+      'endDate',
+      'description',
+      'user',
+      'product',
+      'brand',
+    ];
+    for (let i = 0; i < fieldsToChange.length; i += 1) {
+      const field = fieldsToChange[i];
+      if (promotion.hasOwnProperty(field)) {
+        existing[field] = promotion[field];
+      }
     }
     return this.repository.save(existing);
+  }
+
+  async hasUserRight(userId: number, promotionId: number) {
+    const promotion = await this.repository.findOne(promotionId);
+    return promotion && promotion.userId === userId;
   }
 }

@@ -4,13 +4,13 @@ import { Vote } from '@entities/Vote';
 import { User } from '@entities/User';
 import { Promotion } from '@entities/Promotion';
 import { Product } from '@entities/Product';
-import { connection } from './setup';
+import { testConnection } from './setup';
 
 describe('Vote Entity', () => {
   it('Should be able to be created vote', async () => {
-    const userRepository = connection.getRepository(User);
-    const promotionRepository = connection.getRepository(Promotion);
-    const voteRepository = connection.getRepository(Vote);
+    const userRepository = testConnection.getRepository(User);
+    const promotionRepository = testConnection.getRepository(Promotion);
+    const voteRepository = testConnection.getRepository(Vote);
 
     let user = userRepository.create({
       firstName: 'Login',
@@ -21,25 +21,27 @@ describe('Vote Entity', () => {
 
     let promotion = promotionRepository.create({
       description: 'Description',
+      price: 50,
+      type: 2,
+      promotion: 10.5,
       beginDate: new Date(),
       endDate: new Date(),
       userId: user.id,
     });
     promotion = await promotionRepository.save(promotion);
 
-    let vote = voteRepository.create({
+    const vote = voteRepository.create({
       user,
       promotion,
-      userId: user.id,
       upvote: true,
     });
-    vote = await voteRepository.save(vote);
+    await voteRepository.save(vote);
   });
 
   it('Should NOT be able to be created vote', async () => {
-    const userRepository = connection.getRepository(User);
-    const promotionRepository = connection.getRepository(Promotion);
-    const voteRepository = connection.getRepository(Vote);
+    const userRepository = testConnection.getRepository(User);
+    const promotionRepository = testConnection.getRepository(Promotion);
+    const voteRepository = testConnection.getRepository(Vote);
 
     let user = userRepository.create({
       firstName: 'Login',
@@ -50,6 +52,9 @@ describe('Vote Entity', () => {
 
     let promotion = promotionRepository.create({
       description: 'Description',
+      price: 50,
+      type: 0,
+      promotion: 10.5,
       beginDate: new Date(),
       endDate: new Date(),
       userId: user.id,
@@ -60,7 +65,6 @@ describe('Vote Entity', () => {
       user,
       promotion,
       upvote: true,
-      userId: user.id,
     });
 
     await voteRepository.save(vote);
@@ -68,16 +72,19 @@ describe('Vote Entity', () => {
       user,
       promotion,
       upvote: true,
-      userId: user.id,
     });
-    voteRepository.save(vote).then(() => fail()).catch(() => {});
+    voteRepository
+      .save(vote)
+      .then(() => fail())
+      .catch(() => {});
   });
 
   it('The vote status of the promotion should be +2', async () => {
-    const productRepository = connection.getRepository(Product);
-    const promotionRepository = connection.getRepository(Promotion);
-    const userRepository = connection.getRepository(User);
-    const voteRepository = connection.getRepository(Vote);
+    const productRepository = testConnection.getRepository(Product);
+    const promotionRepository = testConnection.getRepository(Promotion);
+    const userRepository = testConnection.getRepository(User);
+    const voteRepository = testConnection.getRepository(Vote);
+    voteRepository.delete({});
 
     let user1 = userRepository.create({
       firstName: 'Login',
@@ -99,6 +106,9 @@ describe('Vote Entity', () => {
 
     let promotion = promotionRepository.create({
       product,
+      price: 50,
+      promotion: 10.5,
+      type: 1,
       user: user1,
       description: 'test',
       beginDate: new Date(),
@@ -109,7 +119,6 @@ describe('Vote Entity', () => {
     let vote = voteRepository.create({
       promotion,
       user: user1,
-      userId: user1.id,
       upvote: true,
     });
     await voteRepository.save(vote);
@@ -117,7 +126,6 @@ describe('Vote Entity', () => {
     vote = voteRepository.create({
       promotion,
       user: user2,
-      userId: user2.id,
       upvote: true,
     });
     await voteRepository.save(vote);
@@ -126,6 +134,6 @@ describe('Vote Entity', () => {
       where: { upvote: true },
     });
 
-    expect(4).to.equal(data.length);
+    expect(data.length).to.equal(2);
   });
 });

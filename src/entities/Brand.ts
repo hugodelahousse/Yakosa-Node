@@ -1,10 +1,18 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  ManyToMany,
+  RelationId,
+  JoinTable,
+} from 'typeorm';
 import { Store } from './Store';
 import { Promotion } from './Promotion';
+import { User } from './User';
 
 @Entity()
 export class Brand {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -17,4 +25,10 @@ export class Brand {
   @OneToMany(type => Promotion, promotion => promotion.brand)
   promotions: Promotion[];
 
+  @RelationId((brand: Brand) => brand.managers)
+  managersId: number[];
+
+  @JoinTable()
+  @ManyToMany(type => User, user => user.managedBrand)
+  managers: User[];
 }

@@ -1,10 +1,16 @@
-import { Entity, OneToMany, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  RelationId,
+} from 'typeorm';
 import { User } from './User';
 import { ListProduct } from './ListProduct';
 
 @Entity()
 export default class ShoppingList {
-
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -14,13 +20,12 @@ export default class ShoppingList {
   @Column({ nullable: true })
   lastUsed: Date;
 
-  @Column()
+  @RelationId((shopl: ShoppingList) => shopl.user)
   userId: number;
 
-  @ManyToOne(type => User)
+  @ManyToOne(type => User, { onDelete: 'CASCADE' })
   user: User;
 
   @OneToMany(type => ListProduct, listProduct => listProduct.list)
   products: ListProduct[];
-
 }

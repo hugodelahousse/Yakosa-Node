@@ -3,7 +3,9 @@ require('dotenv').config();
 
 function getEnv(variable: string, defaultValue = undefined): string {
   let value = process.env[variable];
-  if (value === undefined) { value = defaultValue; }
+  if (value === undefined) {
+    value = defaultValue;
+  }
   if (value === undefined) {
     throw new Error(`Invalid value for configuration variable: ${variable}`);
   }
@@ -13,11 +15,13 @@ function getEnv(variable: string, defaultValue = undefined): string {
 interface Config {
   GOOGLE_CONSUMER_KEY: string;
   GOOGLE_CONSUMER_SECRET: string;
+  JWT_SECRET: string;
 }
 
 const config: Config = {
   GOOGLE_CONSUMER_KEY: getEnv('GOOGLE_CONSUMER_KEY'),
   GOOGLE_CONSUMER_SECRET: getEnv('GOOGLE_CONSUMER_SECRET'),
+  JWT_SECRET: getEnv('JWT_SECRET'),
 };
 
 export default config;

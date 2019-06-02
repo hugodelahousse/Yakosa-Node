@@ -1,13 +1,20 @@
-import { getConnectionOptions, Connection, getConnectionManager } from 'typeorm';
+import {
+  getConnectionOptions,
+  Connection,
+  getConnectionManager,
+} from 'typeorm';
 
-export async function getOrCreateConnection(name?: string) : Promise<Connection> {
+export async function getOrCreateConnection(
+  name?: string,
+): Promise<Connection> {
   const connectionManager = getConnectionManager();
   try {
     return connectionManager.get();
   } catch {
-    const connection = connectionManager.create(
-      { ...await getConnectionOptions(name), name: 'default' },
-    );
+    const connection = connectionManager.create({
+      ...(await getConnectionOptions(name)),
+      name: 'default',
+    });
     return await connection.connect();
   }
 }
