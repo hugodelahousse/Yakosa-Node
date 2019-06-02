@@ -30,6 +30,7 @@
     "passport-local": "^1.0.0",
     "passport-token-google": "^0.1.2",
     "pg": "^7.3.0",
+    "prettier": "^1.17.1",
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
@@ -64,6 +65,8 @@
     "fixtures": "ts-node -r tsconfig-paths/register node_modules/.bin/fixtures",
     "migrations:run": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:run",
     "build": "tsc",
-    "test": "NODE_ENV=test mocha --timeout 5000 -r ts-node/register -r tsconfig-paths/register src/tests/**/*.test.ts"
+    "test": "NODE_ENV=test mocha --timeout 5000 -r ts-node/register -r tsconfig-paths/register src/tests/**/*.test.ts",
+    "prettier:run": "prettier --write src/*/**.ts",
+    "prettier:check": "prettier --check src/*/**.ts"
   }
 }
