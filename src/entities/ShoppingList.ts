@@ -20,7 +20,7 @@ export default class ShoppingList {
   @Column({ nullable: true })
   lastUsed: Date;
 
-  @RelationId((shopl: ShoppingList) => shopl.user)
+  @RelationId((shop: ShoppingList) => shop.user)
   userId: number;
 
   @ManyToOne(type => User, { onDelete: 'CASCADE' })

@@ -47,6 +47,7 @@ export class PromotionController {
     return this.repository.find({
       where: filter,
       take: limit,
+      relations: ['product'],
     });
   }
 
@@ -55,7 +56,7 @@ export class PromotionController {
     return this.repository.findOne(
       { id },
       {
-        relations: ['store', 'brand', 'user'],
+        relations: ['store', 'brand', 'user', 'product'],
       },
     );
   }
