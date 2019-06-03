@@ -16,10 +16,18 @@ import { JWT } from '../middlewares/checkJwt';
 import config from 'config';
 import { getRepository } from 'typeorm';
 import ShoppingList from '@entities/ShoppingList';
+import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
 
 const typeDefs = gql`
   directive @UUID(name: String! = "uid", from: [String!]! = ["id"]) on OBJECT
   scalar Date
+
+  type ProductInfo {
+    image_url: String
+    brands: String
+    product_name_fr: String
+    generic_name_fr: String
+  }
 
   type User {
     id: Int
@@ -61,6 +69,8 @@ const typeDefs = gql`
       offset: Int
       limit: Int
     ): [Store!]!
+
+    info: ProductInfo
   }
 
   type Store {
@@ -166,6 +176,9 @@ const resolvers = {
   Product: {
     nearbyStore: async (parent, args, _, info) =>
       await graphQlFindNearShopRelatedToProduct(args, info, parent.barcode),
+
+    info: async (parent, args, _, info) =>
+      await getProductFromBarcode(parent.barcode),
   },
 
   Mutation: {

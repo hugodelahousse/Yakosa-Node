@@ -15,7 +15,9 @@ import * as request from 'request-promise';
 import {
   OpenFoodFactProductResponse,
   OpenFoodFactProductsResponse,
+  OpenFoodFactProduct,
 } from '../types/OpenFoodFactProduct';
+import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
 
 @JsonController()
 export class ProductController {
@@ -32,10 +34,7 @@ export class ProductController {
     if (product) {
       return product;
     }
-    const object: OpenFoodFactProductResponse = await request(
-      `https://fr.openfoodfacts.org/api/v0/produit/${barcode}`,
-      { json: true },
-    );
+    const object: OpenFoodFactProduct = await getProductFromBarcode(barcode);
     return await this.create({ barcode: object.code } as Product);
   }
 
