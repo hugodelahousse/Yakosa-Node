@@ -8,10 +8,18 @@ import { JWT } from '../middlewares/checkJwt';
 import config from 'config';
 import { getRepository } from 'typeorm';
 import ShoppingList from '@entities/ShoppingList';
+import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
 
 const typeDefs = gql`
   directive @UUID(name: String! = "uid", from: [String!]! = ["id"]) on OBJECT
   scalar Date
+
+  type ProductInfo {
+    image_url: String
+    brands: String
+    product_name_fr: String
+    generic_name_fr: String
+  }
 
   type User {
     id: Int
@@ -39,6 +47,28 @@ const typeDefs = gql`
 
   type Product {
     barcode: String!
+
+    info: ProductInfo
+  }
+
+  type Store {
+    id: ID!
+    position: String!
+    brand: Brand
+    promotions: [Promotion!]!
+  }
+
+  type Brand {
+    id: ID!
+    name: String!
+    promotions: [Promotion!]!
+  }
+
+  type Promotion {
+    id: ID!
+    product: Product!
+    brand: Brand
+    store: Store
   }
 
   type Query {
@@ -92,6 +122,11 @@ const resolvers = {
   ListProduct: {
     product: async parent => parent.product,
     list: async parent => parent.list,
+  },
+
+  Product: {
+    info: async (parent, args, _, info) =>
+      await getProductFromBarcode(parent.barcode),
   },
 
   Mutation: {
