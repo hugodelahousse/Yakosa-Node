@@ -34,7 +34,10 @@ export class ProductController {
     if (product) {
       return product;
     }
-    const object: OpenFoodFactProduct = await getProductFromBarcode(barcode);
+    const object = await getProductFromBarcode(barcode);
+    if (!object) {
+      return null;
+    }
     return await this.create({ barcode: object.code } as Product);
   }
 
