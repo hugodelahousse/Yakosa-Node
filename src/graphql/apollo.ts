@@ -76,6 +76,7 @@ const typeDefs = gql`
     user(id: ID!): User
     currentUser: User
 
+    shoppingList(id: ID!): ShoppingList
     listProduct(id: ID!): ListProduct
 
     allProducts(offset: Int, limit: Int): [Product!]!
@@ -111,6 +112,8 @@ const resolvers = {
       await graphQLFindOne(ListProduct, info, { barcode: args.barcode }),
     listProduct: async (parent, args, _, info) =>
       await graphQLFindOne(ListProduct, info, { id: args.id }),
+    shoppingList: async (parent, args, _, info) =>
+      await graphQLFindOne(ShoppingList, info, { id: args.id }),
   },
   User: {
     shoppingLists: async parent => parent.shoppingLists,
