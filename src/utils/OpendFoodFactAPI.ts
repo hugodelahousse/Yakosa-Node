@@ -8,26 +8,26 @@ import { tedis } from './redis';
 
 export async function getProductFromBarcode(
   barcode: string,
-): Promise<OpenFoodFactProduct> {
+): Promise<OpenFoodFactProduct | null> {
   let objectString: string;
+  console.log(`Fetching info for ${barcode}`);
   if ((await tedis.exists(barcode)) === 1) {
-    console.log('get cache');
+    console.log(`Using cache for ${barcode}`);
     objectString = (await tedis.get(barcode)) as string;
-    console.log('cache goten');
-    const object = JSON.parse(objectString) as OpenFoodFactProduct;
-    return object;
+    return JSON.parse(objectString) as OpenFoodFactProduct;
   }
+
+  console.log(`Fetching OpenFoodFact for ${barcode}`);
   const object: OpenFoodFactProductResponse = await request(
     `https://fr.openfoodfacts.org/api/v0/produit/${barcode}`,
     { json: true },
   );
-  console.log('obj get');
-  objectString = JSON.stringify(object.product);
-  console.log('obj stringify');
-  tedis.set(barcode, objectString);
-  console.log('obj set');
-  tedis.expire(barcode, 604800);
-  return object.product;
+
+  const product = object.product ? object.product : null;
+
+  await tedis.set(barcode, JSON.stringify(product));
+  await tedis.expire(barcode, 604800);
+  return product;
 }
 
 export async function getProductFromName(
