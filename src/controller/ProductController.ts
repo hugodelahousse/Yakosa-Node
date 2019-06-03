@@ -8,17 +8,17 @@ import {
   Post,
   Patch,
   HttpCode,
-  OnUndefined,
+  OnUndefined, UseBefore,
 } from 'routing-controllers';
 import { Product } from '../entities/Product';
 import * as request from 'request-promise';
 import {
-  OpenFoodFactProductResponse,
   OpenFoodFactProductsResponse,
-  OpenFoodFactProduct,
 } from '../types/OpenFoodFactProduct';
 import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
+import { checkJwt } from '../middlewares/checkJwt';
 
+@UseBefore(checkJwt)
 @JsonController()
 export class ProductController {
   private repository = getRepository(Product);
@@ -88,7 +88,7 @@ export class ProductController {
       return undefined;
     }
     const fieldsToChange: string[] = [];
-    for (let index = 0; index < fieldsToChange.length; index++) {
+    for (let index = 0; index < fieldsToChange.length; index += 1) {
       const element = fieldsToChange[index];
       if (product.hasOwnProperty(element)) {
         existing[element] = product[element];

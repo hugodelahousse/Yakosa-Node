@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
-import { app, jwtToken, promotions } from '../setup';
+import {app, jwtToken, promotions, stores} from '../setup';
 
 chai.use(chaiHttp);
 
@@ -30,11 +30,12 @@ describe('PromotionController should be able to list items', () => {
   });
 
   it('Should display the only promotion of the first store', async () => {
-    const id = promotions[0].id;
-    const res = await chai.request(app).get(`/promotions?storeId=${id}`).set('Authorization', jwtToken);
+    const id = stores[0].id;
+    const res = await chai.request(app).get(`/promotions?storeId=${id}`)
+        .set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
-    const dbId = promotions.filter(promotions => promotions.storeId === 1);
+    const dbId = promotions.filter(promotion => promotion.storeId === 1);
     expect(res.body).to.have.length(dbId.length);
   });
 });
