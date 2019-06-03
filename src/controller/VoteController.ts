@@ -8,10 +8,12 @@ import {
   Param,
   Post,
   Patch,
-  HttpCode,
+  HttpCode, UseBefore,
 } from 'routing-controllers';
 import { Vote } from '@entities/Vote';
+import { checkJwt } from '../middlewares/checkJwt';
 
+@UseBefore(checkJwt)
 @JsonController()
 export class VoteController {
   private repository = getRepository(Vote);
@@ -63,6 +65,6 @@ export class VoteController {
 
   async hasUserRight(userId: number, voteId: number) {
     const vote = await this.repository.findOne(voteId);
-    return vote && vote.userId == userId;
+    return vote && vote.userId === userId;
   }
 }
