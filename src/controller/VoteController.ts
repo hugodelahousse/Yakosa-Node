@@ -8,7 +8,8 @@ import {
   Param,
   Post,
   Patch,
-  HttpCode, UseBefore,
+  HttpCode,
+  UseBefore,
 } from 'routing-controllers';
 import { Vote } from '@entities/Vote';
 import { checkJwt } from '../middlewares/checkJwt';

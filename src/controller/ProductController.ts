@@ -8,13 +8,12 @@ import {
   Post,
   Patch,
   HttpCode,
-  OnUndefined, UseBefore,
+  OnUndefined,
+  UseBefore,
 } from 'routing-controllers';
 import { Product } from '../entities/Product';
 import * as request from 'request-promise';
-import {
-  OpenFoodFactProductsResponse,
-} from '../types/OpenFoodFactProduct';
+import { OpenFoodFactProductsResponse } from '../types/OpenFoodFactProduct';
 import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
 import { checkJwt } from '../middlewares/checkJwt';
 
