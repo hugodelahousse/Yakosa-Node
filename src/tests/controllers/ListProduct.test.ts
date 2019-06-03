@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
-import { app, listProduct } from '../setup';
+import {app, jwtToken, listProduct} from '../setup';
 import { getRepository } from 'typeorm';
 import { ListProduct } from '@entities/ListProduct';
 
@@ -10,12 +10,12 @@ const expect = chai.expect;
 
 describe('ListProductController GET', () => {
   it('Should respond with 200', async () => {
-    const res = await chai.request(app).get('/listProduct');
+    const res = await chai.request(app).get('/listProduct').set('Authorization', jwtToken);
     expect(res).to.have.status(200);
   });
 
   it('Should return existing listProduct', async () => {
-    const res = await chai.request(app).get('/listProduct');
+    const res = await chai.request(app).get('/listProduct').set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(listProduct.length);
@@ -26,8 +26,9 @@ describe('ListProductController GET', () => {
 
   it('should return existing listProduct from specific list', async () => {
     const id = listProduct[0].listId;
-    const productListFromList = listProduct.filter(l => l.listId == id);
-    const res = await chai.request(app).get(`/listproduct/fromlist/${id}`);
+    const productListFromList = listProduct.filter(l => l.listId === id);
+    const res = await chai.request(app).get(`/listproduct/fromlist/${id}`)
+        .set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(productListFromList.length);
@@ -40,14 +41,16 @@ describe('ListProductController GET', () => {
 describe('ListProductController DELETE Then POST', () => {
   it('Should delete the 1 listProduct', async () => {
     const id = listProduct[0].id;
-    let res = await chai.request(app).delete(`/listProduct/${id}`);
+    let res = await chai.request(app).delete(`/listProduct/${id}`)
+        .set('Authorization', jwtToken);
     expect(res).to.have.status(200);
-    res = await chai.request(app).get('/listProduct/');
+    res = await chai.request(app).get('/listProduct/').set('Authorization', jwtToken);
     expect(res.body.length).to.be.equal(listProduct.length - 1);
   });
 
   it('Should not find the desired listProduct', async () => {
-    const res = await chai.request(app).delete('/listProduct/1000');
+    const res = await chai.request(app).delete('/listProduct/1000')
+        .set('Authorization', jwtToken);
     expect(res).to.have.status(404);
   });
 });
@@ -64,9 +67,9 @@ describe('ListProductController Post', () => {
     let res = await chai
       .request(app)
       .post('/listProduct/')
-      .send(list);
+      .send(list).set('Authorization', jwtToken);
     expect(res).to.have.status(201);
-    res = await chai.request(app).get('/listProduct/');
+    res = await chai.request(app).get('/listProduct/').set('Authorization', jwtToken);
     expect(res.body.length).to.be.equal(listProduct.length);
   });
 });

@@ -20,7 +20,7 @@ export class Store {
   @Column('geography', { spatialFeatureType: 'Point', srid: 4326 })
   position: string;
 
-  @Column()
+  @Column({ nullable: true })
   brandId: number;
 
   @ManyToOne(type => Brand, { onDelete: 'CASCADE' })
