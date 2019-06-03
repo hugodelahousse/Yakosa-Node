@@ -1,6 +1,6 @@
 entity: ShoppingList
 items:
-  shoppingList{1..100}:
+  shoppingList{1..50}:
     creationDate: '{{date.past}}'
     lastUsed: '{{date.recent}}'
     user: '@user($current)'

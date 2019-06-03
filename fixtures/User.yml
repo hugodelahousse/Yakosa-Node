@@ -1,5 +1,5 @@
 entity: User
 items:
-  user{1..100}:
+  user{1..50}:
     firstName: '{{name.firstName}}'
     lastName: '{{name.lastName}}'

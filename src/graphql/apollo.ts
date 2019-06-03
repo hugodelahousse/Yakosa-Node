@@ -14,6 +14,8 @@ import { Store } from '@entities/Store';
 import * as jwt from 'jsonwebtoken';
 import { JWT } from '../middlewares/checkJwt';
 import config from 'config';
+import { getRepository } from 'typeorm';
+import ShoppingList from '@entities/ShoppingList';
 
 const typeDefs = gql`
   directive @UUID(name: String! = "uid", from: [String!]! = ["id"]) on OBJECT
@@ -107,6 +109,15 @@ const typeDefs = gql`
     ): [Store!]!
     currentUser: User
   }
+
+  type Mutation {
+    createList: ShoppingList
+    deleteList(id: ID!): Boolean!
+
+    addListProduct(list: ID!, product: ID!, quantity: Int): ListProduct
+    updateListProduct(id: ID!, quantity: Int!): ListProduct
+    removeListProduct(id: ID!): Boolean!
+  }
 `;
 
 const resolvers = {
@@ -155,6 +166,69 @@ const resolvers = {
   Product: {
     nearbyStore: async (parent, args, _, info) =>
       await graphQlFindNearShopRelatedToProduct(args, info, parent.barcode),
+  },
+
+  Mutation: {
+    createList: async (parent, args, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      const newList = await getRepository(ShoppingList).save({
+        creationDate: new Date(),
+        user: {
+          id: user,
+        },
+      });
+
+      return await graphQLFindOne(ShoppingList, info, { id: newList.id });
+    },
+
+    deleteList: async (parent, { id }, { user }) => {
+      if (user === null) {
+        return null;
+      }
+      const result = await getRepository(ShoppingList).delete({
+        id,
+        user: { id: user },
+      });
+      return !!result.raw[1];
+    },
+
+    addListProduct: async (
+      parent,
+      { list, product, quantity },
+      { user },
+      info,
+    ) => {
+      if (user === null) {
+        return null;
+      }
+
+      const result = await getRepository(ListProduct).save({
+        list: { id: list },
+        product: { barcode: product },
+        quantity: quantity || 1,
+      });
+
+      return await graphQLFindOne(ListProduct, info, { id: result.id });
+    },
+
+    updateListProduct: async (parent, { id, quantity }, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      await getRepository(ListProduct).update(id, { quantity });
+
+      return await graphQLFindOne(ListProduct, info, { id });
+    },
+
+    removeListProduct: async (parent, { id }, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      const result = await getRepository(ListProduct).delete(id);
+      return !!result.raw[1];
+    },
   },
 };
 
