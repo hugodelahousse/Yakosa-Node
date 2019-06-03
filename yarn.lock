@@ -4020,6 +4020,13 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
+tedis@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/tedis/-/tedis-0.1.6.tgz#bde2ea9c8cd4a618bc5ecb9c96ebce6fc609917c"
+  integrity sha512-Vvc5SfX1sZupQCfUP6JHZsZ6O0NGgfACcm4oMXHRHuYeuMOA5yBQgaE3Cg9NtQ8k9SxMwHV0erhKyHOuhKU2MQ==
+  dependencies:
+    uuid "^3.3.2"
+
 template-url@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/template-url/-/template-url-1.0.0.tgz#d9456bee70cac6617b462a7b08db29fb813a0b09"
