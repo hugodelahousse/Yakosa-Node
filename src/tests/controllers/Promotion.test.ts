@@ -31,7 +31,8 @@ describe('PromotionController should be able to list items', () => {
 
   it('Should display the only promotion of the first store', async () => {
     const id = stores[0].id;
-    const res = await chai.request(app).get(`/promotions?storeId=${id}`)
+    const res = await chai.request(app).get('/promotions')
+        .query({ storeId: id })
         .set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);

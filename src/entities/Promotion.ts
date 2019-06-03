@@ -4,7 +4,9 @@ import {
   Column,
   ManyToOne,
   OneToMany,
-  JoinTable, Unique, RelationId,
+  JoinTable,
+  Unique,
+  RelationId,
 } from 'typeorm';
 import { Product } from './Product';
 import { User } from './User';
