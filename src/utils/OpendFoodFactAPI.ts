@@ -4,17 +4,16 @@ import {
   OpenFoodFactProductsResponse,
 } from 'types/OpenFoodFactProduct';
 import * as request from 'request-promise';
-import { tedis } from './redis';
+import { redis } from './redis';
 
 export async function getProductFromBarcode(
   barcode: string,
 ): Promise<OpenFoodFactProduct | null> {
-  let objectString: string;
   console.log(`Fetching info for ${barcode}`);
-  if ((await tedis.exists(barcode)) === 1) {
+  const value = await redis.get(barcode);
+  if (value) {
     console.log(`Using cache for ${barcode}`);
-    objectString = (await tedis.get(barcode)) as string;
-    return JSON.parse(objectString) as OpenFoodFactProduct;
+    return JSON.parse(value) as OpenFoodFactProduct;
   }
 
   console.log(`Fetching OpenFoodFact for ${barcode}`);
@@ -25,8 +24,7 @@ export async function getProductFromBarcode(
 
   const product = object.product ? object.product : null;
 
-  await tedis.set(barcode, JSON.stringify(product));
-  await tedis.expire(barcode, 604800);
+  await redis.set(barcode, JSON.stringify(product), 'EX', 604800);
   return product;
 }
 
