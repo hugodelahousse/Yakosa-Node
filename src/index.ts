@@ -20,7 +20,7 @@ createApp().then((app) => {
 
   app.get('/auth/google/callback', passport.authenticate('google'), async (req, res) => {
     const token = jwt.sign({ userId: req.user.id },
-                           config.JWT_SECRET, { expiresIn: 30 },
+                           config.JWT_SECRET, { expiresIn: 600 },
       );
     const refresh = await addRefreshToken(req.user.id);
     res.send({ token, refresh });
@@ -28,37 +28,39 @@ createApp().then((app) => {
 
   app.get('/auth/google/token', passport.authenticate('google-token'), async (req, res) => {
     const token = jwt.sign({ userId: req.user.id },
-                           config.JWT_SECRET, { expiresIn: 1800 },
+                           config.JWT_SECRET, { expiresIn: 600 },
       );
     const refresh = await addRefreshToken(req.user.id);
     res.send({ token, refresh });
   });
 
   app.post('/auth/token/refresh', async (req, res) => {
-    const refresh = req.body['token'];
-    if (!refresh)
+    console.log('refreshing');
+    console.log(req.body);
+    const { refresh_token } = req.body;
+    if (!refresh_token) {
       return res
         .status(403)
         .send({ status: 403, error: 'No auth token found.' });
+    }
 
-    if (refresh !== undefined && !Array.isArray(refresh) && refresh.length > 0) {
-      const refreshFound = await getRefreshToken(refresh);
+    if (refresh_token !== undefined && !Array.isArray(refresh_token) && refresh_token.length > 0) {
+      const refreshFound = await getRefreshToken(refresh_token);
       if (refreshFound !== undefined) {
         const newToken = jwt.sign(
-          { userId: refreshFound.userId},
+          { userId: refreshFound.userId },
           config.JWT_SECRET,
-          { expiresIn: 30 },
+          { expiresIn: 600 },
         );
         const newRefresh = await addRefreshToken(refreshFound.userId);
         return res.send({
           token: newToken,
           refresh: newRefresh,
         });
-      } else {
-        return res
-          .status(403)
-          .send({ status: 403, error: 'Refresh Token verification failed' });
       }
+      return res
+        .status(403)
+        .send({ status: 403, error: 'Refresh Token verification failed' });
     }
   });
 });
