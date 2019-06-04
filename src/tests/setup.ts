@@ -41,9 +41,11 @@ before(async () => {
       'vote.yml',
       'ListProduct.yml',
     );
-    jwtToken = jwt.sign({ userId: 1, googleId: 1 }, config.JWT_SECRET, {
-      expiresIn: '1h',
-    });
+    jwtToken =
+      'JWT ' +
+      jwt.sign({ userId: 1, googleId: 1 }, config.JWT_SECRET, {
+        expiresIn: '1h',
+      });
   } catch (err) {
     console.error(err);
   }
