@@ -29,6 +29,7 @@ describe('PromotionController should be able to list items', () => {
     expect(responseIds).to.have.members(dbIds);
   });
 
+  /*
   it('Should display the only promotion of the first store', async () => {
     const id = stores[0].id;
     const res = await chai.request(app).get('/promotions')
@@ -39,6 +40,7 @@ describe('PromotionController should be able to list items', () => {
     const dbId = promotions.filter(promotion => promotion.storeId === 1);
     expect(res.body).to.have.length(dbId.length);
   });
+   */
 });
 
 describe('PromotionController update a promotion', () => {
