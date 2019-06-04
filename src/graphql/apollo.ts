@@ -69,7 +69,7 @@ const typeDefs = gql`
       offset: Int
       limit: Int
     ): [Store!]!
-    
+
     info: ProductInfo
   }
 
