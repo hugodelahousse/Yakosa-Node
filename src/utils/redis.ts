@@ -1,7 +1,4 @@
-import { Tedis } from 'tedis';
+import * as asyncRedis from 'async-redis';
 import config from 'config';
 
-export const tedis = new Tedis({
-  port: config.REDIS_PORT,
-  host: config.REDIS_HOST,
-});
+export const redis = asyncRedis.createClient(config.REDIS_URL);
