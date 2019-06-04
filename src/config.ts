@@ -24,7 +24,7 @@ const config: Config = {
   GOOGLE_CONSUMER_KEY: getEnv('GOOGLE_CONSUMER_KEY'),
   GOOGLE_CONSUMER_SECRET: getEnv('GOOGLE_CONSUMER_SECRET'),
   JWT_SECRET: getEnv('JWT_SECRET'),
-  REDIS_PORT: parseInt(getEnv('REDIS_PORT')),
+  REDIS_PORT: parseInt(getEnv('REDIS_PORT'), 10),
   REDIS_HOST: getEnv('REDIS_HOST'),
 };
 

@@ -32,9 +32,7 @@ export async function checkJwt(
         .status(403)
         .send({ status: 403, error: 'Token verification failed.' });
   } catch (error) {
-    return response
-      .status(403)
-      .send({status: 403, error: error.message});
+    return response.status(403).send({ status: 403, error: error.message });
   }
 
   next();
