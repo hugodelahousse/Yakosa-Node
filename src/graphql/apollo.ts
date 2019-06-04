@@ -181,6 +181,10 @@ const resolvers = {
       if (user === null) {
         return null;
       }
+      if (quantity <= 0) {
+        await getRepository(ListProduct).delete(id);
+        return null;
+      }
       await getRepository(ListProduct).update(id, { quantity });
 
       return await graphQLFindOne(ListProduct, info, { id });
