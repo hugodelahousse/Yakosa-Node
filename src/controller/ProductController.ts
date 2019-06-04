@@ -9,14 +9,15 @@ import {
   Patch,
   HttpCode,
   OnUndefined,
+  UseBefore,
 } from 'routing-controllers';
 import { Product } from '../entities/Product';
 import * as request from 'request-promise';
-import {
-  OpenFoodFactProductResponse,
-  OpenFoodFactProductsResponse,
-} from '../types/OpenFoodFactProduct';
+import { OpenFoodFactProductsResponse } from '../types/OpenFoodFactProduct';
+import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
+import { checkJwt } from '../middlewares/checkJwt';
 
+@UseBefore(checkJwt)
 @JsonController()
 export class ProductController {
   private repository = getRepository(Product);
@@ -32,10 +33,10 @@ export class ProductController {
     if (product) {
       return product;
     }
-    const object: OpenFoodFactProductResponse = await request(
-      `https://fr.openfoodfacts.org/api/v0/produit/${barcode}`,
-      { json: true },
-    );
+    const object = await getProductFromBarcode(barcode);
+    if (!object) {
+      return null;
+    }
     return await this.create({ barcode: object.code } as Product);
   }
 
@@ -86,7 +87,7 @@ export class ProductController {
       return undefined;
     }
     const fieldsToChange: string[] = [];
-    for (let index = 0; index < fieldsToChange.length; index++) {
+    for (let index = 0; index < fieldsToChange.length; index += 1) {
       const element = fieldsToChange[index];
       if (product.hasOwnProperty(element)) {
         existing[element] = product[element];

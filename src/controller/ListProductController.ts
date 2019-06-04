@@ -9,9 +9,13 @@ import {
   Post,
   Patch,
   HttpCode,
+  UseBefore,
 } from 'routing-controllers';
 import { ListProduct } from '@entities/ListProduct';
 
+import { checkJwt } from '../middlewares/checkJwt';
+
+@UseBefore(checkJwt)
 @JsonController()
 export class ListProductController {
   private repository = getRepository(ListProduct);

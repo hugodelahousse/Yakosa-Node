@@ -36,6 +36,7 @@
     "request-promise": "^4.2.4",
     "request-promise-native": "^1.0.7",
     "routing-controllers": "^0.7.7",
+    "tedis": "^0.1.6",
     "ts-node": "8.0.2",
     "tsconfig-paths": "^3.8.0",
     "typeorm": "0.2.13",

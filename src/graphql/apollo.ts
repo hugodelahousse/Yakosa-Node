@@ -16,10 +16,18 @@ import { JWT } from '../middlewares/checkJwt';
 import config from 'config';
 import { getRepository } from 'typeorm';
 import ShoppingList from '@entities/ShoppingList';
+import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
 
 const typeDefs = gql`
   directive @UUID(name: String! = "uid", from: [String!]! = ["id"]) on OBJECT
   scalar Date
+
+  type ProductInfo {
+    image_url: String
+    brands: String
+    product_name_fr: String
+    generic_name_fr: String
+  }
 
   type User {
     id: Int
@@ -61,6 +69,8 @@ const typeDefs = gql`
       offset: Int
       limit: Int
     ): [Store!]!
+    
+    info: ProductInfo
   }
 
   type Store {
@@ -94,6 +104,7 @@ const typeDefs = gql`
     allUsers(offset: Int, limit: Int): [User!]!
     user(id: ID!): User
 
+    shoppingList(id: ID!): ShoppingList
     listProduct(id: ID!): ListProduct
 
     allProducts(offset: Int, limit: Int): [Product!]!
@@ -144,6 +155,8 @@ const resolvers = {
       await graphQLFindList(Store, args, info),
     nearbyStore: async (parent, args, _, info) =>
       await graphQlFindNearShop(args, info, {}),
+    shoppingList: async (parent, args, _, info) =>
+      await graphQLFindOne(ShoppingList, info, { id: args.id }),
   },
   User: {
     shoppingLists: async parent => parent.shoppingLists,
@@ -164,6 +177,8 @@ const resolvers = {
       await graphQlFindNearShopRelatedToPromotion(args, info, parent.id),
   },
   Product: {
+    info: async (parent, args, _, info) =>
+      await getProductFromBarcode(parent.barcode),
     nearbyStore: async (parent, args, _, info) =>
       await graphQlFindNearShopRelatedToProduct(args, info, parent.barcode),
   },
