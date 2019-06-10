@@ -15,8 +15,7 @@ function getEnv(variable: string, defaultValue = undefined): string {
 interface Config {
   GOOGLE_CONSUMER_KEY: string;
   GOOGLE_CONSUMER_SECRET: string;
-  REDIS_PORT: number;
-  REDIS_HOST: string;
+  REDIS_URL: string;
   JWT_SECRET: string;
 }
 
@@ -24,8 +23,7 @@ const config: Config = {
   GOOGLE_CONSUMER_KEY: getEnv('GOOGLE_CONSUMER_KEY'),
   GOOGLE_CONSUMER_SECRET: getEnv('GOOGLE_CONSUMER_SECRET'),
   JWT_SECRET: getEnv('JWT_SECRET'),
-  REDIS_PORT: parseInt(getEnv('REDIS_PORT')),
-  REDIS_HOST: getEnv('REDIS_HOST'),
+  REDIS_URL: getEnv('REDIS_URL'),
 };
 
 export default config;
