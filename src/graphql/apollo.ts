@@ -22,6 +22,16 @@ const typeDefs = gql`
   directive @UUID(name: String! = "uid", from: [String!]! = ["id"]) on OBJECT
   scalar Date
 
+  input PositionInput {
+    type: String!
+    coordinates: [Float!]!
+  }
+
+  type Position {
+    type: String!
+    coordinates: [Float!]!
+  }
+
   type ProductInfo {
     image_url: String
     brands: String
@@ -47,7 +57,7 @@ const typeDefs = gql`
 
     nearbyStore(
       distance: String
-      position: String!
+      position: PositionInput!
       offset: Int
       limit: Int
     ): [Store!]!
@@ -75,7 +85,7 @@ const typeDefs = gql`
 
   type Store {
     id: ID!
-    position: String!
+    position: Position!
     brand: Brand
     promotions: [Promotion!]!
   }
