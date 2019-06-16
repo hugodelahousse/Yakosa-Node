@@ -75,6 +75,7 @@ describe('createShopingRoute test', () => {
     expect(result.promotions.length).equal(6);
   });
 
+  // Should fail because we don't handle re-evaluation of store value
   it('choose the 3 best shops to have more promotions', () => {
     const result = createShopingRoute(shoplist, shoppinglist, 3);
     expect(result.economie).equal(38.6 + 21.3 + (17.4 - 16.4));

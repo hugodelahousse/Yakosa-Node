@@ -3,20 +3,33 @@ import { Store } from '@entities/Store';
 import { Promotion } from '@entities/Promotion';
 import { StoreWithValueAndPromotion, ShoppingRoute } from 'types/ShoppingRoute';
 
+/**
+ * Function that must find the the stores tou must travel to
+ * to get the most promotions
+ * @param stores
+ * @param shoppingList
+ * @param numMaxOfStore
+ */
 export function createShopingRoute(
   stores: Store[],
   shoppingList: ShoppingList,
   numMaxOfStore: number = 10,
 ): ShoppingRoute {
+  // We calculate the value of each shop,
+  // keep only the one that are usefull
+  // and sort them to have the more usefull first
   const storeAndData = stores
     .map(store => getShopValue(shoppingList, store))
+    .filter(store => store.value > 0)
     .sort((a, b) => (a.value < b.value ? 1 : a.value > b.value ? -1 : 0));
+
   const shoppingRoute: ShoppingRoute = {
     shoppingList,
     stores: [],
     promotions: [],
     economie: 0,
   };
+  // then we create our route with another function
   return selectNextStore(shoppingRoute, numMaxOfStore, storeAndData);
 }
 
@@ -25,18 +38,21 @@ export function selectNextStore(
   numLeftStore: number,
   storeAndDataLeft: StoreWithValueAndPromotion[],
 ): ShoppingRoute {
-  // add value
   if (storeAndDataLeft.length > 0 && numLeftStore > 0) {
+    // we add the best shop to our route
     const bestStoreWithData = storeAndDataLeft.shift() as StoreWithValueAndPromotion;
     actualRoute.economie += bestStoreWithData.value;
     actualRoute.stores.push(bestStoreWithData.store);
     actualRoute.promotions = actualRoute.promotions.concat(
       bestStoreWithData.promotions,
     );
+
+    // TODO: We should re-evaluate value before continuing the recursion first
+
+    // Then we continue our recursion
     return selectNextStore(actualRoute, numLeftStore - 1, storeAndDataLeft);
   }
   return actualRoute;
-  // Re-evaluate score
 }
 
 /**
