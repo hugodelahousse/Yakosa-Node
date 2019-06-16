@@ -1,6 +1,5 @@
 import { Promotion } from '@entities/Promotion';
 import { Product } from '@entities/Product';
-import { promotions, listProduct } from 'tests/setup';
 import { User } from '@entities/User';
 import { Brand } from '@entities/Brand';
 import { Store } from '@entities/Store';
@@ -8,7 +7,6 @@ import { ListProduct } from '@entities/ListProduct';
 import ShoppingList from '@entities/ShoppingList';
 import { getShopValue } from '@utils/CreateShoppingRoute';
 import { expect } from 'chai';
-import { from } from 'apollo-link';
 
 describe('should create score associate with promotion', () => {
   const product1: Product = {
