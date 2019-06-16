@@ -3,7 +3,7 @@ import passport from '@utils/passport';
 
 import * as jwt from 'jsonwebtoken';
 import config from 'config';
-import { addRefreshToken } from 'middlewares/checkJwt';
+import { getRefreshToken, addRefreshToken } from 'middlewares/checkJwt';
 import apollo from '@graphql/apollo';
 
 createApp().then((app) => {
@@ -19,18 +19,48 @@ createApp().then((app) => {
   }));
 
   app.get('/auth/google/callback', passport.authenticate('google'), async (req, res) => {
-    const token = jwt.sign({ userId: req.user.id, googleId: req.user.googleId },
-                           config.JWT_SECRET, { expiresIn: 1800 },
+    const token = jwt.sign({ userId: req.user.id },
+                           config.JWT_SECRET, { expiresIn: 600 },
       );
     const refresh = await addRefreshToken(req.user.id);
-    res.send({ token, refresh, googleId: req.user.googleId });
+    res.send({ token, refresh });
   });
 
   app.get('/auth/google/token', passport.authenticate('google-token'), async (req, res) => {
-    const token = jwt.sign({ userId: req.user.id, googleId: req.user.googleId },
-                           config.JWT_SECRET, { expiresIn: 1800 },
+    const token = jwt.sign({ userId: req.user.id },
+                           config.JWT_SECRET, { expiresIn: 600 },
       );
     const refresh = await addRefreshToken(req.user.id);
-    res.send({ token, refresh, googleId: req.user.googleId });
+    res.send({ token, refresh });
+  });
+
+  app.post('/auth/token/refresh', async (req, res) => {
+    console.log('refreshing');
+    console.log(req.body);
+    const { refresh_token } = req.body;
+    if (!refresh_token) {
+      return res
+        .status(403)
+        .send({ status: 403, error: 'No auth token found.' });
+    }
+
+    if (refresh_token !== undefined && !Array.isArray(refresh_token) && refresh_token.length > 0) {
+      const refreshFound = await getRefreshToken(refresh_token);
+      if (refreshFound !== undefined) {
+        const newToken = jwt.sign(
+          { userId: refreshFound.userId },
+          config.JWT_SECRET,
+          { expiresIn: 600 },
+        );
+        const newRefresh = await addRefreshToken(refreshFound.userId);
+        return res.send({
+          token: newToken,
+          refresh: newRefresh,
+        });
+      }
+      return res
+        .status(403)
+        .send({ status: 403, error: 'Refresh Token verification failed' });
+    }
   });
 });

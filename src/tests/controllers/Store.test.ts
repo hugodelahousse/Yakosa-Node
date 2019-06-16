@@ -29,43 +29,33 @@ describe('StoreController GET', () => {
   });
 
   it('Should return one store', async () => {
-    const res = await chai
-      .request(app)
-      .get(
-        '/stores?position={"type":"Point","coordinates":[1.304389,103.831709]}',
-      )
-      .set('Authorization', jwtToken);
+
+    const res = await chai.request(app)
+        .get('/stores?position={"type":"Point","coordinates":[2.33386,48.866503]}'
+                 + '&distance=100').set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(1);
   });
 
-  it('Should return all three stores', async () => {
-    const res = await chai
-      .request(app)
-      .get(
-        '/stores' +
-          '?position={"type":"Point","coordinates":[-48.23456,20.12345]}' +
-          '&distance=100000000',
-      )
-      .set('Authorization', jwtToken);
-    expect(res).to.be.json;
-    expect(res.body).to.have.length.above(0);
-    expect(res.body).to.have.length(stores.length);
-  });
-
   it('Should return two stores', async () => {
-    const res = await chai
-      .request(app)
-      .get(
-        '/stores' +
-          '?position={"type":"Point","coordinates":[-48.23456,20.12345]}' +
-          '&distance=100000000&limit=2',
-      )
-      .set('Authorization', jwtToken);
+    const res = await chai.request(app)
+        .get('/stores?position={"type":"Point","coordinates":[2.342107,48.88356]}'
+                 + '&distance=100000000&limit=2').set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(2);
+  });
+
+
+  it('Should return 100 stores', async () => {
+    const res = await chai.request(app)
+        .get('/stores'
+                 + '?position={"type":"Point","coordinates":[2.342107,48.88356]}'
+                 + '&distance=100000000').set('Authorization', jwtToken);
+    expect(res).to.be.json;
+    expect(res.body).to.have.length.above(0);
+    expect(res.body).to.have.length(100);
   });
 
   it('Should return no store', async () => {

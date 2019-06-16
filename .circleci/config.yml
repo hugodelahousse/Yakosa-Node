@@ -6,6 +6,8 @@ defaults: &defaults
     GOOGLE_CONSUMER_KEY: google
     GOOGLE_CONSUMER_SECRET: google
     JWT_SECRET: jwt
+    REDIS_HOST: ''
+    REDIS_PORT: ''
 
 jobs:
   build:
@@ -49,7 +51,7 @@ jobs:
             - ./node_modules
       - run:
           name: lint
-          command: yarn lint
+          command: yarn prettier:check
 
   test:
     <<: *defaults

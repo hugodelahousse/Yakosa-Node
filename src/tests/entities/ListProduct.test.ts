@@ -38,6 +38,9 @@ describe('ListProduct Entity', () => {
       list: lists[1],
       quantity: 10,
     });
-    listProductRepository.save(listProduct).then(() => fail()).catch(() => {});
+    listProductRepository
+      .save(listProduct)
+      .then(() => fail())
+      .catch(() => {});
   });
 });

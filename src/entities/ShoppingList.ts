@@ -4,10 +4,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   ManyToOne,
-  RelationId
-} from "typeorm";
-import { User } from "./User";
-import { ListProduct } from "./ListProduct";
+  RelationId,
+} from 'typeorm';
+import { User } from './User';
+import { ListProduct } from './ListProduct';
 
 @Entity()
 export default class ShoppingList {
@@ -20,10 +20,10 @@ export default class ShoppingList {
   @Column({ nullable: true })
   lastUsed: Date;
 
-  @RelationId((shopl: ShoppingList) => shopl.user)
+  @RelationId((shop: ShoppingList) => shop.user)
   userId: number;
 
-  @ManyToOne(type => User, { onDelete:'CASCADE' })
+  @ManyToOne(type => User, { onDelete: 'CASCADE' })
   user: User;
 
   @OneToMany(type => ListProduct, listProduct => listProduct.list)

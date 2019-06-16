@@ -1,6 +1,6 @@
 import * as chai from 'chai';
 import chaiHttp = require('chai-http');
-import { app, brands } from '../setup';
+import {app, brands, jwtToken} from '../setup';
 import { Brand } from '@entities/Brand';
 
 chai.use(chaiHttp);
@@ -9,12 +9,12 @@ const expect = chai.expect;
 
 describe('BrandController GET', () => {
   it('Should respond with 200', async () => {
-    const res = await chai.request(app).get('/brands');
+    const res = await chai.request(app).get('/brands').set('Authorization', jwtToken);;
     expect(res).to.have.status(200);
   });
 
   it('Should return existing stores', async () => {
-    const res = await chai.request(app).get('/brands');
+    const res = await chai.request(app).get('/brands').set('Authorization', jwtToken);;
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(brands.length);
@@ -32,9 +32,9 @@ describe('BrandController Post', () => {
     let res = await chai
       .request(app)
       .post('/brands/')
-      .send(brand);
+      .send(brand).set('Authorization', jwtToken);
     expect(res).to.have.status(201);
-    res = await chai.request(app).get('/brands/');
+    res = await chai.request(app).get('/brands/').set('Authorization', jwtToken);;
     expect(res.body.length).to.be.equal(brands.length + 1);
   });
 });
@@ -42,14 +42,14 @@ describe('BrandController Post', () => {
 describe('BrandController DELETE', () => {
   it('Should delete one Brand', async () => {
     const id = brands[3].id;
-    let res = await chai.request(app).delete(`/brands/${id}`);
+    let res = await chai.request(app).delete(`/brands/${id}`).set('Authorization', jwtToken);
     expect(res).to.have.status(200);
-    res = await chai.request(app).get('/brands/');
+    res = await chai.request(app).get('/brands/').set('Authorization', jwtToken);
     expect(res.body.length).to.be.equal(brands.length - 1);
   });
 
   it('Should not find the desired Brand', async () => {
-    const res = await chai.request(app).delete('/brands/1000');
+    const res = await chai.request(app).delete('/brands/1000').set('Authorization', jwtToken);
     expect(res).to.have.status(404);
   });
 });

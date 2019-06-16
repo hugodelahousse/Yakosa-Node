@@ -11,13 +11,13 @@ import {
   UseBefore,
   BadRequestError,
   Patch,
-  HttpCode } from 'routing-controllers';
+  HttpCode,
+} from 'routing-controllers';
 import { checkJwt } from '../middlewares/checkJwt';
 
 @UseBefore(checkJwt)
 @JsonController()
 export class UserController {
-
   private repository = getRepository(User);
 
   @Get('/users/')
@@ -51,8 +51,7 @@ export class UserController {
   }
 
   @Patch('/users/:id')
-  async update(@Param('id') id: number,
-               @Body() user: User) {
+  async update(@Param('id') id: number, @Body() user: User) {
     const existing = await this.repository.findOne(id);
     if (existing === undefined) {
       return undefined;
@@ -60,7 +59,9 @@ export class UserController {
     const fieldsToChange = ['firstName', 'lastName', 'age', 'googleId'];
     for (let i = 0; i < fieldsToChange.length; i += 1) {
       const field = fieldsToChange[i];
-      if (user.hasOwnProperty(field)) { existing[field] = user[field]; }
+      if (user.hasOwnProperty(field)) {
+        existing[field] = user[field];
+      }
     }
     return this.repository.save(existing);
   }
