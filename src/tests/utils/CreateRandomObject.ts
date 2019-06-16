@@ -14,6 +14,21 @@ export function createRandomBrand(): Brand {
 
 export function createRandomShop(): Store {
   const store = new Store();
+  store.position = {
+    type: 'Point',
+    coordinates: [0, 0],
+  };
+  store.promotions = [];
+  store.brand = createRandomBrand();
+  return store;
+}
+
+export function createShopWithPositon(x: number, y: number) {
+  const store = new Store();
+  store.position = {
+    type: 'Point',
+    coordinates: [x, y],
+  };
   store.promotions = [];
   store.brand = createRandomBrand();
   return store;

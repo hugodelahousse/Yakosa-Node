@@ -18,7 +18,7 @@ export class Store {
   id: number;
 
   @Column('geography', { spatialFeatureType: 'Point', srid: 4326 })
-  position: string;
+  position: { type: string; coordinates: [number, number] };
 
   @Column({ nullable: true })
   brandId: number;
