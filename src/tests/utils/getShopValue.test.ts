@@ -139,6 +139,52 @@ describe('should create score associate with promotion', () => {
     expect(result.value).to.be.equal(1.7);
     expect(result.Promotions).to.have.length.above(0);
     expect(result.Promotions.length).to.be.equal(1);
-    expect(result.Promotions[0]).to.be.equal(promotion2);
+    expect(result.Promotions[0]).to.be.equal(promotion3);
+  });
+
+  const product2: Product = {
+    barcode: '12344',
+    promotions: [],
+    listProducts: [],
+  };
+
+  const promotion4: Promotion = {
+    id: 1,
+    description: '',
+    price: 2,
+    promotion: 1,
+    beginDate: new Date(),
+    endDate: new Date(),
+    type: 1,
+    userId: 0,
+    storeId: 0,
+    brandId: 0,
+    product: product2,
+    user: new User(),
+    brand: new Brand(),
+    store: store1,
+    votes: [],
+  };
+
+  const listProduct2: ListProduct = {
+    id: 1,
+    quantity: 1,
+    list: shoppingList1,
+    listId: 0,
+    product: product2,
+    productBarcode: '12344',
+  };
+
+  it('should found the two promotion related to the two products of the shopping list', () => {
+    brand1.promotions.push(promotion3);
+    shoppingList1.products.push(listProduct2);
+    store2.promotions.push(promotion4);
+
+    const result = getShopValue(shoppingList1, store2);
+    expect(result.value).to.be.equal(2.7);
+    expect(result.Promotions).to.have.length.above(0);
+    expect(result.Promotions.length).to.be.equal(2);
+    expect(result.Promotions).to.contains(promotion3);
+    expect(result.Promotions).to.contains(promotion4);
   });
 });
