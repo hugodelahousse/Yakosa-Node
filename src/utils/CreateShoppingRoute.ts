@@ -7,10 +7,10 @@ export function createShopingRoute(
   stores: Store[],
   shoppingList: ShoppingList,
   numMaxOfStore: number = 10,
-) {
+): ShoppingRoute {
   const storeAndData = stores
     .map(store => getShopValue(shoppingList, store))
-    .sort((a, b) => (a.value < b.value ? -1 : a.value > b.value ? 1 : 0));
+    .sort((a, b) => (a.value < b.value ? 1 : a.value > b.value ? -1 : 0));
   const shoppingRoute: ShoppingRoute = {
     shoppingList,
     stores: [],
@@ -24,7 +24,7 @@ export function selectNextStore(
   actualRoute: ShoppingRoute,
   numLeftStore: number,
   storeAndDataLeft: StoreWithValueAndPromotion[],
-) {
+): ShoppingRoute {
   // add value
   if (storeAndDataLeft.length > 0 && numLeftStore > 0) {
     const bestStoreWithData = storeAndDataLeft.shift() as StoreWithValueAndPromotion;
