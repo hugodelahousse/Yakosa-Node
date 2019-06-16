@@ -1,10 +1,9 @@
 import ShoppingList from '@entities/ShoppingList';
 import { Store } from '@entities/Store';
-import { promotions } from 'tests/setup';
 import { Promotion } from '@entities/Promotion';
 import { StoreWithValueAndPromotion } from 'types/ShoppingRoute';
 
-function getShopValue(
+export function getShopValue(
   shoppingList: ShoppingList,
   store: Store,
 ): StoreWithValueAndPromotion {
