@@ -29,30 +29,40 @@ describe('StoreController GET', () => {
   });
 
   it('Should return one store', async () => {
-
-    const res = await chai.request(app)
-        .get('/stores?position={"type":"Point","coordinates":[2.33386,48.866503]}'
-                 + '&distance=100').set('Authorization', jwtToken);
+    const res = await chai
+      .request(app)
+      .get(
+        '/stores?position={"type":"Point","coordinates":[2.33386,48.866503]}' +
+          '&distance=100',
+      )
+      .set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(1);
   });
 
   it('Should return two stores', async () => {
-    const res = await chai.request(app)
-        .get('/stores?position={"type":"Point","coordinates":[2.342107,48.88356]}'
-                 + '&distance=100000000&limit=2').set('Authorization', jwtToken);
+    const res = await chai
+      .request(app)
+      .get(
+        '/stores?position={"type":"Point","coordinates":[2.342107,48.88356]}' +
+          '&distance=100000000&limit=2',
+      )
+      .set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(2);
   });
 
-
   it('Should return 100 stores', async () => {
-    const res = await chai.request(app)
-        .get('/stores'
-                 + '?position={"type":"Point","coordinates":[2.342107,48.88356]}'
-                 + '&distance=100000000').set('Authorization', jwtToken);
+    const res = await chai
+      .request(app)
+      .get(
+        '/stores' +
+          '?position={"type":"Point","coordinates":[2.342107,48.88356]}' +
+          '&distance=100000000',
+      )
+      .set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
     expect(res.body).to.have.length(100);
@@ -86,8 +96,8 @@ describe('storeController get Relevant Store', () => {
     expect(res).to.have.status(200);
   });
 
-  it('should contain one shop corresponding to the promotion of the product', async () => {
-    const barcode = products[0].barcode;
+  it('should contain the shops corresponding to the promotion of the product', async () => {
+    const barcode = '5449000000996';
     const res = await chai
       .request(app)
       .get(
