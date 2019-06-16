@@ -45,25 +45,6 @@ describe('should create score associate with promotion', () => {
     votes: [],
   };
 
-  const promotion2: Promotion = {
-    id: 1,
-    description: '',
-    price: 2,
-    promotion: 1.5,
-    beginDate: new Date(),
-    endDate: new Date(),
-    type: 1,
-    userId: 0,
-    storeId: 0,
-    brandId: 0,
-    product: product1,
-    user: new User(),
-    brand: new Brand(),
-    store: store1,
-    votes: [],
-  };
-  store1.promotions.push(promotion1);
-
   const shoppingList1 = new ShoppingList();
   shoppingList1.products = [];
   const listProduct1: ListProduct = {
@@ -86,10 +67,76 @@ describe('should create score associate with promotion', () => {
     expect(result.Promotions[0]).to.be.equal(promotion1);
   });
 
+  const promotion2: Promotion = {
+    id: 1,
+    description: '',
+    price: 2,
+    promotion: 1.5,
+    beginDate: new Date(),
+    endDate: new Date(),
+    type: 1,
+    userId: 0,
+    storeId: 0,
+    brandId: 0,
+    product: product1,
+    user: new User(),
+    brand: new Brand(),
+    store: store1,
+    votes: [],
+  };
+  store1.promotions.push(promotion1);
+
   it('should select the best promotion between the 2', () => {
     store1.promotions.push(promotion2);
     const result = getShopValue(shoppingList1, store1);
     expect(result.value).to.be.equal(1.5);
+    expect(result.Promotions).to.have.length.above(0);
+    expect(result.Promotions.length).to.be.equal(1);
+    expect(result.Promotions[0]).to.be.equal(promotion2);
+  });
+
+  const brand1 = new Brand();
+  brand1.promotions = [];
+
+  const store2: Store = {
+    id: 1,
+    position: '',
+    brand: brand1,
+    brandId: 0,
+    promotions: [],
+    managers: [],
+    managersId: [],
+  };
+
+  it('should found no promotion', () => {
+    const result = getShopValue(shoppingList1, store2);
+    expect(result.value).to.be.equal(0);
+    expect(result.Promotions.length).to.be.equal(0);
+  });
+
+  const promotion3: Promotion = {
+    id: 1,
+    description: '',
+    price: 2,
+    promotion: 1.7,
+    beginDate: new Date(),
+    endDate: new Date(),
+    type: 1,
+    userId: 0,
+    storeId: 0,
+    brandId: 0,
+    product: product1,
+    user: new User(),
+    brand: brand1,
+    store: new Store(),
+    votes: [],
+  };
+
+  it('should found the promotion related to the brand', () => {
+    brand1.promotions.push(promotion3);
+
+    const result = getShopValue(shoppingList1, store2);
+    expect(result.value).to.be.equal(1.7);
     expect(result.Promotions).to.have.length.above(0);
     expect(result.Promotions.length).to.be.equal(1);
     expect(result.Promotions[0]).to.be.equal(promotion2);
