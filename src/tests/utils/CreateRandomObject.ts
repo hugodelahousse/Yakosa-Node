@@ -1,0 +1,80 @@
+import { Store } from '@entities/Store';
+import { Brand } from '@entities/Brand';
+import { Product } from '@entities/Product';
+import { Promotion } from '@entities/Promotion';
+import { User } from '@entities/User';
+import ShoppingList from '@entities/ShoppingList';
+import { ListProduct } from '@entities/ListProduct';
+
+export function createRandomBrand(): Brand {
+  const brand = new Brand();
+  brand.promotions = [];
+  return brand;
+}
+
+export function createRandomShop(): Store {
+  const store = new Store();
+  store.promotions = [];
+  store.brand = createRandomBrand();
+  return store;
+}
+
+export function createRandomShopWithBrand(brand: Brand): Store {
+  const store = new Store();
+  store.promotions = [];
+  store.brand = brand;
+  return store;
+}
+
+export function createRandomProductWithbarcode(barcode: string): Product {
+  return {
+    barcode,
+    promotions: [],
+    listProducts: [],
+  };
+}
+
+export function createRandomPromotion(
+  price: number,
+  promotion: number,
+  product: Product,
+): Promotion {
+  return {
+    id: 1,
+    description: '',
+    price,
+    promotion,
+    beginDate: new Date(),
+    endDate: new Date(),
+    type: 1,
+    userId: 0,
+    storeId: 0,
+    brandId: 0,
+    product,
+    user: new User(),
+    brand: createRandomBrand(),
+    store: createRandomShop(),
+    votes: [],
+  };
+}
+
+export function createRandomShoppingList(): ShoppingList {
+  const shoppingList = new ShoppingList();
+  shoppingList.products = [];
+
+  return shoppingList;
+}
+
+export function createRandomListProduct(
+  quantity: number,
+  product: Product,
+): ListProduct {
+  return {
+    id: 1,
+    quantity,
+    list: new ShoppingList(),
+    listId: 0,
+    product,
+    productBarcode: product.barcode,
+  };
+}
