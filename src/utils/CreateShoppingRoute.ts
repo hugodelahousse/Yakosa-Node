@@ -12,14 +12,22 @@ export function getShopValue(
   shoppingList.products.forEach(product => {
     let actualPromo = 0;
     let promoChosen: Promotion | null = null;
-    store.promotions
-      .filter(promotion => promotion.product.barcode == product.product.barcode)
-      .forEach(promotion => {
-        if (promotion.promotion * product.quantity > actualPromo) {
-          promoChosen = promotion;
-          actualPromo = promotion.promotion * product.quantity;
-        }
-      });
+
+    const filterToRelatedPromo = (promotion: Promotion) =>
+      promotion.product.barcode == product.product.barcode;
+
+    const findBestPromo = (promotion: Promotion) => {
+      if (promotion.promotion * product.quantity > actualPromo) {
+        promoChosen = promotion;
+        actualPromo = promotion.promotion * product.quantity;
+      }
+    };
+    store.promotions.filter(filterToRelatedPromo).forEach(findBestPromo);
+    if (store.brand && store.brand.promotions) {
+      store.brand.promotions
+        .filter(filterToRelatedPromo)
+        .forEach(findBestPromo);
+    }
     if (actualPromo > 0) {
       score += actualPromo;
       promotionsChoice.push(promoChosen!);
