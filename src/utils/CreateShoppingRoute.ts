@@ -1,7 +1,43 @@
 import ShoppingList from '@entities/ShoppingList';
 import { Store } from '@entities/Store';
 import { Promotion } from '@entities/Promotion';
-import { StoreWithValueAndPromotion } from 'types/ShoppingRoute';
+import { StoreWithValueAndPromotion, ShoppingRoute } from 'types/ShoppingRoute';
+
+export function createShopingRoute(
+  stores: Store[],
+  shoppingList: ShoppingList,
+  numMaxOfStore: number = 10,
+) {
+  const storeAndData = stores
+    .map(store => getShopValue(shoppingList, store))
+    .sort((a, b) => (a.value < b.value ? -1 : a.value > b.value ? 1 : 0));
+  const shoppingRoute: ShoppingRoute = {
+    shoppingList,
+    stores: [],
+    promotions: [],
+    economie: 0,
+  };
+  return selectNextStore(shoppingRoute, numMaxOfStore, storeAndData);
+}
+
+export function selectNextStore(
+  actualRoute: ShoppingRoute,
+  numLeftStore: number,
+  storeAndDataLeft: StoreWithValueAndPromotion[],
+) {
+  // add value
+  if (storeAndDataLeft.length > 0 && numLeftStore > 0) {
+    const bestStoreWithData = storeAndDataLeft.shift() as StoreWithValueAndPromotion;
+    actualRoute.economie += bestStoreWithData.value;
+    actualRoute.stores.push(bestStoreWithData.store);
+    actualRoute.promotions = actualRoute.promotions.concat(
+      bestStoreWithData.promotions,
+    );
+    return selectNextStore(actualRoute, numLeftStore - 1, storeAndDataLeft);
+  }
+  return actualRoute;
+  // Re-evaluate score
+}
 
 /**
  * This function calculated the value of a shop for our algo
@@ -49,8 +85,8 @@ export function getShopValue(
   // The struct returned containes all our result
   // And will be usefull for optimisation
   return {
-    Store: store,
+    store,
     value: score,
-    Promotions: promotionsChoice,
+    promotions: promotionsChoice,
   };
 }

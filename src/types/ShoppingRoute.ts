@@ -4,13 +4,13 @@ import { Promotion } from '@entities/Promotion';
 
 export interface ShoppingRoute {
   shoppingList: ShoppingList;
-  Stores: Store[];
-  Promotions: Promotion[];
-  Economie: number;
+  stores: Store[];
+  promotions: Promotion[];
+  economie: number;
 }
 
 export interface StoreWithValueAndPromotion {
-  Store: Store;
+  store: Store;
   value: number;
-  Promotions: Promotion[];
+  promotions: Promotion[];
 }

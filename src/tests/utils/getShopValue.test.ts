@@ -31,9 +31,9 @@ describe('should create score associate with promotion', () => {
   it('should select the only promotion', () => {
     const result = getShopValue(shoppingList1, store1);
     expect(result.value).to.be.equal(1);
-    expect(result.Promotions).to.have.length.above(0);
-    expect(result.Promotions.length).to.be.equal(1);
-    expect(result.Promotions[0]).to.be.equal(promotion1);
+    expect(result.promotions).to.have.length.above(0);
+    expect(result.promotions.length).to.be.equal(1);
+    expect(result.promotions[0]).to.be.equal(promotion1);
   });
 
   const promotion2 = createRandomPromotion(2, 1.5, product1);
@@ -42,9 +42,9 @@ describe('should create score associate with promotion', () => {
     store1.promotions.push(promotion2);
     const result = getShopValue(shoppingList1, store1);
     expect(result.value).to.be.equal(1.5);
-    expect(result.Promotions).to.have.length.above(0);
-    expect(result.Promotions.length).to.be.equal(1);
-    expect(result.Promotions[0]).to.be.equal(promotion2);
+    expect(result.promotions).to.have.length.above(0);
+    expect(result.promotions.length).to.be.equal(1);
+    expect(result.promotions[0]).to.be.equal(promotion2);
   });
 
   const brand1 = createRandomBrand();
@@ -53,7 +53,7 @@ describe('should create score associate with promotion', () => {
   it('should found no promotion', () => {
     const result = getShopValue(shoppingList1, store2);
     expect(result.value).to.be.equal(0);
-    expect(result.Promotions.length).to.be.equal(0);
+    expect(result.promotions.length).to.be.equal(0);
   });
 
   const promotion3 = createRandomPromotion(2, 1.7, product1);
@@ -63,9 +63,9 @@ describe('should create score associate with promotion', () => {
 
     const result = getShopValue(shoppingList1, store2);
     expect(result.value).to.be.equal(1.7);
-    expect(result.Promotions).to.have.length.above(0);
-    expect(result.Promotions.length).to.be.equal(1);
-    expect(result.Promotions[0]).to.be.equal(promotion3);
+    expect(result.promotions).to.have.length.above(0);
+    expect(result.promotions.length).to.be.equal(1);
+    expect(result.promotions[0]).to.be.equal(promotion3);
   });
 
   const product2 = createRandomProductWithbarcode('12344');
@@ -80,9 +80,9 @@ describe('should create score associate with promotion', () => {
 
     const result = getShopValue(shoppingList1, store2);
     expect(result.value).to.be.equal(3.7);
-    expect(result.Promotions).to.have.length.above(0);
-    expect(result.Promotions.length).to.be.equal(2);
-    expect(result.Promotions).to.contains(promotion3);
-    expect(result.Promotions).to.contains(promotion4);
+    expect(result.promotions).to.have.length.above(0);
+    expect(result.promotions.length).to.be.equal(2);
+    expect(result.promotions).to.contains(promotion3);
+    expect(result.promotions).to.contains(promotion4);
   });
 });
