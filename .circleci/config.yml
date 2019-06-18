@@ -8,6 +8,7 @@ defaults: &defaults
     JWT_SECRET: jwt
     REDIS_HOST: ''
     REDIS_PORT: ''
+    REDIS_URL: ''
 
 jobs:
   build:
