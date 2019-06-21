@@ -49,6 +49,10 @@ export function selectNextStore(
       bestStoreWithData.promotions,
     );
 
+    storeAndDataLeft = storeAndDataLeft
+      .map(shop => reEvaluateShopValue(actualRoute, shop))
+      .filter(store => store.value > 0)
+      .sort((a, b) => (a.value < b.value ? 1 : a.value > b.value ? -1 : 0));
     // TODO: We should re-evaluate value before continuing the recursion first
 
     // Then we continue our recursion
@@ -57,18 +61,49 @@ export function selectNextStore(
   return actualRoute;
 }
 
+function getNumberOfProductFromPromoType(type: PromotionType) {
+  return type === PromotionType.THREEFORTWO
+    ? 3
+    : type === PromotionType.TWOSECONDHALF
+    ? 2
+    : 1;
+}
+
+/**
+ *
+ * @param promotion
+ * @param listProduct
+ */
 export function getPromoValue(
   promotion: Promotion,
   listProduct: ListProduct,
 ): number {
-  const quantityByPromo =
-    promotion.type === PromotionType.THREEFORTWO
-      ? 3
-      : promotion.type === PromotionType.TWOSECONDHALF
-      ? 2
-      : 1;
+  const quantityByPromo = getNumberOfProductFromPromoType(promotion.type);
   const numPromo = Math.trunc(listProduct.quantity / quantityByPromo);
   return numPromo * promotion.promotion;
+}
+
+export function getPromoDiffValue(
+  newPromo: Promotion,
+  lastPromo: Promotion,
+  listProduct: ListProduct,
+): number {
+  const quantityOfNewPromo = getNumberOfProductFromPromoType(newPromo.type);
+  const newPromoValue =
+    Math.trunc(listProduct.quantity / quantityOfNewPromo) * newPromo.promotion;
+  const realPriceWithNewPromo =
+    (listProduct.quantity / quantityOfNewPromo) * newPromo.price -
+    newPromoValue;
+
+  const quantityOfLastPromo = getNumberOfProductFromPromoType(lastPromo.type);
+  const LastPromoValue =
+    Math.trunc(listProduct.quantity / quantityOfLastPromo) *
+    lastPromo.promotion;
+  const realPriceWithLastPromo =
+    (listProduct.quantity / quantityOfLastPromo) * lastPromo.price -
+    LastPromoValue;
+
+  return realPriceWithNewPromo - realPriceWithLastPromo;
 }
 
 /**
@@ -121,5 +156,45 @@ export function getShopValue(
     store,
     value: score,
     promotions: promotionsChoice,
+  };
+}
+
+export function reEvaluateShopValue(
+  shoppingRoute: ShoppingRoute,
+  store: StoreWithValueAndPromotion,
+): StoreWithValueAndPromotion {
+  let newScore = 0;
+  const newPromotion: Promotion[] = [];
+  for (const promotion of store.promotions) {
+    const relatedListProduct = shoppingRoute.shoppingList.products.find(
+      lp => lp.product.barcode == promotion.product.barcode,
+    );
+    const relatedPromotion = shoppingRoute.promotions.find(
+      promo => promo.product.barcode === promotion.product.barcode,
+    );
+    if (!relatedPromotion) {
+      const promoScore = getPromoValue(
+        promotion,
+        relatedListProduct as ListProduct,
+      );
+      newScore += promoScore;
+      newPromotion.push(promotion);
+    } else {
+      const relatifPromoScore = getPromoDiffValue(
+        promotion,
+        relatedPromotion,
+        relatedListProduct as ListProduct,
+      );
+      if (relatifPromoScore > 0) {
+        newScore += relatifPromoScore;
+        newPromotion.push(promotion);
+      }
+    }
+  }
+
+  return {
+    store: store.store,
+    promotions: newPromotion,
+    value: newScore,
   };
 }
