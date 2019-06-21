@@ -1,7 +1,7 @@
 import { Store } from '@entities/Store';
 import { Brand } from '@entities/Brand';
 import { Product } from '@entities/Product';
-import { Promotion } from '@entities/Promotion';
+import { Promotion, PromotionType } from '@entities/Promotion';
 import { User } from '@entities/User';
 import ShoppingList from '@entities/ShoppingList';
 import { ListProduct } from '@entities/ListProduct';
@@ -53,6 +53,7 @@ export function createRandomPromotion(
   price: number,
   promotion: number,
   product: Product,
+  type: PromotionType = PromotionType.SIMPLE,
 ): Promotion {
   return {
     id: 1,
@@ -61,7 +62,7 @@ export function createRandomPromotion(
     promotion,
     beginDate: new Date(),
     endDate: new Date(),
-    type: 1,
+    type,
     userId: 0,
     storeId: 0,
     brandId: 0,
