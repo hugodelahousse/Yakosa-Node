@@ -35,6 +35,12 @@ export function createShopingRoute(
   return selectNextStore(shoppingRoute, numMaxOfStore, storeAndData);
 }
 
+/**
+ * Select a new shop to add to the route
+ * @param actualRoute
+ * @param numLeftStore
+ * @param storeAndDataLeft
+ */
 export function selectNextStore(
   actualRoute: ShoppingRoute,
   numLeftStore: number,
@@ -49,11 +55,11 @@ export function selectNextStore(
       bestStoreWithData.promotions,
     );
 
+    //  We re-evaluate value before of each store using the promotion we are currently using
     storeAndDataLeft = storeAndDataLeft
       .map(shop => reEvaluateShopValue(actualRoute, shop))
       .filter(store => store.value > 0)
       .sort((a, b) => (a.value < b.value ? 1 : a.value > b.value ? -1 : 0));
-    // TODO: We should re-evaluate value before continuing the recursion first
 
     // Then we continue our recursion
     return selectNextStore(actualRoute, numLeftStore - 1, storeAndDataLeft);
@@ -61,6 +67,10 @@ export function selectNextStore(
   return actualRoute;
 }
 
+/**
+ * Simple function to get the number of item needed to profit of a promo
+ * @param type
+ */
 function getNumberOfProductFromPromoType(type: PromotionType) {
   return type === PromotionType.THREEFORTWO
     ? 3
@@ -70,7 +80,7 @@ function getNumberOfProductFromPromoType(type: PromotionType) {
 }
 
 /**
- *
+ * Calculate the value of a promotion (without comparaison to other products)
  * @param promotion
  * @param listProduct
  */
@@ -83,11 +93,20 @@ export function getPromoValue(
   return numPromo * promotion.promotion;
 }
 
+/**
+ * Calculate the value of a promotion in comparaison to another promotion
+ * If the value returned is positive then the newPromo is better than the lastPromo
+ * @param newPromo
+ * @param lastPromo
+ * @param listProduct
+ */
+
 export function getPromoDiffValue(
   newPromo: Promotion,
   lastPromo: Promotion,
   listProduct: ListProduct,
 ): number {
+  // We calculate the total price of the product in the list with the new promotion
   const quantityOfNewPromo = getNumberOfProductFromPromoType(newPromo.type);
   const newPromoValue =
     Math.trunc(listProduct.quantity / quantityOfNewPromo) * newPromo.promotion;
@@ -95,6 +114,7 @@ export function getPromoDiffValue(
     (listProduct.quantity / quantityOfNewPromo) * newPromo.price -
     newPromoValue;
 
+  // Then we do the same calcul with the last promotion
   const quantityOfLastPromo = getNumberOfProductFromPromoType(lastPromo.type);
   const LastPromoValue =
     Math.trunc(listProduct.quantity / quantityOfLastPromo) *
@@ -103,6 +123,7 @@ export function getPromoDiffValue(
     (listProduct.quantity / quantityOfLastPromo) * lastPromo.price -
     LastPromoValue;
 
+  // And we return the diff between those to price
   return realPriceWithLastPromo - realPriceWithNewPromo;
 }
 
@@ -159,20 +180,30 @@ export function getShopValue(
   };
 }
 
+/**
+ * Re-evaluate the score of a shop using the promotion already used in the route
+ * @param shoppingRoute
+ * @param store
+ */
 export function reEvaluateShopValue(
   shoppingRoute: ShoppingRoute,
   store: StoreWithValueAndPromotion,
 ): StoreWithValueAndPromotion {
   let newScore = 0;
   const newPromotion: Promotion[] = [];
+  // For each promotion that are still relevant in the shop we recalculate his value
   for (const promotion of store.promotions) {
+    // We find the item in the list relatred to the promotion
     const relatedListProduct = shoppingRoute.shoppingList.products.find(
       lp => lp.product.barcode == promotion.product.barcode,
     );
+    // And we search if we already have a promotion used on this product
     const relatedPromotion = shoppingRoute.promotions.find(
       promo => promo.product.barcode === promotion.product.barcode,
     );
     if (!relatedPromotion) {
+      // If we don't have another promotion on this product we simply use this promotion
+      // To update the score of the store
       const promoScore = getPromoValue(
         promotion,
         relatedListProduct as ListProduct,
@@ -180,18 +211,22 @@ export function reEvaluateShopValue(
       newScore += promoScore;
       newPromotion.push(promotion);
     } else {
+      // If we already use a promotion we calculate the gain of using this promotion
+      // instead of the other one
       const relatifPromoScore = getPromoDiffValue(
         promotion,
         relatedPromotion,
         relatedListProduct as ListProduct,
       );
       if (relatifPromoScore > 0) {
+        // If using this promotion is better we update the score of the store
         newScore += relatifPromoScore;
         newPromotion.push(promotion);
       }
     }
   }
 
+  // At last we returned the store with his score and the promotion relevant used to calculate this score
   return {
     store: store.store,
     promotions: newPromotion,
