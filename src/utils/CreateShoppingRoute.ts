@@ -103,7 +103,7 @@ export function getPromoDiffValue(
     (listProduct.quantity / quantityOfLastPromo) * lastPromo.price -
     LastPromoValue;
 
-  return realPriceWithNewPromo - realPriceWithLastPromo;
+  return realPriceWithLastPromo - realPriceWithNewPromo;
 }
 
 /**
