@@ -2,6 +2,8 @@ import ShoppingList from '@entities/ShoppingList';
 import { Store } from '@entities/Store';
 import { Promotion } from '@entities/Promotion';
 import { StoreWithValueAndPromotion, ShoppingRoute } from 'types/ShoppingRoute';
+import { ListProduct } from '@entities/ListProduct';
+import { PromotionType } from '@entities/Promotion';
 
 /**
  * Function that must find the the stores tou must travel to
@@ -55,6 +57,20 @@ export function selectNextStore(
   return actualRoute;
 }
 
+export function getPromoValue(
+  promotion: Promotion,
+  listProduct: ListProduct,
+): number {
+  const quantityByPromo =
+    promotion.type === PromotionType.THREEFORTWO
+      ? 3
+      : promotion.type === PromotionType.TWOSECONDHALF
+      ? 2
+      : 1;
+  const numPromo = Math.trunc(listProduct.quantity / quantityByPromo);
+  return numPromo * promotion.promotion;
+}
+
 /**
  * This function calculated the value of a shop for our algo
  * @param shoppingList
@@ -77,9 +93,10 @@ export function getShopValue(
       promotion.product.barcode == product.product.barcode;
 
     const findBestPromo = (promotion: Promotion) => {
-      if (promotion.promotion * product.quantity > actualPromo) {
+      const promotionValue = getPromoValue(promotion, product);
+      if (promotionValue > actualPromo) {
         promoChosen = promotion;
-        actualPromo = promotion.promotion * product.quantity;
+        actualPromo = promotionValue;
       }
     };
 

@@ -14,10 +14,10 @@ import { Vote } from './Vote';
 import { Brand } from './Brand';
 import { Store } from './Store';
 
-enum PromotionType {
+export enum PromotionType {
   SIMPLE = 0,
   TWOSECONDHALF = 1,
-  TWOFORTHREE = 2,
+  THREEFORTWO = 2,
   UNDEFINE = 3,
 }
 
