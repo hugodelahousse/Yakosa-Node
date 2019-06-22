@@ -5,7 +5,7 @@ import { StoreWithValueAndPromotion, ShoppingRoute } from 'types/ShoppingRoute';
 import { ListProduct } from '@entities/ListProduct';
 import { PromotionType } from '@entities/Promotion';
 import { Position } from 'types/PositionType';
-import { calculateDist } from './PositionUtils';
+import { calculateDist } from './positionUtils';
 
 /**
  * Function that must find the the stores tou must travel to
