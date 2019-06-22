@@ -4,6 +4,8 @@ import {
   getRepository,
   ObjectLiteral,
   ObjectType,
+  FindConditions,
+  Raw,
 } from 'typeorm';
 import {
   FieldNode,
@@ -12,8 +14,18 @@ import {
   GraphQLScalarType,
   Kind,
 } from 'graphql';
+import { Store } from '@entities/Store';
+import { isArray } from 'util';
+import { func } from 'joi';
 
 interface FindListOptions {
+  limit?: number;
+  offset?: number;
+}
+
+interface FindStoreOptions {
+  distance?: string;
+  position?: string;
   limit?: number;
   offset?: number;
 }
@@ -116,6 +128,150 @@ export function graphQLFindOne<Entity>(
   const options: FindOneOptions<Entity> = { where, relations };
 
   return getRepository(entityClass).findOne(options);
+}
+
+export function graphQlFindNearShopRelatedToPromotion(
+  args: FindStoreOptions,
+  info: GraphQLResolveInfo,
+  id: number,
+) {
+  return graphQlFindNearShop(args, info, [
+    {
+      promotions: [
+        {
+          id,
+        },
+      ],
+    },
+    {
+      brand: {
+        promotions: [
+          {
+            id,
+          },
+        ],
+      },
+    },
+  ]);
+}
+
+export function graphQlFindNearShopRelatedToShoppingList(
+  args: FindStoreOptions,
+  info: GraphQLResolveInfo,
+  id: number,
+) {
+  return graphQlFindNearShop(args, info, [
+    {
+      promotions: [
+        {
+          product: {
+            listProducts: [
+              {
+                list: {
+                  id,
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+    {
+      brand: {
+        promotions: [
+          {
+            product: {
+              listProducts: [
+                {
+                  list: {
+                    id,
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ]);
+}
+
+export function graphQlFindNearShopRelatedToProduct(
+  args: FindStoreOptions,
+  info: GraphQLResolveInfo,
+  barcode: string,
+) {
+  return graphQlFindNearShop(args, info, [
+    {
+      promotions: [
+        {
+          product: {
+            listProducts: [
+              {
+                list: {
+                  products: [
+                    {
+                      productBarcode: barcode,
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      ],
+    },
+    {
+      brand: {
+        promotions: [
+          {
+            product: {
+              listProducts: [
+                {
+                  list: {
+                    products: [
+                      {
+                        productBarcode: barcode,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ]);
+}
+
+export function graphQlFindNearShop(
+  { distance, position, limit, offset }: FindStoreOptions,
+  info: GraphQLResolveInfo,
+  where: FindConditions<Store> | FindConditions<Store>[],
+) {
+  const relations = getQueryRelations(Store, info, info.fieldNodes[0]);
+  const CheckDistanceOperator = Raw(
+    alias =>
+      `ST_Distance(${alias}, ST_GeomFromGeoJSON('${position}'))` +
+      `< ${distance || 1000}`,
+  );
+  if (isArray(where)) {
+    where.forEach(element => {
+      element.position = CheckDistanceOperator;
+    });
+  } else {
+    where.position = CheckDistanceOperator;
+  }
+
+  const options: FindManyOptions<Store> = {
+    where,
+    relations,
+    take: limit,
+    skip: offset,
+  };
+
+  return getRepository(Store).find(options);
 }
 
 export const dateResolver = {

@@ -1,8 +1,16 @@
 import { ApolloServer, makeExecutableSchema, gql } from 'apollo-server-express';
-import { graphQLFindList, graphQLFindOne } from '@graphql/utils';
+import {
+  graphQLFindList,
+  graphQLFindOne,
+  graphQlFindNearShop,
+  graphQlFindNearShopRelatedToPromotion,
+  graphQlFindNearShopRelatedToShoppingList,
+  graphQlFindNearShopRelatedToProduct,
+} from '@graphql/utils';
 import { User } from '@entities/User';
 import { ListProduct } from '@entities/ListProduct';
 import { Product } from '@entities/Product';
+import { Store } from '@entities/Store';
 import * as jwt from 'jsonwebtoken';
 import { JWT } from '../middlewares/checkJwt';
 import config from 'config';
@@ -13,6 +21,16 @@ import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
 const typeDefs = gql`
   directive @UUID(name: String! = "uid", from: [String!]! = ["id"]) on OBJECT
   scalar Date
+
+  input PositionInput {
+    type: String!
+    coordinates: [Float!]!
+  }
+
+  type Position {
+    type: String!
+    coordinates: [Float!]!
+  }
 
   type ProductInfo {
     image_url: String
@@ -36,6 +54,13 @@ const typeDefs = gql`
     creationDate: Date!
     lastUsed: Date
     products: [ListProduct!]!
+
+    nearbyStore(
+      distance: String
+      position: PositionInput!
+      offset: Int
+      limit: Int
+    ): [Store!]!
   }
 
   type ListProduct {
@@ -48,12 +73,19 @@ const typeDefs = gql`
   type Product {
     barcode: String!
 
+    nearbyStore(
+      distance: String
+      position: String!
+      offset: Int
+      limit: Int
+    ): [Store!]!
+
     info: ProductInfo
   }
 
   type Store {
     id: ID!
-    position: String!
+    position: Position!
     brand: Brand
     promotions: [Promotion!]!
   }
@@ -69,18 +101,34 @@ const typeDefs = gql`
     product: Product!
     brand: Brand
     store: Store
+
+    nearbyStore(
+      distance: String
+      position: String!
+      offset: Int
+      limit: Int
+    ): [Store!]!
   }
 
   type Query {
     allUsers(offset: Int, limit: Int): [User!]!
     user(id: ID!): User
-    currentUser: User
 
     shoppingList(id: ID!): ShoppingList
     listProduct(id: ID!): ListProduct
 
     allProducts(offset: Int, limit: Int): [Product!]!
     product(barcode: String!): Product
+
+    allStore(offset: Int, limit: Int): [Store!]!
+
+    nearbyStore(
+      distance: String
+      position: String!
+      offset: Int
+      limit: Int
+    ): [Store!]!
+    currentUser: User
   }
 
   type Mutation {
@@ -99,6 +147,7 @@ const resolvers = {
       await graphQLFindList(User, args, info),
     user: async (parent, args, _, info) =>
       await graphQLFindOne(User, info, { id: args.id }),
+
     currentUser: async (parent, args, context, info) => {
       if (!context.user) {
         return null;
@@ -112,6 +161,10 @@ const resolvers = {
       await graphQLFindOne(ListProduct, info, { barcode: args.barcode }),
     listProduct: async (parent, args, _, info) =>
       await graphQLFindOne(ListProduct, info, { id: args.id }),
+    allStore: async (parent, args, _, info) =>
+      await graphQLFindList(Store, args, info),
+    nearbyStore: async (parent, args, _, info) =>
+      await graphQlFindNearShop(args, info, {}),
     shoppingList: async (parent, args, _, info) =>
       await graphQLFindOne(ShoppingList, info, { id: args.id }),
   },
@@ -121,15 +174,23 @@ const resolvers = {
   ShoppingList: {
     user: async parent => parent.user,
     products: async parent => parent.products,
+
+    nearbyStore: async (parent, args, _, info) =>
+      await graphQlFindNearShopRelatedToShoppingList(args, info, parent.id),
   },
   ListProduct: {
     product: async parent => parent.product,
     list: async parent => parent.list,
   },
-
+  Promotion: {
+    nearbyStore: async (parent, args, _, info) =>
+      await graphQlFindNearShopRelatedToPromotion(args, info, parent.id),
+  },
   Product: {
     info: async (parent, args, _, info) =>
       await getProductFromBarcode(parent.barcode),
+    nearbyStore: async (parent, args, _, info) =>
+      await graphQlFindNearShopRelatedToProduct(args, info, parent.barcode),
   },
 
   Mutation: {
