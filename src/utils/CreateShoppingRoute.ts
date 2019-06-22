@@ -22,7 +22,7 @@ export function createShopingRoute(
   maxDistTravel: number,
 ): ShoppingRoute {
   // We use a lesser value for distTravel because we will use
-  // the distance as the crow flie
+  // the distance as the crow flies
   const approximativeMaxDistTravel = 0.8 * maxDistTravel;
   // We calculate the value of each shop,
   // keep only the one that are usefull
@@ -123,12 +123,21 @@ function canStoreBeAddToRoute(
   maxDist: number,
   originalPosition: Position,
 ) {
+  // We will only work with position so we get them
   let positions: Position[] = route.stores
     .map(s => s.position)
     .concat([store.position]);
+  // our fist position is the position of the user
   let actualPosition = originalPosition;
   let actualDistTravel = 0;
+  // We will treat his position one by one
   while (positions.length > 0) {
+    // We will always choose the position nearest to the previous one.
+    // It's easiest than calculating avery possibility and should be
+    // not far from the best combinaison.
+    // TODO : Passer a une solution optimale, le nombre de magasin etant
+    // faible (<= 10) tester toutes les possibilite n'est pas forcement trop long
+    // Le probleme reste que ce test est executer de nombreuse fois
     let bestPosition = positions[0];
     let distTravel = calculateDist(actualPosition, positions[0]);
     for (let index = 1; index < positions.length; index++) {
