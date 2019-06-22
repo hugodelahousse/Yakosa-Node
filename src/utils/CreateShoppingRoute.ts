@@ -55,9 +55,15 @@ export function selectNextStore(
       bestStoreWithData.promotions,
     );
 
+    let maxValue = 0;
     //  We re-evaluate value before of each store using the promotion we are currently using
     storeAndDataLeft = storeAndDataLeft
-      .map(shop => reEvaluateShopValue(actualRoute, shop))
+      .map(shop => {
+        // We optimise our re-evaluation by only re-evaluing shop that have a chance to be used.
+        const res = reEvaluateShopValue(actualRoute, shop, maxValue);
+        if (res.value > maxValue) maxValue = res.value;
+        return res;
+      })
       .filter(store => store.value > 0)
       .sort((a, b) => (a.value < b.value ? 1 : a.value > b.value ? -1 : 0));
 
@@ -188,7 +194,13 @@ export function getShopValue(
 export function reEvaluateShopValue(
   shoppingRoute: ShoppingRoute,
   store: StoreWithValueAndPromotion,
+  maxvalue: number = 0,
 ): StoreWithValueAndPromotion {
+  // If we are already sure that re-evaluating the score will not change
+  // anithing with the order of choosen store we don't recalculate it.
+  if (store.value < maxvalue) {
+    return store;
+  }
   let newScore = 0;
   const newPromotion: Promotion[] = [];
   // For each promotion that are still relevant in the shop we recalculate his value

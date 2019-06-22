@@ -3,8 +3,8 @@ import {
   createRandomPromotion,
   createRandomProductWithbarcode,
   createRandomListProduct,
+  createRandomShop,
 } from './CreateRandomObject';
-import { Product } from '@entities/Product';
 import { PromotionType } from '@entities/Promotion';
 import { getPromoValue } from '@utils/CreateShoppingRoute';
 
@@ -40,4 +40,25 @@ describe('test Promotion Value', () => {
     const res = getPromoValue(promotion3, listproduct);
     expect(res).equal(8);
   });
+});
+
+describe('test promotion Value using previous promotion', () => {
+  const product = createRandomProductWithbarcode('12345');
+  const promotion1 = createRandomPromotion(5, 4, product);
+  const promotion2 = createRandomPromotion(
+    5,
+    4,
+    product,
+    PromotionType.THREEFORTWO,
+  );
+  const promotion3 = createRandomPromotion(
+    5,
+    4,
+    product,
+    PromotionType.TWOSECONDHALF,
+  );
+
+  const listproduct = createRandomListProduct(5, product);
+
+  const shop = createRandomShop();
 });
