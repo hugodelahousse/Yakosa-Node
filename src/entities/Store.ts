@@ -11,6 +11,7 @@ import {
 import { Brand } from './Brand';
 import { User } from './User';
 import { Promotion } from './Promotion';
+import { Position } from 'types/PositionType';
 
 @Entity()
 export class Store {
@@ -18,7 +19,7 @@ export class Store {
   id: number;
 
   @Column('geography', { spatialFeatureType: 'Point', srid: 4326 })
-  position: { type: string; coordinates: [number, number] };
+  position: Position;
 
   @Column({ nullable: true })
   brandId: number;
