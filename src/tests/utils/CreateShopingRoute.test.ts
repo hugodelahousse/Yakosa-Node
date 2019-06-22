@@ -8,12 +8,14 @@ import {
 } from './CreateRandomObject';
 import { Store } from '@entities/Store';
 import { createShopingRoute } from '@utils/CreateShoppingRoute';
+import { Position } from 'types/PositionType';
 
 describe('createShopingRoute test', () => {
-  const shop1 = createShopWithPositon(1, 1);
-  const shop2 = createShopWithPositon(2, 2);
-  const shop3 = createShopWithPositon(3, 3);
-  const shop4 = createShopWithPositon(4, 4);
+  const position: Position = { type: 'point', coordinates: [0, 0] };
+  const shop1 = createShopWithPositon(0, 1);
+  const shop2 = createShopWithPositon(0, 2);
+  const shop3 = createShopWithPositon(0, -3);
+  const shop4 = createShopWithPositon(0, 4);
   const shoplist: Store[] = [shop1, shop2, shop3, shop4];
   const product1 = createRandomProductWithbarcode('11111');
   const product2 = createRandomProductWithbarcode('22222');
@@ -51,14 +53,14 @@ describe('createShopingRoute test', () => {
   );
 
   it('should return an empty result', () => {
-    const result = createShopingRoute(shoplist, shoppinglist, 0);
+    const result = createShopingRoute(shoplist, shoppinglist, 0, position, 100);
     expect(result.economie).equal(0);
     expect(result.promotions.length).equal(0);
     expect(result.stores.length).equal(0);
   });
 
   it('choose the best shop to have more promotions', () => {
-    const result = createShopingRoute(shoplist, shoppinglist, 1);
+    const result = createShopingRoute(shoplist, shoppinglist, 1, position, 100);
     expect(result.economie).equal(38.6);
     expect(result.stores).to.have.length.above(0);
     expect(result.stores.length).equal(1);
@@ -67,7 +69,7 @@ describe('createShopingRoute test', () => {
   });
 
   it('choose the 2 best shops to have more promotions', () => {
-    const result = createShopingRoute(shoplist, shoppinglist, 2);
+    const result = createShopingRoute(shoplist, shoppinglist, 2, position, 100);
     expect(result.economie).equal(38.6 + 21.3);
     expect(result.stores).to.have.length.above(0);
     expect(result.stores.length).equal(2);
@@ -77,7 +79,7 @@ describe('createShopingRoute test', () => {
 
   // Should fail because we don't handle re-evaluation of store value
   it('choose the 3 best shops to have more promotions', () => {
-    const result = createShopingRoute(shoplist, shoppinglist, 3);
+    const result = createShopingRoute(shoplist, shoppinglist, 3, position, 100);
     expect(result.economie).equal(38.6 + 21.3 + (17.4 - 16.4));
     expect(result.stores).to.have.length.above(0);
     expect(result.stores.length).equal(3);
@@ -86,11 +88,41 @@ describe('createShopingRoute test', () => {
   });
 
   it('choose more shops than usefull', () => {
-    const result = createShopingRoute(shoplist, shoppinglist);
+    const result = createShopingRoute(
+      shoplist,
+      shoppinglist,
+      10,
+      position,
+      100,
+    );
     expect(result.economie).equal(38.6 + 21.3 + (17.4 - 16.4));
     expect(result.stores).to.have.length.above(0);
     expect(result.stores.length).equal(3);
     expect(result.promotions).to.have.length.above(0);
     expect(result.promotions.length).equal(7);
+  });
+
+  it('should not select shop number 3 because it is too far', () => {
+    const result = createShopingRoute(
+      shoplist,
+      shoppinglist,
+      10,
+      position,
+      5.5,
+    );
+    expect(result.economie).equal(21.3 + (17.4 - 16.4));
+    expect(result.stores).to.have.length.above(0);
+    expect(result.stores.length).equal(2);
+    expect(result.promotions).to.have.length.above(0);
+    expect(result.promotions.length).equal(4);
+  });
+
+  it('should only select shop number 3 because other are too far from it', () => {
+    const result = createShopingRoute(shoplist, shoppinglist, 10, position, 10);
+    expect(result.economie).equal(38.6);
+    expect(result.stores).to.have.length.above(0);
+    expect(result.stores.length).equal(1);
+    expect(result.promotions).to.have.length.above(0);
+    expect(result.promotions.length).equal(3);
   });
 });

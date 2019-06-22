@@ -4,6 +4,8 @@ import { Promotion } from '@entities/Promotion';
 import { StoreWithValueAndPromotion, ShoppingRoute } from 'types/ShoppingRoute';
 import { ListProduct } from '@entities/ListProduct';
 import { PromotionType } from '@entities/Promotion';
+import { Position } from 'types/PositionType';
+import { calculateDist } from './Positionutils';
 
 /**
  * Function that must find the the stores tou must travel to
@@ -16,13 +18,23 @@ export function createShopingRoute(
   stores: Store[],
   shoppingList: ShoppingList,
   numMaxOfStore: number = 10,
+  position: Position,
+  maxDistTravel: number,
 ): ShoppingRoute {
+  // We use a lesser value for distTravel because we will use
+  // the distance as the crow flie
+  const approximativeMaxDistTravel = 0.8 * maxDistTravel;
   // We calculate the value of each shop,
   // keep only the one that are usefull
   // and sort them to have the more usefull first
   const storeAndData = stores
     .map(store => getShopValue(shoppingList, store))
     .filter(store => store.value > 0)
+    .filter(
+      store =>
+        calculateDist(position, store.store.position) * 2 <
+        approximativeMaxDistTravel,
+    )
     .sort((a, b) => (a.value < b.value ? 1 : a.value > b.value ? -1 : 0));
 
   const shoppingRoute: ShoppingRoute = {
@@ -32,7 +44,14 @@ export function createShopingRoute(
     economie: 0,
   };
   // then we create our route with another function
-  return selectNextStore(shoppingRoute, numMaxOfStore, storeAndData);
+  return selectNextStore(
+    shoppingRoute,
+    numMaxOfStore,
+    storeAndData,
+    position,
+    maxDistTravel,
+    approximativeMaxDistTravel,
+  );
 }
 
 /**
@@ -45,6 +64,9 @@ export function selectNextStore(
   actualRoute: ShoppingRoute,
   numLeftStore: number,
   storeAndDataLeft: StoreWithValueAndPromotion[],
+  position: Position,
+  maxDistTravel: number,
+  approximativeMaxDistTravel: number,
 ): ShoppingRoute {
   if (storeAndDataLeft.length > 0 && numLeftStore > 0) {
     // we add the best shop to our route
@@ -56,8 +78,16 @@ export function selectNextStore(
     );
 
     let maxValue = 0;
-    //  We re-evaluate value before of each store using the promotion we are currently using
+    //  We re-evaluate value before of each store using the promotions we are currently using
     storeAndDataLeft = storeAndDataLeft
+      .filter(shop =>
+        canStoreBeAddToRoute(
+          shop.store,
+          actualRoute,
+          approximativeMaxDistTravel,
+          position,
+        ),
+      )
       .map(shop => {
         // We optimise our re-evaluation by only re-evaluing shop that have a chance to be used.
         const res = reEvaluateShopValue(actualRoute, shop, maxValue);
@@ -68,9 +98,53 @@ export function selectNextStore(
       .sort((a, b) => (a.value < b.value ? 1 : a.value > b.value ? -1 : 0));
 
     // Then we continue our recursion
-    return selectNextStore(actualRoute, numLeftStore - 1, storeAndDataLeft);
+    return selectNextStore(
+      actualRoute,
+      numLeftStore - 1,
+      storeAndDataLeft,
+      position,
+      maxDistTravel,
+      approximativeMaxDistTravel,
+    );
   }
   return actualRoute;
+}
+
+/**
+ * Calculate if we can add a store to a route without breaking the rule of maxDistance.
+ * @param store
+ * @param route
+ * @param maxDist
+ * @param originalPosition
+ */
+function canStoreBeAddToRoute(
+  store: Store,
+  route: ShoppingRoute,
+  maxDist: number,
+  originalPosition: Position,
+) {
+  let positions: Position[] = route.stores
+    .map(s => s.position)
+    .concat([store.position]);
+  let actualPosition = originalPosition;
+  let actualDistTravel = 0;
+  while (positions.length > 0) {
+    let bestPosition = positions[0];
+    let distTravel = calculateDist(actualPosition, positions[0]);
+    for (let index = 1; index < positions.length; index++) {
+      const element = positions[index];
+      const dist = calculateDist(actualPosition, element);
+      if (dist < distTravel) {
+        distTravel = dist;
+        bestPosition = element;
+      }
+    }
+    actualDistTravel += distTravel;
+    actualPosition = bestPosition;
+    positions = positions.filter(p => p != actualPosition);
+  }
+  actualDistTravel += calculateDist(actualPosition, originalPosition);
+  return actualDistTravel < maxDist;
 }
 
 /**
