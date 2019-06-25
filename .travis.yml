@@ -16,8 +16,16 @@ stages:
   - test
 
 services:
-  - postgresql
   - redis
+
+addons:
+  postgresql: 9.6
+  apt:
+    packages:
+      - postgresql-9.6-postgis-2.3
+
+before_script:
+  - psql -U postgres -c "create extension postgis"
 
 env:
   - GOOGLE_CONSUMER_KEY=google GOOGLE_CONSUMER_SECRET=google JWT_SECRET=jwt REDIS_URL=''
