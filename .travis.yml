@@ -15,7 +15,9 @@ stages:
   - lint
   - test
 
-services: postgresql
+services:
+  - postgresql
+  - redis
 
 env:
   - GOOGLE_CONSUMER_KEY=google GOOGLE_CONSUMER_SECRET=google JWT_SECRET=jwt REDIS_URL=''
