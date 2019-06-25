@@ -1,0 +1,29 @@
+dist: xenial
+language: node_js
+node_js:
+  - '12.4'
+
+install:
+  - yarn install
+
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
+stages:
+  - prettier
+  - build
+  - test
+
+jobs:
+  include:
+    - stage: prettier
+      script: yarn prettier:check
+
+    - stage: test
+      script: yarn build
+
+    - stage: test
+      script: yarn test
+
