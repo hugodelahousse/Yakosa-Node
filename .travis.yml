@@ -12,13 +12,15 @@ cache:
     - node_modules
 
 stages:
-  - prettier
-  - build
+  - lint
   - test
+
+env:
+  - GOOGLE_CONSUMER_KEY=google GOOGLE_CONSUMER_SECRET=google JWT_SECRET=jwt REDIS_URL=''
 
 jobs:
   include:
-    - stage: prettier
+    - stage: lint
       script: yarn prettier:check
 
     - stage: test
