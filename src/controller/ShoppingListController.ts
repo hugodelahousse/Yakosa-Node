@@ -57,11 +57,12 @@ export class ShoppingListController {
     }
     existing.creationDate = list.creationDate || existing.creationDate;
     existing.lastUsed = list.lastUsed || existing.lastUsed;
+    existing.name = list.name || existing.name;
     return await this.repository.save(existing);
   }
 
   async hasUserRight(userId: number, listId: number) {
     const list = await this.repository.findOne(listId);
-    return list && list.userId == userId;
+    return list && list.userId === userId;
   }
 }
