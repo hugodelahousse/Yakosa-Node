@@ -51,6 +51,7 @@ const typeDefs = gql`
   type ShoppingList {
     id: ID!
     user: User!
+    name: String!
     creationDate: Date!
     lastUsed: Date
     products: [ListProduct!]!
@@ -132,7 +133,8 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createList: ShoppingList
+    createList(name: String): ShoppingList
+    updateList(id: ID!, name: String): ShoppingList
     deleteList(id: ID!): Boolean!
 
     addListProduct(list: ID!, product: ID!, quantity: Int): ListProduct
@@ -194,11 +196,12 @@ const resolvers = {
   },
 
   Mutation: {
-    createList: async (parent, args, { user }, info) => {
+    createList: async (parent, { name }, { user }, info) => {
       if (user === null) {
         return null;
       }
       const newList = await getRepository(ShoppingList).save({
+        name,
         creationDate: new Date(),
         user: {
           id: user,
@@ -206,6 +209,15 @@ const resolvers = {
       });
 
       return await graphQLFindOne(ShoppingList, info, { id: newList.id });
+    },
+
+    updateList: async (parent, { id, name }, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      await getRepository(ShoppingList).update(id, { name });
+
+      return await graphQLFindOne(ShoppingList, info, { id });
     },
 
     deleteList: async (parent, { id }, { user }) => {
