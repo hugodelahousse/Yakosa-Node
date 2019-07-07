@@ -146,6 +146,13 @@ const typeDefs = gql`
     updateList(id: ID!, name: String): ShoppingList
     deleteList(id: ID!): Boolean!
 
+    addListProductWithbarcode(
+      list: ID!
+      barcore: String
+      quantity: Int
+      unit: MeasuringUnits!
+    ): ListProduct
+
     addListProduct(
       list: ID!
       product: ID!
@@ -254,6 +261,30 @@ const resolvers = {
         user: { id: user },
       });
       return !!result.raw[1];
+    },
+
+    addListProductWithbarcode: async (
+      parent,
+      { list, barcode, quantity, unit },
+      { user },
+      info,
+    ) => {
+      if (user === null) {
+        return null;
+      }
+      
+      let product = await getRepository(Product).findOne(barcode);
+      if (!product) {
+        product = await getRepository(Product).save({ barcode })
+      }
+      const result = await getRepository(ListProduct).save({
+        unit,
+        list: { id: list },
+        product: { barcode },
+        quantity: quantity || 1,
+      });
+
+      return await graphQLFindOne(ListProduct, info, { id: result.id });
     },
 
     addListProduct: async (
