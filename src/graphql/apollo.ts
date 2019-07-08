@@ -148,7 +148,7 @@ const typeDefs = gql`
 
     addListProductWithbarcode(
       list: ID!
-      barcore: String
+      barcode: String
       quantity: Int
       unit: MeasuringUnits!
     ): ListProduct
@@ -272,10 +272,10 @@ const resolvers = {
       if (user === null) {
         return null;
       }
-      
+
       let product = await getRepository(Product).findOne(barcode);
       if (!product) {
-        product = await getRepository(Product).save({ barcode })
+        product = await getRepository(Product).save({ barcode });
       }
       const result = await getRepository(ListProduct).save({
         unit,
