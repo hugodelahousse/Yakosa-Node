@@ -9,9 +9,12 @@ import {
   Post,
   Patch,
   HttpCode,
+  UseBefore,
 } from 'routing-controllers';
 import { Brand } from '@entities/Brand';
+import { checkJwt } from '../middlewares/checkJwt';
 
+@UseBefore(checkJwt)
 @JsonController()
 export class BrandController {
   private repository = getRepository(Brand);
@@ -27,14 +30,7 @@ export class BrandController {
     if (idOrName.match(/[0-9]+/)) {
       where = { id: parseFloat(idOrName) };
     }
-    const brand = await this.repository.findOne(where);
-    if (brand === undefined && !idOrName.match(/[0-9]+/)) {
-      const brand = {
-        name: idOrName,
-      };
-      return await this.repository.save(brand);
-    }
-    return brand;
+    return await this.repository.findOne(where);
   }
 
   @Post('/brands/')

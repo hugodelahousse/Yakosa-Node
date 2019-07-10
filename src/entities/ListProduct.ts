@@ -9,6 +9,14 @@ import {
 import ShoppingList from './ShoppingList';
 import { Product } from './Product';
 
+enum MesuringUnits {
+  UNIT = 0,
+  GRAMME = 1,
+  KILOGRAM = 2,
+  LITRE = 3,
+  CENTILITRE = 4,
+}
+
 @Entity()
 @Unique(['list', 'product'])
 export class ListProduct {
@@ -17,6 +25,9 @@ export class ListProduct {
 
   @Column()
   quantity: number;
+
+  @Column('enum', { enum: MesuringUnits, default: MesuringUnits.UNIT })
+  unit: number;
 
   @RelationId((listProduct: ListProduct) => listProduct.list)
   listId: number;

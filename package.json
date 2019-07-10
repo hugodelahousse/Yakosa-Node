@@ -15,6 +15,7 @@
     "@types/passport-google-oauth": "^1.0.39",
     "@types/passport-local": "^1.0.33",
     "apollo-server-express": "^2.4.8",
+    "async-redis": "^1.1.7",
     "body-parser": "^1.18.1",
     "dotenv": "^7.0.0",
     "express": "^4.15.4",
@@ -65,7 +66,8 @@
     "fixtures": "ts-node -r tsconfig-paths/register node_modules/.bin/fixtures",
     "migrations:run": "ts-node -r tsconfig-paths/register ./node_modules/.bin/typeorm migration:run",
     "build": "tsc",
-    "test": "NODE_ENV=test mocha --timeout 5000 -r ts-node/register -r tsconfig-paths/register src/tests/**/*.test.ts",
+    "test": "NODE_ENV=test mocha --timeout 5000 -r ts-node/register -r tsconfig-paths/register src/tests/**/*.test.ts --exit",
+    "jwt:generate:admin": "ts-node -r tsconfig-paths/register src/utils/generateAdminJWT.ts",
     "prettier:run": "prettier --write src/*/**.ts",
     "prettier:check": "prettier --check src/*/**.ts"
   }

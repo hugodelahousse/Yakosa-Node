@@ -5,11 +5,13 @@ import {
   Column,
   ManyToOne,
   RelationId,
+  Unique,
 } from 'typeorm';
 import { User } from './User';
 import { ListProduct } from './ListProduct';
 
 @Entity()
+@Unique(['name', 'user'])
 export default class ShoppingList {
   @PrimaryGeneratedColumn()
   id: number;
@@ -17,10 +19,13 @@ export default class ShoppingList {
   @Column()
   creationDate: Date;
 
+  @Column()
+  name: string;
+
   @Column({ nullable: true })
   lastUsed: Date;
 
-  @RelationId((shopl: ShoppingList) => shopl.user)
+  @RelationId((shop: ShoppingList) => shop.user)
   userId: number;
 
   @ManyToOne(type => User, { onDelete: 'CASCADE' })

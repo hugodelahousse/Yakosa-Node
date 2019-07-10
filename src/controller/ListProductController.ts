@@ -9,9 +9,13 @@ import {
   Post,
   Patch,
   HttpCode,
+  UseBefore,
 } from 'routing-controllers';
 import { ListProduct } from '@entities/ListProduct';
 
+import { checkJwt } from '../middlewares/checkJwt';
+
+@UseBefore(checkJwt)
 @JsonController()
 export class ListProductController {
   private repository = getRepository(ListProduct);
@@ -59,7 +63,7 @@ export class ListProductController {
     if (existing === undefined) {
       return undefined;
     }
-    const fieldsToChange = ['quantity', 'list', 'product'];
+    const fieldsToChange = ['quantity', 'list', 'product', 'unit'];
     for (let i = 0; i < fieldsToChange.length; i += 1) {
       const field = fieldsToChange[i];
       if (listProduct.hasOwnProperty(field)) {
@@ -73,6 +77,6 @@ export class ListProductController {
     const listProduct = await this.repository.findOne(listproductId, {
       relations: ['list'],
     });
-    return listProduct && listProduct.list.userId == userId;
+    return listProduct && listProduct.list.userId === userId;
   }
 }

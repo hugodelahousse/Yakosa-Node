@@ -5,6 +5,8 @@ import {
   ManyToOne,
   OneToMany,
   JoinTable,
+  Unique,
+  RelationId,
 } from 'typeorm';
 import { Product } from './Product';
 import { User } from './User';
@@ -20,6 +22,8 @@ enum PromotionType {
 }
 
 @Entity()
+@Unique(['promotion', 'beginDate', 'endDate', 'type', 'product', 'storeId'])
+@Unique(['promotion', 'beginDate', 'endDate', 'type', 'product', 'brandId'])
 export class Promotion {
   @PrimaryGeneratedColumn()
   id: number;
