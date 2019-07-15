@@ -111,6 +111,8 @@ const typeDefs = gql`
     product: Product!
     brand: Brand
     store: Store
+    promotion: Float
+    price: Float
 
     nearbyStore(
       distance: String
