@@ -6,12 +6,14 @@ import {
   ManyToMany,
   RelationId,
   JoinTable,
+  Unique,
 } from 'typeorm';
 import { Store } from './Store';
 import { Promotion } from './Promotion';
 import { User } from './User';
 
 @Entity()
+@Unique(['name'])
 export class Brand {
   @PrimaryGeneratedColumn()
   id: number;
