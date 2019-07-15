@@ -113,6 +113,7 @@ const typeDefs = gql`
     store: Store
     promotion: Float
     price: Float
+    type: Int
 
     nearbyStore(
       distance: String
