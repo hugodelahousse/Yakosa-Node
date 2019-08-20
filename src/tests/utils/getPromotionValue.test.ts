@@ -6,7 +6,7 @@ import {
   createRandomShop,
 } from './CreateRandomObject';
 import { PromotionType } from '@entities/Promotion';
-import { getPromoValue } from '@utils/CreateShoppingRoute';
+import { getPromoValue, getPromoDiffValue } from '@utils/CreateShoppingRoute';
 
 describe('test Promotion Value', () => {
   const product = createRandomProductWithbarcode('12345');
@@ -60,5 +60,18 @@ describe('test promotion Value using previous promotion', () => {
 
   const listproduct = createRandomListProduct(5, product);
 
-  const shop = createRandomShop();
+  it('should find that promotion1 is worse than promotion (5 instead of )', () => {
+    const res = getPromoDiffValue(promotion1, promotion2, listproduct);
+    expect(res).equal(-(5 - ((5 / 3) * 2 + 1)));
+  });
+
+  it('and the other way around that promotion 2 is worse than promotion 1', () => {
+    const res = getPromoDiffValue(promotion2, promotion1, listproduct);
+    expect(res).equal(5 - ((5 / 3) * 2 + 1));
+  });
+
+  it('should find that promotion2 is also better than promotion3', () => {
+    const res = getPromoDiffValue(promotion2, promotion3, listproduct);
+    expect(res).equal(4.5 - ((5 / 3) * 2 + 1));
+  });
 });
