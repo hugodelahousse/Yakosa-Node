@@ -6,6 +6,7 @@ import {
   graphQlFindNearShopRelatedToPromotion,
   graphQlFindNearShopRelatedToShoppingList,
   graphQlFindNearShopRelatedToProduct,
+  graphQlFindRoute,
 } from '@graphql/utils';
 import { User } from '@entities/User';
 import { ListProduct } from '@entities/ListProduct';
@@ -17,6 +18,7 @@ import config from 'config';
 import { getRepository } from 'typeorm';
 import ShoppingList from '@entities/ShoppingList';
 import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
+import { createShopingRoute } from '@utils/CreateShoppingRoute';
 
 const typeDefs = gql`
   directive @UUID(name: String! = "uid", from: [String!]! = ["id"]) on OBJECT
@@ -110,6 +112,13 @@ const typeDefs = gql`
     ): [Store!]!
   }
 
+  type ShoppingRoute {
+    shoppingList: ShoppingList!
+    stores: [Store!]!
+    promotions: [Promotion!]!
+    economie: Float!
+  }
+
   type Query {
     allUsers(offset: Int, limit: Int): [User!]!
     user(id: ID!): User
@@ -129,6 +138,13 @@ const typeDefs = gql`
       limit: Int
     ): [Store!]!
     currentUser: User
+
+    shoppingRoute(
+      shoppingListId: ID!
+      numMaxOfStore: Int
+      position: String!
+      maxDistTravel: Float
+    ): ShoppingRoute!
   }
 
   type Mutation {
@@ -167,6 +183,8 @@ const resolvers = {
       await graphQlFindNearShop(args, info, {}),
     shoppingList: async (parent, args, _, info) =>
       await graphQLFindOne(ShoppingList, info, { id: args.id }),
+    shoppingRoute: async (parent, args, _, info) =>
+      await graphQlFindRoute(args, info),
   },
   User: {
     shoppingLists: async parent => parent.shoppingLists,

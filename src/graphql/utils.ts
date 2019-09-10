@@ -16,7 +16,9 @@ import {
 } from 'graphql';
 import { Store } from '@entities/Store';
 import { isArray } from 'util';
-import { func } from 'joi';
+import ShoppingList from '@entities/ShoppingList';
+import { createShopingRoute } from '@utils/CreateShoppingRoute';
+import { Position } from 'types/PositionType';
 
 interface FindListOptions {
   limit?: number;
@@ -28,6 +30,13 @@ interface FindStoreOptions {
   position?: string;
   limit?: number;
   offset?: number;
+}
+
+interface FindRouteOptions {
+  shoppingListId: number;
+  numMaxOfStore?: number;
+  position: string;
+  maxDistTravel?: number;
 }
 
 function getQueryFields<Entity>(
@@ -272,6 +281,33 @@ export function graphQlFindNearShop(
   };
 
   return getRepository(Store).find(options);
+}
+
+export async function graphQlFindRoute(
+  args: FindRouteOptions,
+  info: GraphQLResolveInfo,
+) {
+  const shoppingList = await graphQLFindOne(ShoppingList, info, {
+    id: args.shoppingListId,
+  });
+  if (!shoppingList) return undefined;
+  const shops = await graphQlFindNearShopRelatedToShoppingList(
+    {
+      distance: args.maxDistTravel ? String(args.maxDistTravel) : '1000',
+      position: args.position,
+      limit: 100,
+    },
+    info,
+    args.shoppingListId,
+  );
+  const position: Position = JSON.parse(args.position);
+  return createShopingRoute(
+    shops,
+    shoppingList,
+    args.numMaxOfStore || 10,
+    position,
+    args.maxDistTravel || 1000,
+  );
 }
 
 export const dateResolver = {
