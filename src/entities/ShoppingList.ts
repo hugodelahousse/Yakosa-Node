@@ -5,17 +5,22 @@ import {
   Column,
   ManyToOne,
   RelationId,
+  Unique,
 } from 'typeorm';
 import { User } from './User';
 import { ListProduct } from './ListProduct';
 
 @Entity()
+@Unique(['name', 'user'])
 export default class ShoppingList {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
   creationDate: Date;
+
+  @Column()
+  name: string;
 
   @Column({ nullable: true })
   lastUsed: Date;

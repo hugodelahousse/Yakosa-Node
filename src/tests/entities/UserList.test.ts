@@ -16,6 +16,7 @@ describe('UserList Entity', () => {
     user = await userRepository.save(user);
     let userList = userListRepository.create({
       user,
+      name: 'ShoppingList',
       creationDate: new Date(),
     });
     userList = await userListRepository.save(userList);

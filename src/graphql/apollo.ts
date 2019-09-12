@@ -21,6 +21,14 @@ import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
 import { createShopingRoute } from '@utils/CreateShoppingRoute';
 
 const typeDefs = gql`
+  enum MeasuringUnits {
+    UNIT
+    GRAMME
+    KILOGRAM
+    LITRE
+    CENTILITRE
+  }
+
   directive @UUID(name: String! = "uid", from: [String!]! = ["id"]) on OBJECT
   scalar Date
 
@@ -53,6 +61,7 @@ const typeDefs = gql`
   type ShoppingList {
     id: ID!
     user: User!
+    name: String!
     creationDate: Date!
     lastUsed: Date
     products: [ListProduct!]!
@@ -68,6 +77,7 @@ const typeDefs = gql`
   type ListProduct {
     id: ID!
     quantity: Int!
+    unit: MeasuringUnits!
     list: ShoppingList!
     product: Product!
   }
@@ -148,16 +158,33 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createList: ShoppingList
+    createList(name: String): ShoppingList
+    updateList(id: ID!, name: String): ShoppingList
     deleteList(id: ID!): Boolean!
 
-    addListProduct(list: ID!, product: ID!, quantity: Int): ListProduct
-    updateListProduct(id: ID!, quantity: Int!): ListProduct
+    addListProduct(
+      list: ID!
+      product: ID!
+      quantity: Int
+      unit: MeasuringUnits!
+    ): ListProduct
+    updateListProduct(
+      id: ID!
+      quantity: Int!
+      unit: MeasuringUnits!
+    ): ListProduct
     removeListProduct(id: ID!): Boolean!
   }
 `;
 
 const resolvers = {
+  MeasuringUnits: {
+    UNIT: 0,
+    GRAMME: 1,
+    KILOGRAM: 2,
+    LITRE: 3,
+    CENTILITRE: 4,
+  },
   Query: {
     allUsers: async (parent, args, _, info) =>
       await graphQLFindList(User, args, info),
@@ -212,11 +239,12 @@ const resolvers = {
   },
 
   Mutation: {
-    createList: async (parent, args, { user }, info) => {
+    createList: async (parent, { name }, { user }, info) => {
       if (user === null) {
         return null;
       }
       const newList = await getRepository(ShoppingList).save({
+        name,
         creationDate: new Date(),
         user: {
           id: user,
@@ -224,6 +252,15 @@ const resolvers = {
       });
 
       return await graphQLFindOne(ShoppingList, info, { id: newList.id });
+    },
+
+    updateList: async (parent, { id, name }, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      await getRepository(ShoppingList).update(id, { name });
+
+      return await graphQLFindOne(ShoppingList, info, { id });
     },
 
     deleteList: async (parent, { id }, { user }) => {
@@ -239,7 +276,7 @@ const resolvers = {
 
     addListProduct: async (
       parent,
-      { list, product, quantity },
+      { list, product, quantity, unit },
       { user },
       info,
     ) => {
@@ -248,6 +285,7 @@ const resolvers = {
       }
 
       const result = await getRepository(ListProduct).save({
+        unit,
         list: { id: list },
         product: { barcode: product },
         quantity: quantity || 1,
@@ -256,7 +294,12 @@ const resolvers = {
       return await graphQLFindOne(ListProduct, info, { id: result.id });
     },
 
-    updateListProduct: async (parent, { id, quantity }, { user }, info) => {
+    updateListProduct: async (
+      parent,
+      { id, quantity, unit },
+      { user },
+      info,
+    ) => {
       if (user === null) {
         return null;
       }
@@ -264,7 +307,7 @@ const resolvers = {
         await getRepository(ListProduct).delete(id);
         return null;
       }
-      await getRepository(ListProduct).update(id, { quantity });
+      await getRepository(ListProduct).update(id, { quantity, unit });
 
       return await graphQLFindOne(ListProduct, info, { id });
     },
