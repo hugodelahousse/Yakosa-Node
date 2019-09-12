@@ -87,6 +87,7 @@ export function createRandomListProduct(
 ): ListProduct {
   return {
     id: 1,
+    unit: 0,
     quantity,
     list: new ShoppingList(),
     listId: 0,
