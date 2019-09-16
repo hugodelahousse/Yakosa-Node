@@ -98,6 +98,8 @@ const typeDefs = gql`
     position: Position!
     brand: Brand
     promotions: [Promotion!]!
+    name: String!
+    address: String!
   }
 
   type Brand {
