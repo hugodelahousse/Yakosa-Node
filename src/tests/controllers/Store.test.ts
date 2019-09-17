@@ -24,7 +24,7 @@ describe('StoreController GET', () => {
 
   it('Should return one store', async () => {
     const res = await chai.request(app)
-        .get('/stores?position={"type":"Point","coordinates":[2.33386,48.866503]}'
+        .get('/stores?position={"type":"Point","coordinates":[2.363185,48.82472]}'
                  + '&distance=100').set('Authorization', jwtToken);
     expect(res).to.be.json;
     expect(res.body).to.have.length.above(0);
@@ -82,6 +82,8 @@ describe('StoreController POST', () => {
     const store = {
       brandId: tmp.brandId,
       position: tmp.position,
+      name: 'test',
+      address: 'test',
     };
     let res = await chai.request(app).post('/stores/')
         .send(store).set('Authorization', jwtToken);
