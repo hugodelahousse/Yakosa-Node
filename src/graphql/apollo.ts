@@ -145,6 +145,7 @@ const typeDefs = gql`
     product(barcode: String!): Product
 
     allStore(offset: Int, limit: Int): [Store!]!
+    store(id: ID!): Store
 
     nearbyStore(
       distance: String
@@ -218,6 +219,8 @@ const resolvers = {
       await graphQLFindOne(ListProduct, info, { id: args.id }),
     allStore: async (parent, args, _, info) =>
       await graphQLFindList(Store, args, info),
+    store: async (parent, args, _, info) =>
+      await graphQLFindOne(Store, info, { id: args.id }),
     nearbyStore: async (parent, args, _, info) =>
       await graphQlFindNearShop(args, info, {}),
     shoppingList: async (parent, args, _, info) =>
