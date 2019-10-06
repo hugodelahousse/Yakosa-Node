@@ -100,6 +100,8 @@ const typeDefs = gql`
     position: Position!
     brand: Brand
     promotions: [Promotion!]!
+    name: String!
+    address: String!
   }
 
   type Brand {
@@ -113,6 +115,9 @@ const typeDefs = gql`
     product: Product!
     brand: Brand
     store: Store
+    promotion: Float
+    price: Float
+    type: Int
 
     nearbyStore(
       distance: String
@@ -161,6 +166,13 @@ const typeDefs = gql`
     createList(name: String): ShoppingList
     updateList(id: ID!, name: String): ShoppingList
     deleteList(id: ID!): Boolean!
+
+    addListProductWithbarcode(
+      list: ID!
+      barcode: String
+      quantity: Int
+      unit: MeasuringUnits!
+    ): ListProduct
 
     addListProduct(
       list: ID!
@@ -272,6 +284,30 @@ const resolvers = {
         user: { id: user },
       });
       return !!result.raw[1];
+    },
+
+    addListProductWithbarcode: async (
+      parent,
+      { list, barcode, quantity, unit },
+      { user },
+      info,
+    ) => {
+      if (user === null) {
+        return null;
+      }
+
+      let product = await getRepository(Product).findOne(barcode);
+      if (!product) {
+        product = await getRepository(Product).save({ barcode });
+      }
+      const result = await getRepository(ListProduct).save({
+        unit,
+        list: { id: list },
+        product: { barcode },
+        quantity: quantity || 1,
+      });
+
+      return await graphQLFindOne(ListProduct, info, { id: result.id });
     },
 
     addListProduct: async (
