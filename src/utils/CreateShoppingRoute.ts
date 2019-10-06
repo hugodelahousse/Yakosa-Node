@@ -6,6 +6,7 @@ import { ListProduct } from '@entities/ListProduct';
 import { PromotionType } from '@entities/Promotion';
 import { Position } from 'types/PositionType';
 import { calculateDist } from './positionUtils';
+import { findOptimalRoute } from './traveler';
 
 /**
  * Function that must find the the stores tou must travel to
@@ -44,7 +45,7 @@ export function createShopingRoute(
     economie: 0,
   };
   // then we create our route with another function
-  return selectNextStore(
+  const route = selectNextStore(
     shoppingRoute,
     numMaxOfStore,
     storeAndData,
@@ -52,6 +53,10 @@ export function createShopingRoute(
     maxDistTravel,
     approximativeMaxDistTravel,
   );
+
+  route.stores = findOptimalRoute(route.stores, position);
+
+  return route;
 }
 
 /**
