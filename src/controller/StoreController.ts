@@ -157,6 +157,8 @@ export class StoreController {
     }
     existing.brand = store.brand || existing.brand;
     existing.position = store.position || existing.position;
+    existing.address = store.address || existing.address;
+    existing.name = store.name || existing.name;
     return this.repository.save(existing);
   }
 

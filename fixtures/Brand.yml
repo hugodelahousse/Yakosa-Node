@@ -62,3 +62,11 @@ items:
     name: 'Match'
   brand31:
     name: 'Netto'
+  brand32:
+    name: 'Auchan'
+  brand33:
+    name: 'Auchan Supermarche'
+  brand34:
+    name: 'Hyper U'
+  brand35:
+    name: 'Casino'
