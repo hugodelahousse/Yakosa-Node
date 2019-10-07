@@ -187,6 +187,17 @@ const typeDefs = gql`
       quantity: Int
       unit: MeasuringUnits
     )
+
+    updatePromotion(
+      id: ID!
+      price: Float!
+      promotion: Float!
+      beginDate: Date
+      endDate: Date
+      description: String
+      quantity: Int
+      unit: MeasuringUnits
+    )
   }
 `;
 
@@ -400,6 +411,39 @@ const resolvers = {
         promotion,
         endDate,
         storeId,
+        description,
+        quantity,
+        unit,
+      };
+
+      const result = await getRepository(Promotion).save(promo);
+
+      return await graphQLFindOne(Promotion, info, { id: result.id });
+    },
+
+    updatePromotion: async (
+      parent,
+      { id, price, promotion, beginDate, endDate, description, quantity, unit },
+      { user },
+      info,
+    ) => {
+      if (user === null) {
+        return null;
+      }
+      if (!beginDate) {
+        beginDate = new Date();
+      }
+      if (!quantity || !unit) {
+        quantity = 1;
+        unit = 0;
+      }
+
+      const promo: DeepPartial<Promotion> = {
+        id,
+        beginDate,
+        price,
+        promotion,
+        endDate,
         description,
         quantity,
         unit,
