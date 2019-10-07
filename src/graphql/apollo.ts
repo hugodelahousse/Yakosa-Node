@@ -15,7 +15,7 @@ import { Store } from '@entities/Store';
 import * as jwt from 'jsonwebtoken';
 import { JWT } from '../middlewares/checkJwt';
 import config from 'config';
-import { getRepository } from 'typeorm';
+import { getRepository, DeepPartial } from 'typeorm';
 import ShoppingList from '@entities/ShoppingList';
 import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
 import { Vote } from '@entities/Vote';
@@ -186,6 +186,12 @@ const typeDefs = gql`
       unit: MeasuringUnits!
     ): ListProduct
     removeListProduct(id: ID!): Boolean!
+
+    addOrUpdateVote(
+      userId: ID!
+      promotionId: ID!
+      upvote: Boolean!
+    ) : Vote
   }
 `;
 
@@ -361,6 +367,30 @@ const resolvers = {
       }
       const result = await getRepository(ListProduct).delete(id);
       return !!result.raw[1];
+    },
+
+    addOrUpdateVote: async (
+      parent,
+      { userId, promotionId, upvote },
+      { user },
+      info,
+    ) => {
+      if (user === null || user.id != userId) {
+        return null;
+      }
+      const voteRepository = getRepository(Vote);
+      const now = new Date();
+      const partialVote: DeepPartial<Vote> = {
+        userId,
+        promotionId,
+        upvote,
+        created: now,
+      };
+      const vote = await voteRepository.findOne({ promotionId, userId });
+      if (vote !== null && vote !== undefined) {
+        partialVote.id = vote.id;
+      }
+      return await voteRepository.save(partialVote);
     },
   },
 };
