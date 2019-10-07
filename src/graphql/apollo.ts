@@ -118,6 +118,10 @@ const typeDefs = gql`
     promotion: Float
     price: Float
     type: Int
+
+    units: MeasuringUnits
+    quantity: Int
+
     votes: [Vote!]!
 
     nearbyStore(

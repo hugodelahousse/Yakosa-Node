@@ -27,6 +27,8 @@ describe('Vote Entity', () => {
       beginDate: new Date(),
       endDate: new Date(),
       userId: user.id,
+      quantity: 1,
+      unit: 0,
     });
     promotion = await promotionRepository.save(promotion);
 
@@ -58,6 +60,8 @@ describe('Vote Entity', () => {
       beginDate: new Date(),
       endDate: new Date(),
       userId: user.id,
+      quantity: 1,
+      unit: 0,
     });
     promotion = await promotionRepository.save(promotion);
 
@@ -113,6 +117,8 @@ describe('Vote Entity', () => {
       description: 'test',
       beginDate: new Date(),
       userId: user1.id,
+      quantity: 1,
+      unit: 0,
     });
     promotion = await promotionRepository.save(promotion);
 
