@@ -192,6 +192,8 @@ const typeDefs = gql`
       promotionId: ID!
       upvote: Boolean!
     ) : Vote
+
+    removeVote(id: ID!): Boolean!
   }
 `;
 
@@ -390,7 +392,17 @@ const resolvers = {
       if (vote !== null && vote !== undefined) {
         partialVote.id = vote.id;
       }
-      return await voteRepository.save(partialVote);
+      const result = await voteRepository.save(partialVote);
+
+      return await graphQLFindOne(Vote, info, { id: result.id });
+    },
+
+    removeVote: async (parent, { id }, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      const result = await getRepository(Vote).delete(id);
+      return !!result.raw[1];
     },
   },
 };
