@@ -10,6 +10,8 @@ items:
     product: '@productOne($current)'
     user: '@user($current)'
     brand: '@brand($current)'
+    quantity: 1
+    unit: 0
   promotionTwo{1..30}:
     description: '{{lorem.sentence}}'
     price: 100
@@ -20,6 +22,8 @@ items:
     product: '@productTwo($current)'
     user: '@user($current)'
     brand: '@brand($current)'
+    quantity: 1
+    unit: 0
   promotionThree{1..3}:
     description: '{{lorem.sentence}}'
     price: 100
@@ -30,3 +34,5 @@ items:
     product: '@productOne($current)'
     user: '@user($current)'
     store: '@store($current)'
+    quantity: 1
+    unit: 0

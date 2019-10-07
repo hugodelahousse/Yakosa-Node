@@ -116,6 +116,8 @@ const typeDefs = gql`
     promotion: Float
     price: Float
     type: Int
+    units: MeasuringUnits
+    quantity: Int
 
     nearbyStore(
       distance: String
