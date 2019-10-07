@@ -29,4 +29,7 @@ export class Vote {
 
   @RelationId((vote: Vote) => vote.promotion)
   promotionId: number;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
+  created: Date;
 }
