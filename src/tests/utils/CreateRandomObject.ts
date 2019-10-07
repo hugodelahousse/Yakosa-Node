@@ -71,6 +71,8 @@ export function createRandomPromotion(
     brand: createRandomBrand(),
     store: createRandomShop(),
     votes: [],
+    quantity: 1,
+    unit: 0,
   };
 }
 

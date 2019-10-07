@@ -182,8 +182,11 @@ export function getPromoValue(
   promotion: Promotion,
   listProduct: ListProduct,
 ): number {
+  if (promotion.unit != listProduct.unit) return 0;
   const quantityByPromo = getNumberOfProductFromPromoType(promotion.type);
-  const numPromo = Math.trunc(listProduct.quantity / quantityByPromo);
+  const numPromo = Math.trunc(
+    listProduct.quantity / (quantityByPromo * promotion.quantity),
+  );
   return numPromo * promotion.promotion;
 }
 
