@@ -186,7 +186,7 @@ const typeDefs = gql`
       description: String
       quantity: Int
       unit: MeasuringUnits
-    )
+    ): Promotion
 
     updatePromotion(
       id: ID!
@@ -197,7 +197,9 @@ const typeDefs = gql`
       description: String
       quantity: Int
       unit: MeasuringUnits
-    )
+    ): Promotion
+
+    removePromotion(id: ID!): Boolean!
   }
 `;
 
@@ -452,6 +454,14 @@ const resolvers = {
       const result = await getRepository(Promotion).save(promo);
 
       return await graphQLFindOne(Promotion, info, { id: result.id });
+    },
+
+    removePromotion: async (parent, { id }, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      const result = await getRepository(Promotion).delete(id);
+      return !!result.raw[1];
     },
   },
 };
