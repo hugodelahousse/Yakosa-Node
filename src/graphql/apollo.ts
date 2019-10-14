@@ -385,12 +385,11 @@ const resolvers = {
         return null;
       }
       const voteRepository = getRepository(Vote);
-      const now = new Date();
       const partialVote: DeepPartial<Vote> = {
         userId,
         promotionId,
         upvote,
-        created: now,
+        created: new Date(),
       };
       const vote = await voteRepository.findOne({ promotionId, userId });
       if (vote !== null && vote !== undefined) {
