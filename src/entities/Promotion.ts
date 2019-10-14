@@ -47,7 +47,7 @@ export class Promotion {
   @Column('enum', { enum: PromotionType, default: PromotionType.SIMPLE })
   type: number;
 
-  @Column()
+  @Column({ default: 1 })
   quantity: number;
 
   @Column('enum', { enum: MesuringUnits, default: MesuringUnits.UNIT })
