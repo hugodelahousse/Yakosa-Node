@@ -9,7 +9,7 @@ import { calculateDist } from './positionUtils';
 import { findOptimalRoute } from './traveler';
 
 /**
- * Function that must find the the stores tou must travel to
+ * Function that must find the list of stores
  * to get the most promotions
  * @param stores
  * @param shoppingList
@@ -240,7 +240,7 @@ export function getShopValue(
     // best promotion related to it
 
     let actualPromo = 0;
-    let promoChosen: Promotion | null = null;
+    let promoChosen: Promotion;
 
     const filterToRelatedPromo = (promotion: Promotion) =>
       promotion.product.barcode == product.product.barcode;

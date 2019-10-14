@@ -56,7 +56,7 @@ export function createRandomPromotion(
   type: PromotionType = PromotionType.SIMPLE,
 ): Promotion {
   return {
-    id: 1,
+    id: 0,
     description: '',
     price,
     promotion,
@@ -88,7 +88,7 @@ export function createRandomListProduct(
   product: Product,
 ): ListProduct {
   return {
-    id: 1,
+    id: 0,
     unit: 0,
     quantity,
     list: new ShoppingList(),
