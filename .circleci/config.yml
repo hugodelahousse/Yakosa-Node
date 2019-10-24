@@ -9,6 +9,7 @@ defaults: &defaults
     REDIS_HOST: ''
     REDIS_PORT: ''
     REDIS_URL: ''
+    SENTRY_URL: https://878cde707c2d4201af62c4eb697a579d@sentry.io/1793918
 
 jobs:
   build:
