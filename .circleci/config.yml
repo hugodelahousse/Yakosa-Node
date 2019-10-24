@@ -58,7 +58,7 @@ jobs:
     <<: *defaults
     docker:
       - image: circleci/node
-      - image: circleci/postgres:alpine-postgis
+      - image: circleci/postgres:11.5-alpine-postgis
         environment:
           POSTGRES_DB: test
     steps:
