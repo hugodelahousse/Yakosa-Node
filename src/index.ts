@@ -3,10 +3,22 @@ import passport from '@utils/passport';
 
 import * as jwt from 'jsonwebtoken';
 import config from 'config';
-import { getRefreshToken, addRefreshToken } from 'middlewares/checkJwt';
 import apollo from '@graphql/apollo';
 
+import { getRefreshToken, addRefreshToken } from 'middlewares/checkJwt';
+
 createApp().then((app) => {
+  const sentry = require('@sentry/node');
+  sentry.init({ dsn: config.SENTRY_URL });
+
+  app.use(sentry.Handlers.requestHandler());
+  app.use(sentry.Handlers.errorHandler());
+
+  app.use((err, req, res, next) => {
+    res.statusCode = 400;
+    res.end(`${res.sentry}`);
+  });
+
   const port = process.env.PORT || 3000;
   console.log(`App starting on ${port}`);
   app.listen(port);
