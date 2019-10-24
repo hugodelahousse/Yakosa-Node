@@ -10,8 +10,9 @@ import createTypeormConnection from './createTypeormConnection';
 import { BrandController } from '../controller/BrandController';
 import { VoteController } from '../controller/VoteController';
 import { ListProductController } from '../controller/ListProductController';
+import { Connection } from 'typeorm';
 
-export let connection;
+export let connection: Connection;
 
 export default async function createApp() {
   const app = express();
