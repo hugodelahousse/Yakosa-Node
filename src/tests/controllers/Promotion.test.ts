@@ -80,6 +80,8 @@ describe('PromotionController post a promotion', () => {
       endDate: tmp.endDate,
       userId: tmp.userId,
       brandId: tmp.brandId,
+      quantity: 1,
+      unit: 0,
     };
     let res = await chai
       .request(app)

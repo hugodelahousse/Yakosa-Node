@@ -14,9 +14,10 @@ import { Store } from '@entities/Store';
 import * as jwt from 'jsonwebtoken';
 import { JWT } from '../middlewares/checkJwt';
 import config from 'config';
-import { getRepository } from 'typeorm';
+import { getRepository, DeepPartial } from 'typeorm';
 import ShoppingList from '@entities/ShoppingList';
 import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
+import { Promotion } from '@entities/Promotion';
 
 const typeDefs = gql`
   enum MeasuringUnits {
@@ -116,6 +117,8 @@ const typeDefs = gql`
     promotion: Float
     price: Float
     type: Int
+    units: MeasuringUnits
+    quantity: Int
 
     nearbyStore(
       distance: String
@@ -171,6 +174,32 @@ const typeDefs = gql`
       unit: MeasuringUnits!
     ): ListProduct
     removeListProduct(id: ID!): Boolean!
+
+    addPromotion(
+      barcode: String!
+      price: Float!
+      promotion: Float!
+      beginDate: Date
+      endDate: Date
+      brandId: ID
+      storeId: ID
+      description: String
+      quantity: Int
+      unit: MeasuringUnits
+    ): Promotion
+
+    updatePromotion(
+      id: ID!
+      price: Float!
+      promotion: Float!
+      beginDate: Date
+      endDate: Date
+      description: String
+      quantity: Int
+      unit: MeasuringUnits
+    ): Promotion
+
+    removePromotion(id: ID!): Boolean!
   }
 `;
 
@@ -338,6 +367,100 @@ const resolvers = {
         return null;
       }
       const result = await getRepository(ListProduct).delete(id);
+      return !!result.raw[1];
+    },
+
+    addPromotion: async (
+      parent,
+      {
+        barcode,
+        price,
+        promotion,
+        beginDate,
+        endDate,
+        brandId,
+        storeId,
+        description,
+        quantity,
+        unit,
+      },
+      { user },
+      info,
+    ) => {
+      if (user === null) {
+        return null;
+      }
+      if (!storeId && !brandId) {
+        return null;
+      }
+      if (!beginDate) {
+        beginDate = new Date();
+      }
+      if (!quantity || !unit) {
+        quantity = 1;
+        unit = 0;
+      }
+      let product = await getRepository(Product).findOne(barcode);
+      if (!product) {
+        product = await getRepository(Product).save({ barcode });
+      }
+
+      const promo: DeepPartial<Promotion> = {
+        brandId,
+        beginDate,
+        product,
+        price,
+        promotion,
+        endDate,
+        storeId,
+        description,
+        quantity,
+        unit,
+      };
+
+      const result = await getRepository(Promotion).save(promo);
+
+      return await graphQLFindOne(Promotion, info, { id: result.id });
+    },
+
+    updatePromotion: async (
+      parent,
+      { id, price, promotion, beginDate, endDate, description, quantity, unit },
+      { user },
+      info,
+    ) => {
+      if (user === null) {
+        return null;
+      }
+      if (!beginDate) {
+        beginDate = new Date();
+      }
+      if (!quantity || !unit) {
+        quantity = 1;
+        unit = 0;
+      }
+
+      const promo: DeepPartial<Promotion> = {
+        id,
+        beginDate,
+        price,
+        promotion,
+        endDate,
+        description,
+        quantity,
+        unit,
+      };
+
+      const result = await getRepository(Promotion).save(promo);
+
+      return await graphQLFindOne(Promotion, info, { id: result.id });
+    },
+
+    removePromotion: async (parent, { id }, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      const result = await getRepository(Promotion).delete(id);
       return !!result.raw[1];
     },
   },

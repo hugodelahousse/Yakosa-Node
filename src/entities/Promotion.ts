@@ -13,6 +13,7 @@ import { User } from './User';
 import { Vote } from './Vote';
 import { Brand } from './Brand';
 import { Store } from './Store';
+import { MesuringUnits } from '@entities/utils';
 
 enum PromotionType {
   SIMPLE = 0,
@@ -45,6 +46,12 @@ export class Promotion {
 
   @Column('enum', { enum: PromotionType, default: PromotionType.SIMPLE })
   type: number;
+
+  @Column({ default: 1 })
+  quantity: number;
+
+  @Column('enum', { enum: MesuringUnits, default: MesuringUnits.UNIT })
+  unit: number;
 
   @Column({ nullable: true })
   userId: number;
