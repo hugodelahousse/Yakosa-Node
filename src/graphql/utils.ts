@@ -6,6 +6,7 @@ import {
   ObjectType,
   FindConditions,
   Raw,
+  FindOptionsUtils,
 } from 'typeorm';
 import {
   FieldNode,
@@ -16,7 +17,6 @@ import {
 } from 'graphql';
 import { Store } from '@entities/Store';
 import { isArray } from 'util';
-import { func } from 'joi';
 import { Vote } from '@entities/Vote';
 
 const MILLISECOND_IN_ONE_DAY = 86400000;
@@ -274,7 +274,12 @@ export function graphQlFindNearShop(
     skip: offset,
   };
 
-  return getRepository(Store).find(options);
+  return FindOptionsUtils.applyFindManyOptionsOrConditionsToQueryBuilder(
+    getRepository(Store).createQueryBuilder(),
+    options,
+  )
+    .orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`)
+    .getMany();
 }
 
 /**
