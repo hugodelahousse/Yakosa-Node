@@ -113,19 +113,20 @@ describe('storeController get Relevant Store', () => {
 
 describe('StoreController UPDATE', () => {
   it('Should update the 2 store position', async () => {
+    const id = stores[1].id;
     const position = {
       type: 'Point',
       coordinates: [-48.23456, 20.12345],
     };
     let res = await chai
       .request(app)
-      .patch('/stores/2')
+      .patch(`/stores/${id}`)
       .send({ position })
       .set('Authorization', jwtToken);
     expect(res).to.have.status(200);
     res = await chai
       .request(app)
-      .get('/stores/2')
+      .get(`/stores/${id}`)
       .set('Authorization', jwtToken);
     expect(res.body.position).to.be.deep.equal(position);
   });
@@ -156,9 +157,10 @@ describe('StoreController POST', () => {
 
 describe('StoreController DELETE', () => {
   it('Should delete the 2 store', async () => {
+    const id = stores[1].id;
     let res = await chai
       .request(app)
-      .delete('/stores/2')
+      .delete(`/stores/${id}`)
       .set('Authorization', jwtToken);
     expect(res).to.have.status(200);
     res = await chai
@@ -171,7 +173,7 @@ describe('StoreController DELETE', () => {
   it('Should not find the desired store', async () => {
     const res = await chai
       .request(app)
-      .delete('/stores/1000')
+      .delete('/stores/-1')
       .set('Authorization', jwtToken);
     expect(res).to.have.status(404);
   });
