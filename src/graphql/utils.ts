@@ -6,6 +6,7 @@ import {
   ObjectType,
   FindConditions,
   Raw,
+  FindOptionsUtils,
 } from 'typeorm';
 import {
   FieldNode,
@@ -19,6 +20,9 @@ import { isArray } from 'util';
 import ShoppingList from '@entities/ShoppingList';
 import { createShopingRoute } from '@utils/CreateShoppingRoute';
 import { Position } from 'types/PositionType';
+import { Vote } from '@entities/Vote';
+
+const MILLISECOND_IN_ONE_DAY = 86400000;
 
 interface FindListOptions {
   limit?: number;
@@ -280,7 +284,36 @@ export function graphQlFindNearShop(
     skip: offset,
   };
 
-  return getRepository(Store).find(options);
+  return FindOptionsUtils.applyFindManyOptionsOrConditionsToQueryBuilder(
+    getRepository(Store).createQueryBuilder(),
+    options,
+  )
+    .orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`)
+    .getMany();
+}
+
+/**
+ * compute the value of a promotion. Each vote has a value between 30 and 0
+ * they lose one point of value each day and become invalid when there value become 0
+ * @param votes votes of the promotions
+ */
+export function graphQlgetPromotionValue(votes: Vote[]): number {
+  const now = Date.now();
+  return (
+    votes
+      // we filter the invalid value
+      .filter(
+        vote => now - vote.created.valueOf() / MILLISECOND_IN_ONE_DAY < 30,
+      )
+      // then compute the value of each vote
+      .map(
+        vote =>
+          (30 - (now - vote.created.valueOf() / MILLISECOND_IN_ONE_DAY)) *
+          (vote.upvote ? 1 : -1),
+      )
+      // and add all those value
+      .reduce((accumulator, currentValue) => accumulator + currentValue)
+  );
 }
 
 export async function graphQlFindRoute(

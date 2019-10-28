@@ -9,6 +9,7 @@ defaults: &defaults
     REDIS_HOST: ''
     REDIS_PORT: ''
     REDIS_URL: ''
+    SENTRY_URL: ''
 
 jobs:
   build:
