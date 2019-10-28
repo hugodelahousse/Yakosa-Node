@@ -54,15 +54,16 @@ describe('PromotionController should be able to list items', () => {
 
 describe('PromotionController update a promotion', () => {
   it('Should update the first promotion', async () => {
+    const id = promotions[0].id;
     let res = await chai
       .request(app)
-      .patch('/promotions/1')
+      .patch(`/promotions/${id}`)
       .send({ description: 'toto' })
       .set('Authorization', jwtToken);
     expect(res).to.have.status(200);
     res = await chai
       .request(app)
-      .get('/promotions/1')
+      .get(`/promotions/${id}`)
       .set('Authorization', jwtToken);
     expect(res.body.description).to.be.equal('toto');
   });
@@ -99,9 +100,10 @@ describe('PromotionController post a promotion', () => {
 
 describe('PromotionController delete a promotion', () => {
   it('Should delete a promotion', async () => {
+    const id = promotions[1].id;
     let res = await chai
       .request(app)
-      .delete('/promotions/2')
+      .delete(`/promotions/${id}`)
       .set('Authorization', jwtToken);
     expect(res).to.have.status(200);
     res = await chai
@@ -114,7 +116,7 @@ describe('PromotionController delete a promotion', () => {
   it('Should not find the desired promotion', async () => {
     const res = await chai
       .request(app)
-      .delete('/promotions/10000')
+      .delete('/promotions/-1')
       .set('Authorization', jwtToken);
     expect(res).to.have.status(404);
   });

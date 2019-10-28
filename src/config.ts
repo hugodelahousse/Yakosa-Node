@@ -17,6 +17,7 @@ interface Config {
   GOOGLE_CONSUMER_SECRET: string;
   REDIS_URL: string;
   JWT_SECRET: string;
+  SENTRY_URL: string;
 }
 
 const config: Config = {
@@ -24,6 +25,7 @@ const config: Config = {
   GOOGLE_CONSUMER_SECRET: getEnv('GOOGLE_CONSUMER_SECRET'),
   JWT_SECRET: getEnv('JWT_SECRET'),
   REDIS_URL: getEnv('REDIS_URL'),
+  SENTRY_URL: getEnv('SENTRY_URL'),
 };
 
 export default config;
