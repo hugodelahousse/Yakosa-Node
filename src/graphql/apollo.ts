@@ -6,6 +6,7 @@ import {
   graphQlFindNearShopRelatedToPromotion,
   graphQlFindNearShopRelatedToShoppingList,
   graphQlFindNearShopRelatedToProduct,
+  graphQlgetPromotionValue,
 } from '@graphql/utils';
 import { User } from '@entities/User';
 import { ListProduct } from '@entities/ListProduct';
@@ -17,6 +18,7 @@ import config from 'config';
 import { getRepository, DeepPartial } from 'typeorm';
 import ShoppingList from '@entities/ShoppingList';
 import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
+import { Vote } from '@entities/Vote';
 import { Promotion } from '@entities/Promotion';
 
 const typeDefs = gql`
@@ -117,8 +119,11 @@ const typeDefs = gql`
     promotion: Float
     price: Float
     type: Int
+
     units: MeasuringUnits
     quantity: Int
+
+    votes: [Vote!]!
 
     nearbyStore(
       distance: String
@@ -126,6 +131,16 @@ const typeDefs = gql`
       offset: Int
       limit: Int
     ): [Store!]!
+
+    promotionValue(): Int
+  }
+
+  type Vote {
+    id: ID!
+    upvote: Boolean
+    user: User
+    promotion: Promotion
+    created: Date
   }
 
   type Query {
@@ -140,6 +155,8 @@ const typeDefs = gql`
 
     allStore(offset: Int, limit: Int): [Store!]!
     store(id: ID!): Store
+
+    vote(userId: ID!, promotionId: ID!): Vote
 
     nearbyStore(
       distance: String
@@ -174,6 +191,14 @@ const typeDefs = gql`
       unit: MeasuringUnits!
     ): ListProduct
     removeListProduct(id: ID!): Boolean!
+
+    addOrUpdateVote(
+      userId: ID!
+      promotionId: ID!
+      upvote: Boolean!
+    ) : Vote
+
+    removeVote(id: ID!): Boolean!
 
     addPromotion(
       barcode: String!
@@ -234,6 +259,11 @@ const resolvers = {
       await graphQLFindList(Store, args, info),
     store: async (parent, args, _, info) =>
       await graphQLFindOne(Store, info, { id: args.id }),
+    vote: async (parent, args, _, info) =>
+      await graphQLFindOne(Vote, info, {
+        userId: args.userId,
+        promotionId: args.promotionId,
+      }),
     nearbyStore: async (parent, args, _, info) =>
       await graphQlFindNearShop(args, info, {}),
     shoppingList: async (parent, args, _, info) =>
@@ -254,6 +284,8 @@ const resolvers = {
     list: async parent => parent.list,
   },
   Promotion: {
+    promotionValue: async (parent, args, _, info) =>
+      await graphQlgetPromotionValue(parent.votes),
     nearbyStore: async (parent, args, _, info) =>
       await graphQlFindNearShopRelatedToPromotion(args, info, parent.id),
   },
@@ -370,6 +402,38 @@ const resolvers = {
       return !!result.raw[1];
     },
 
+    addOrUpdateVote: async (
+      parent,
+      { userId, promotionId, upvote },
+      { user },
+      info,
+    ) => {
+      if (user === null || user.id != userId) {
+        return null;
+      }
+      const voteRepository = getRepository(Vote);
+      const partialVote: DeepPartial<Vote> = {
+        userId,
+        promotionId,
+        upvote,
+        created: new Date(),
+      };
+      const vote = await voteRepository.findOne({ promotionId, userId });
+      if (vote !== null && vote !== undefined) {
+        partialVote.id = vote.id;
+      }
+      const result = await voteRepository.save(partialVote);
+
+      return await graphQLFindOne(Vote, info, { id: result.id });
+    },
+
+    removeVote: async (parent, { id }, { user }, info) => {
+      if (user === null) {
+        return null;
+      }
+      const result = await getRepository(Vote).delete(id);
+      return !!result.raw[1];
+    },
     addPromotion: async (
       parent,
       {
