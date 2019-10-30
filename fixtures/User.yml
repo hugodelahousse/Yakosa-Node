@@ -1,5 +1,10 @@
 entity: User
 items:
-  user{1..50}:
+  user1:
     firstName: '{{name.firstName}}'
     lastName: '{{name.lastName}}'
+    isAdmin: true
+  user{2..50}:
+    firstName: '{{name.firstName}}'
+    lastName: '{{name.lastName}}'
+    isAdmin: false

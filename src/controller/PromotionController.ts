@@ -12,10 +12,26 @@ import {
   HttpCode,
   UseBefore,
   BadRequestError,
+  CurrentUser,
+  ForbiddenError,
 } from 'routing-controllers';
 import { Promotion } from '@entities/Promotion';
 
 import { checkJwt } from '../middlewares/checkJwt';
+import { User } from '@entities/User';
+
+function hasPermission(
+  user: User,
+  promotion: Promotion,
+): [boolean, Error | null] {
+  if (user.isAdmin) {
+    return [true, null];
+  }
+  if (promotion.userId !== user.id) {
+    return [false, new ForbiddenError('Invalid promotion userId')];
+  }
+  return [true, null];
+}
 
 @UseBefore(checkJwt)
 @JsonController()
@@ -63,7 +79,14 @@ export class PromotionController {
 
   @Post('/promotions/')
   @HttpCode(201)
-  async create(@Body() promotion: Promotion) {
+  async create(
+    @CurrentUser({ required: true }) user: User,
+    @Body() promotion: Promotion,
+  ) {
+    const [authorized, error] = hasPermission(user, promotion);
+    if (error !== null) {
+      throw error;
+    }
     try {
       return await this.repository.save(promotion);
     } catch (e) {
@@ -73,9 +96,17 @@ export class PromotionController {
 
   @Delete('/promotions/:id')
   @OnUndefined(404)
-  async remove(@Param('id') id: number) {
+  async remove(
+    @CurrentUser({ required: true }) user: User,
+    @Param('id') id: number,
+  ) {
     const promotionToRemove = await this.repository.findOne(id);
     if (promotionToRemove) {
+      const [authorized, error] = hasPermission(user, promotionToRemove);
+      if (error !== null) {
+        throw error;
+      }
+
       return await this.repository.remove(promotionToRemove);
     }
     return promotionToRemove;
@@ -83,11 +114,22 @@ export class PromotionController {
 
   @OnUndefined(404)
   @Patch('/promotions/:id')
-  async update(@Param('id') id: number, @Body() promotion: Promotion) {
+  async update(
+    @CurrentUser({ required: true }) user: User,
+    @Param('id') id: number,
+    @Body() promotion: Promotion,
+  ) {
     const existing = await this.repository.findOne(id);
+
     if (existing === undefined) {
       return undefined;
     }
+
+    const [authorized, error] = hasPermission(user, existing);
+    if (error !== null) {
+      throw error;
+    }
+
     const fieldsToChange = [
       'store',
       'beginDate',

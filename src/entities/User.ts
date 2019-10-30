@@ -19,6 +19,9 @@ export class User {
   id: number;
 
   @Column()
+  isAdmin: boolean;
+
+  @Column()
   firstName: string;
 
   @Column()
