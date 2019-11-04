@@ -1,4 +1,9 @@
-import { ApolloServer, makeExecutableSchema, gql } from 'apollo-server-express';
+import {
+  ApolloServer,
+  AuthenticationError,
+  makeExecutableSchema,
+  gql,
+} from 'apollo-server-express';
 import {
   graphQLFindList,
   graphQLFindOne,
@@ -19,7 +24,6 @@ import config from 'config';
 import { getRepository, DeepPartial } from 'typeorm';
 import ShoppingList from '@entities/ShoppingList';
 import { getProductFromBarcode } from '@utils/OpendFoodFactAPI';
-import { createShopingRoute } from '@utils/CreateShoppingRoute';
 import { Vote } from '@entities/Vote';
 import { Promotion } from '@entities/Promotion';
 
@@ -426,7 +430,7 @@ const resolvers = {
       { user },
       info,
     ) => {
-      if (user === null || user.id != userId) {
+      if (user === null || user.id !== userId) {
         return null;
       }
       const voteRepository = getRepository(Vote);
@@ -438,6 +442,10 @@ const resolvers = {
       };
       const vote = await voteRepository.findOne({ promotionId, userId });
       if (vote !== null && vote !== undefined) {
+        if (vote.userId !== user.id) {
+          throw new AuthenticationError('Unauthorized');
+        }
+
         partialVote.id = vote.id;
       }
       const result = await voteRepository.save(partialVote);
@@ -449,6 +457,11 @@ const resolvers = {
       if (user === null) {
         return null;
       }
+      const vote = await getRepository(Vote).findOne({ id });
+      if (vote && vote.userId !== user.id) {
+        throw new AuthenticationError('Unauthorized');
+      }
+
       const result = await getRepository(Vote).delete(id);
       return !!result.raw[1];
     },
