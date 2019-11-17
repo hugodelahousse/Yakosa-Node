@@ -138,7 +138,7 @@ const typeDefs = gql`
       limit: Int
     ): [Store!]!
 
-    promotionValue(): Int
+    promotionValue: Int
   }
 
   type Vote {
@@ -212,11 +212,7 @@ const typeDefs = gql`
     ): ListProduct
     removeListProduct(id: ID!): Boolean!
 
-    addOrUpdateVote(
-      userId: ID!
-      promotionId: ID!
-      upvote: Boolean!
-    ) : Vote
+    addOrUpdateVote(userId: ID!, promotionId: ID!, upvote: Boolean!): Vote
 
     removeVote(id: ID!): Boolean!
 
