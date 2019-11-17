@@ -284,12 +284,14 @@ export function graphQlFindNearShop(
     skip: offset,
   };
 
-  return FindOptionsUtils.applyFindManyOptionsOrConditionsToQueryBuilder(
-    getRepository(Store).createQueryBuilder(),
-    options,
-  )
-    .orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`)
-    .getMany();
+  return (
+    FindOptionsUtils.applyFindManyOptionsOrConditionsToQueryBuilder(
+      getRepository(Store).createQueryBuilder(),
+      options,
+    )
+      //.orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`)
+      .getMany()
+  );
 }
 
 /**
