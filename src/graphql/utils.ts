@@ -390,12 +390,12 @@ export async function graphQlFindRoute(
   const storeRelation = storeNode
     ? getQueryRelations(Store, info, storeNode)
     : [
-      'promotions',
-      'promotions.product',
-      'brand',
-      'brand.promotions',
-      'brand.promotions.product',
-    ];
+        'promotions',
+        'promotions.product',
+        'brand',
+        'brand.promotions',
+        'brand.promotions.product',
+      ];
   addInListIfNotPresent(storeRelation, [
     'promotions',
     'promotions.product',
