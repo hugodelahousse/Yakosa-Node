@@ -43,6 +43,24 @@ interface FindRouteOptions {
   maxDistTravel?: number;
 }
 
+function getFieldNode(
+  name: String,
+  node: FieldNode | FragmentDefinitionNode,
+): FieldNode | undefined {
+  if (!node.selectionSet) {
+    return undefined;
+  }
+
+  for (const selection of node.selectionSet.selections) {
+    if (selection.kind == 'Field') {
+      const relationName = selection.name.value;
+      if (relationName == name) {
+        return selection;
+      }
+    }
+  }
+}
+
 function getQueryFields<Entity>(
   entityClass: ObjectType<Entity>,
   node: FieldNode,
@@ -339,19 +357,52 @@ export function graphQlgetPromotionValue(votes: Vote[]): number {
   );
 }
 
+function addInListIfNotPresent(list: String[], value: string | string[]) {
+  if (isArray(value)) {
+    for (const val of value) {
+      addInListIfNotPresent(list, val);
+    }
+  } else if (list.filter(name => name == value).length == 0) {
+    list.push(value);
+  }
+}
+
 export async function graphQlFindRoute(
   args: FindRouteOptions,
   info: GraphQLResolveInfo,
 ) {
+  const shoppingNode = getFieldNode('shoppingList', info.fieldNodes[0]);
+  const shoppingRelation = shoppingNode
+    ? getQueryRelations(ShoppingList, info, shoppingNode)
+    : ['products', 'products.product'];
+  addInListIfNotPresent(shoppingRelation, ['products', 'products.product']);
   const shoppingList = await graphQLFindOne(
     ShoppingList,
     info,
     {
       id: args.shoppingListId,
     },
-    getQueryRelations(ShoppingList, info, info.fragments['shoppingList']),
+    shoppingRelation,
   );
   if (!shoppingList) return undefined;
+
+  const storeNode = getFieldNode('stores', info.fieldNodes[0]);
+  const storeRelation = storeNode
+    ? getQueryRelations(Store, info, storeNode)
+    : [
+        'promotions',
+        'promotions.product',
+        'brand',
+        'brand.promotions',
+        'brand.promotions.product',
+      ];
+  addInListIfNotPresent(storeRelation, [
+    'promotions',
+    'promotions.product',
+    'brand',
+    'brand.promotions',
+    'brand.promotions.product',
+  ]);
   const shops = await graphQlFindNearShopRelatedToShoppingList(
     {
       distance: args.maxDistTravel ? String(args.maxDistTravel) : '1000',
@@ -360,7 +411,7 @@ export async function graphQlFindRoute(
     },
     info,
     args.shoppingListId,
-    getQueryRelations(Store, info, info.fragments['stores']),
+    storeRelation,
   );
   const position: Position = JSON.parse(args.position);
   return createShopingRoute(
