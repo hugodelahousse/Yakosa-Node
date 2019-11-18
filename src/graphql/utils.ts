@@ -7,6 +7,8 @@ import {
   FindConditions,
   Raw,
   FindOptionsUtils,
+  SelectQueryBuilder,
+  Brackets,
 } from 'typeorm';
 import {
   FieldNode,
@@ -139,9 +141,8 @@ export function graphQLFindList<Entity>(
   where?: ObjectLiteral,
   relationsOverride?: string[],
 ) {
-  const relations = relationsOverride
-    ? relationsOverride
-    : getQueryRelations(entityClass, info, info.fieldNodes[0]);
+  const relations = getQueryRelations(entityClass, info, info.fieldNodes[0]);
+  if (relationsOverride) addInListIfNotPresent(relations, relationsOverride);
 
   const options: FindManyOptions<Entity> = {
     where,
@@ -159,9 +160,8 @@ export function graphQLFindOne<Entity>(
   where?: ObjectLiteral,
   relationsOverride?: string[],
 ) {
-  const relations = relationsOverride
-    ? relationsOverride
-    : getQueryRelations(entityClass, info, info.fieldNodes[0]);
+  const relations = getQueryRelations(entityClass, info, info.fieldNodes[0]);
+  if (relationsOverride) addInListIfNotPresent(relations, relationsOverride);
 
   const options: FindOneOptions<Entity> = { where, relations };
 
@@ -174,29 +174,30 @@ export function graphQlFindNearShopRelatedToPromotion(
   id: number,
   relationsOverride?: string[],
 ) {
-  return graphQlFindNearShop(
+  if (!relationsOverride) relationsOverride = [];
+  addInListIfNotPresent(relationsOverride, [
+    'promotions',
+    'brand',
+    'brand.promotions',
+  ]);
+  const builder = graphQlFindNearShopConstructor(
     args,
     info,
-    [
-      {
-        promotions: [
-          {
-            id,
-          },
-        ],
-      },
-      {
-        brand: {
-          promotions: [
-            {
-              id,
-            },
-          ],
-        },
-      },
-    ],
+    undefined,
     relationsOverride,
   );
+
+  return builder
+    .andWhere(
+      new Brackets(qb => {
+        qb.where('Store__brand__promotions.id = :id', {
+          id,
+        }).orWhere('Store__promotions.id = :id2', {
+          id2: id,
+        });
+      }),
+    )
+    .getMany();
 }
 
 export function graphQlFindNearShopRelatedToShoppingList(
@@ -205,94 +206,107 @@ export function graphQlFindNearShopRelatedToShoppingList(
   id: number,
   relationsOverride?: string[],
 ) {
-  return graphQlFindNearShop(
+  if (!relationsOverride) relationsOverride = [];
+  addInListIfNotPresent(relationsOverride, [
+    'promotions',
+    'promotions.product',
+    'promotions.product.listProducts',
+    'promotions.product.listProducts.list',
+    'brand',
+    'brand.promotions',
+    'brand.promotions.product',
+    'brand.promotions.product.listProducts',
+    'brand.promotions.product.listProducts.list',
+  ]);
+  const builder = graphQlFindNearShopConstructor(
     args,
     info,
-    [
-      {
-        promotions: [
-          {
-            product: {
-              listProducts: [
-                {
-                  list: {
-                    id,
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-      {
-        brand: {
-          promotions: [
-            {
-              product: {
-                listProducts: [
-                  {
-                    list: {
-                      id,
-                    },
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
-    ],
+    undefined,
     relationsOverride,
   );
+
+  return builder
+    .andWhere(
+      new Brackets(qb => {
+        qb.where(
+          'Store__brand__promotions__product__listProducts__list.id = :id',
+          {
+            id,
+          },
+        ).orWhere('Store__promotions__product__listProducts__list.id = :id2', {
+          id2: id,
+        });
+      }),
+    )
+    .getMany();
 }
 
 export function graphQlFindNearShopRelatedToProduct(
   args: FindStoreOptions,
   info: GraphQLResolveInfo,
   barcode: string,
+  relationsOverride?: string[],
 ) {
-  return graphQlFindNearShop(args, info, [
-    {
-      promotions: [
-        {
-          product: {
-            listProducts: [
-              {
-                list: {
-                  products: [
-                    {
-                      productBarcode: barcode,
-                    },
-                  ],
-                },
-              },
-            ],
-          },
-        },
-      ],
-    },
-    {
-      brand: {
-        promotions: [
-          {
-            product: {
-              listProducts: [
-                {
-                  list: {
-                    products: [
-                      {
-                        productBarcode: barcode,
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
+  if (!relationsOverride) relationsOverride = [];
+  addInListIfNotPresent(relationsOverride, [
+    'promotions',
+    'promotions.product',
+    'brand',
+    'brand.promotions',
+    'brand.promotions.product',
   ]);
+  const builder = graphQlFindNearShopConstructor(
+    args,
+    info,
+    undefined,
+    relationsOverride,
+  );
+
+  return builder
+    .andWhere(
+      new Brackets(qb => {
+        qb.where('Store__brand__promotions__product.barcode = :barcode', {
+          barcode,
+        }).orWhere('Store__promotions__product.barcode = :barcode2', {
+          barcode2: barcode,
+        });
+      }),
+    )
+    .getMany();
+}
+
+function graphQlFindNearShopConstructor(
+  { distance, position, limit, offset }: FindStoreOptions,
+  info: GraphQLResolveInfo,
+  where?: FindConditions<Store> | FindConditions<Store>[],
+  relationsOverride?: string[],
+): SelectQueryBuilder<Store> {
+  const relations = getQueryRelations(Store, info, info.fieldNodes[0]);
+  if (relationsOverride) addInListIfNotPresent(relations, relationsOverride);
+  const CheckDistanceOperator = Raw(
+    alias =>
+      `ST_Distance(${alias}, ST_GeomFromGeoJSON('${position}'))` +
+      `< ${distance || 1000}`,
+  );
+  if (!where) {
+    where = { position: CheckDistanceOperator };
+  } else if (isArray(where)) {
+    where.forEach(element => {
+      element.position = CheckDistanceOperator;
+    });
+  } else {
+    where.position = CheckDistanceOperator;
+  }
+  const options: FindManyOptions<Store> = {
+    where,
+    relations,
+    take: limit,
+    skip: offset,
+  };
+  return FindOptionsUtils.applyFindManyOptionsOrConditionsToQueryBuilder(
+    getRepository(Store).createQueryBuilder(),
+    options,
+  );
 }
 
 export function graphQlFindNearShop(
@@ -301,37 +315,12 @@ export function graphQlFindNearShop(
   where: FindConditions<Store> | FindConditions<Store>[],
   relationsOverride?: string[],
 ) {
-  const relations = relationsOverride
-    ? relationsOverride
-    : getQueryRelations(Store, info, info.fieldNodes[0]);
-  const CheckDistanceOperator = Raw(
-    alias =>
-      `ST_Distance(${alias}, ST_GeomFromGeoJSON('${position}'))` +
-      `< ${distance || 1000}`,
-  );
-  if (isArray(where)) {
-    where.forEach(element => {
-      element.position = CheckDistanceOperator;
-    });
-  } else {
-    where.position = CheckDistanceOperator;
-  }
-
-  const options: FindManyOptions<Store> = {
+  return graphQlFindNearShopConstructor(
+    { distance, position, limit, offset },
+    info,
     where,
-    relations,
-    take: limit,
-    skip: offset,
-  };
-
-  return (
-    FindOptionsUtils.applyFindManyOptionsOrConditionsToQueryBuilder(
-      getRepository(Store).createQueryBuilder(),
-      options,
-    )
-      // .orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`)
-      .getMany()
-  );
+    relationsOverride,
+  ).getMany();
 }
 
 /**
@@ -394,12 +383,12 @@ export async function graphQlFindRoute(
   const storeRelation = storeNode
     ? getQueryRelations(Store, info, storeNode)
     : [
-      'promotions',
-      'promotions.product',
-      'brand',
-      'brand.promotions',
-      'brand.promotions.product',
-    ];
+        'promotions',
+        'promotions.product',
+        'brand',
+        'brand.promotions',
+        'brand.promotions.product',
+      ];
   addInListIfNotPresent(storeRelation, [
     'promotions',
     'promotions.product',
@@ -429,7 +418,7 @@ export async function graphQlFindRoute(
     {
       distance: args.maxDistTravel ? String(args.maxDistTravel) : '1000',
       position: args.position,
-      limit: 1000,
+      limit: 100,
     },
     info,
     args.shoppingListId,
