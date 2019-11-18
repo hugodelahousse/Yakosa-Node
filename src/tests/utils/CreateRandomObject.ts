@@ -59,7 +59,7 @@ export function createRandomPromotion(
     id: 0,
     description: '',
     price,
-    promotion,
+    promotion: -promotion,
     beginDate: new Date(),
     endDate: new Date(),
     type,
