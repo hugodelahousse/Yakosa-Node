@@ -118,8 +118,11 @@ export function graphQLFindList<Entity>(
   { limit, offset }: FindListOptions,
   info: GraphQLResolveInfo,
   where?: ObjectLiteral,
+  relationsOverride?: string[],
 ) {
-  const relations = getQueryRelations(entityClass, info, info.fieldNodes[0]);
+  const relations = relationsOverride
+    ? relationsOverride
+    : getQueryRelations(entityClass, info, info.fieldNodes[0]);
 
   const options: FindManyOptions<Entity> = {
     where,
@@ -135,8 +138,11 @@ export function graphQLFindOne<Entity>(
   entityClass: ObjectType<Entity>,
   info: GraphQLResolveInfo,
   where?: ObjectLiteral,
+  relationsOverride?: string[],
 ) {
-  const relations = getQueryRelations(entityClass, info, info.fieldNodes[0]);
+  const relations = relationsOverride
+    ? relationsOverride
+    : getQueryRelations(entityClass, info, info.fieldNodes[0]);
 
   const options: FindOneOptions<Entity> = { where, relations };
 
@@ -147,50 +153,44 @@ export function graphQlFindNearShopRelatedToPromotion(
   args: FindStoreOptions,
   info: GraphQLResolveInfo,
   id: number,
+  relationsOverride?: string[],
 ) {
-  return graphQlFindNearShop(args, info, [
-    {
-      promotions: [
-        {
-          id,
-        },
-      ],
-    },
-    {
-      brand: {
+  return graphQlFindNearShop(
+    args,
+    info,
+    [
+      {
         promotions: [
           {
             id,
           },
         ],
       },
-    },
-  ]);
+      {
+        brand: {
+          promotions: [
+            {
+              id,
+            },
+          ],
+        },
+      },
+    ],
+    relationsOverride,
+  );
 }
 
 export function graphQlFindNearShopRelatedToShoppingList(
   args: FindStoreOptions,
   info: GraphQLResolveInfo,
   id: number,
+  relationsOverride?: string[],
 ) {
-  return graphQlFindNearShop(args, info, [
-    {
-      promotions: [
-        {
-          product: {
-            listProducts: [
-              {
-                list: {
-                  id,
-                },
-              },
-            ],
-          },
-        },
-      ],
-    },
-    {
-      brand: {
+  return graphQlFindNearShop(
+    args,
+    info,
+    [
+      {
         promotions: [
           {
             product: {
@@ -205,8 +205,26 @@ export function graphQlFindNearShopRelatedToShoppingList(
           },
         ],
       },
-    },
-  ]);
+      {
+        brand: {
+          promotions: [
+            {
+              product: {
+                listProducts: [
+                  {
+                    list: {
+                      id,
+                    },
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+    relationsOverride,
+  );
 }
 
 export function graphQlFindNearShopRelatedToProduct(
@@ -262,8 +280,11 @@ export function graphQlFindNearShop(
   { distance, position, limit, offset }: FindStoreOptions,
   info: GraphQLResolveInfo,
   where: FindConditions<Store> | FindConditions<Store>[],
+  relationsOverride?: string[],
 ) {
-  const relations = getQueryRelations(Store, info, info.fieldNodes[0]);
+  const relations = relationsOverride
+    ? relationsOverride
+    : getQueryRelations(Store, info, info.fieldNodes[0]);
   const CheckDistanceOperator = Raw(
     alias =>
       `ST_Distance(${alias}, ST_GeomFromGeoJSON('${position}'))` +
@@ -289,7 +310,7 @@ export function graphQlFindNearShop(
       getRepository(Store).createQueryBuilder(),
       options,
     )
-      //.orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`)
+      // .orderBy(`ST_Distance(position, ST_GeomFromGeoJSON('${position}'))`)
       .getMany()
   );
 }
@@ -322,9 +343,14 @@ export async function graphQlFindRoute(
   args: FindRouteOptions,
   info: GraphQLResolveInfo,
 ) {
-  const shoppingList = await graphQLFindOne(ShoppingList, info, {
-    id: args.shoppingListId,
-  });
+  const shoppingList = await graphQLFindOne(
+    ShoppingList,
+    info,
+    {
+      id: args.shoppingListId,
+    },
+    getQueryRelations(ShoppingList, info, info.fragments['shoppingList']),
+  );
   if (!shoppingList) return undefined;
   const shops = await graphQlFindNearShopRelatedToShoppingList(
     {
@@ -334,6 +360,7 @@ export async function graphQlFindRoute(
     },
     info,
     args.shoppingListId,
+    getQueryRelations(Store, info, info.fragments['stores']),
   );
   const position: Position = JSON.parse(args.position);
   return createShopingRoute(
