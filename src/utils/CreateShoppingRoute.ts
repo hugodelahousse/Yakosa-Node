@@ -187,7 +187,7 @@ export function getPromoValue(
   const numPromo = Math.trunc(
     listProduct.quantity / (quantityByPromo * promotion.quantity),
   );
-  return numPromo * promotion.promotion;
+  return -numPromo * promotion.promotion;
 }
 
 /**
@@ -208,7 +208,7 @@ export function getPromoDiffValue(
   const newPromoValue =
     Math.trunc(listProduct.quantity / quantityOfNewPromo) * newPromo.promotion;
   const realPriceWithNewPromo =
-    (listProduct.quantity / quantityOfNewPromo) * newPromo.price -
+    (listProduct.quantity / quantityOfNewPromo) * newPromo.price +
     newPromoValue;
 
   // Then we do the same calcul with the last promotion
@@ -217,7 +217,7 @@ export function getPromoDiffValue(
     Math.trunc(listProduct.quantity / quantityOfLastPromo) *
     lastPromo.promotion;
   const realPriceWithLastPromo =
-    (listProduct.quantity / quantityOfLastPromo) * lastPromo.price -
+    (listProduct.quantity / quantityOfLastPromo) * lastPromo.price +
     LastPromoValue;
 
   // And we return the diff between those to price

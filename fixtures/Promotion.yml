@@ -3,7 +3,7 @@ items:
   promotionOne{1..30}:
     description: '{{lorem.sentence}}'
     price: 100
-    promotion: 50
+    promotion: -50
     type: 1
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
@@ -15,7 +15,7 @@ items:
   promotionTwo{1..30}:
     description: '{{lorem.sentence}}'
     price: 100
-    promotion: 50
+    promotion: -50
     type: 2
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
@@ -27,7 +27,7 @@ items:
   promotionThree{1..3}:
     description: '{{lorem.sentence}}'
     price: 100
-    promotion: 50
+    promotion: -50
     type: 0
     beginDate: '{{date.past}}'
     endDate: '{{date.future}}'
