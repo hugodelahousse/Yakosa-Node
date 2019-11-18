@@ -21,6 +21,7 @@ import ShoppingList from '@entities/ShoppingList';
 import { createShopingRoute } from '@utils/CreateShoppingRoute';
 import { Position } from 'types/PositionType';
 import { Vote } from '@entities/Vote';
+import { Promotion } from '@entities/Promotion';
 
 const MILLISECOND_IN_ONE_DAY = 86400000;
 
@@ -371,6 +372,8 @@ export async function graphQlFindRoute(
   args: FindRouteOptions,
   info: GraphQLResolveInfo,
 ) {
+  // we will first find all the relation we need from shoppingList fusing the one asked by the user and the
+  // one needed by the algorithm
   const shoppingNode = getFieldNode('shoppingList', info.fieldNodes[0]);
   const shoppingRelation = shoppingNode
     ? getQueryRelations(ShoppingList, info, shoppingNode)
@@ -386,16 +389,17 @@ export async function graphQlFindRoute(
   );
   if (!shoppingList) return undefined;
 
+  // we will then compute the relation needed for store in the same way
   const storeNode = getFieldNode('stores', info.fieldNodes[0]);
   const storeRelation = storeNode
     ? getQueryRelations(Store, info, storeNode)
     : [
-        'promotions',
-        'promotions.product',
-        'brand',
-        'brand.promotions',
-        'brand.promotions.product',
-      ];
+      'promotions',
+      'promotions.product',
+      'brand',
+      'brand.promotions',
+      'brand.promotions.product',
+    ];
   addInListIfNotPresent(storeRelation, [
     'promotions',
     'promotions.product',
@@ -403,11 +407,29 @@ export async function graphQlFindRoute(
     'brand.promotions',
     'brand.promotions.product',
   ]);
+
+  // however the relation from promotions must be added to the shoppinglist usage because it's where
+  // we get the promotions
+
+  const promotionsNode = getFieldNode('promotions', info.fieldNodes[0]);
+  const promotionRelation = promotionsNode
+    ? getQueryRelations(Promotion, info, promotionsNode)
+    : [];
+
+  addInListIfNotPresent(
+    storeRelation,
+    promotionRelation.map(str => `promotions.${str}`),
+  );
+  addInListIfNotPresent(
+    storeRelation,
+    promotionRelation.map(str => `brand.promotions.${str}`),
+  );
+
   const shops = await graphQlFindNearShopRelatedToShoppingList(
     {
       distance: args.maxDistTravel ? String(args.maxDistTravel) : '1000',
       position: args.position,
-      limit: 100,
+      limit: 1000,
     },
     info,
     args.shoppingListId,
