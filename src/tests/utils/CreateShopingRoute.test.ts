@@ -70,7 +70,7 @@ describe('createShopingRoute test', () => {
 
   it('choose the 2 best shops to have more promotions', () => {
     const result = createShopingRoute(shoplist, shoppinglist, 2, position, 100);
-    expect(result.economie).equal(38.6 + 21.3);
+    expect(result.economie).equal(59.9);
     expect(result.stores).to.have.length.above(0);
     expect(result.stores.length).equal(2);
     expect(result.promotions).to.have.length.above(0);
@@ -80,7 +80,7 @@ describe('createShopingRoute test', () => {
   // Should fail because we don't handle re-evaluation of store value
   it('choose the 3 best shops to have more promotions', () => {
     const result = createShopingRoute(shoplist, shoppinglist, 3, position, 100);
-    expect(result.economie).equal(38.6 + 21.3 + (17.4 - 16.4));
+    expect(result.economie).equal(60.9);
     expect(result.stores).to.have.length.above(0);
     expect(result.stores.length).equal(3);
     expect(result.promotions).to.have.length.above(0);
@@ -95,7 +95,7 @@ describe('createShopingRoute test', () => {
       position,
       100,
     );
-    expect(result.economie).equal(38.6 + 21.3 + (17.4 - 16.4));
+    expect(result.economie).equal(60.9);
     expect(result.stores).to.have.length.above(0);
     expect(result.stores.length).equal(3);
     expect(result.promotions).to.have.length.above(0);
