@@ -54,6 +54,38 @@ export function createShopingRoute(
     approximativeMaxDistTravel,
   );
 
+  const promotionsChoice: Promotion[] = [];
+  let value = 0;
+  shoppingList.products.forEach(product => {
+    // for each product in the shopping list we choose the
+    // best promotion related to it
+
+    let actualPromo = 0;
+    let promoChosen: Promotion;
+
+    const filterToRelatedPromo = (promotion: Promotion) =>
+      promotion.product.barcode == product.product.barcode;
+
+    const findBestPromo = (promotion: Promotion) => {
+      const promotionValue = getPromoValue(promotion, product);
+      if (promotionValue > actualPromo) {
+        promoChosen = promotion;
+        actualPromo = promotionValue;
+      }
+    };
+
+    // we search in the promotions of the shop
+    route.promotions.filter(filterToRelatedPromo).forEach(findBestPromo);
+    if (actualPromo > 0) {
+      // If we found at least one promotion related to the product we add it
+      // to our total
+      promotionsChoice.push(promoChosen!);
+      value += actualPromo;
+    }
+  });
+  route.promotions = promotionsChoice;
+  route.economie = value;
+
   route.stores = findOptimalRoute(route.stores, position);
 
   return route;
