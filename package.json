@@ -15,7 +15,7 @@
     "@types/passport-facebook": "^2.1.8",
     "@types/passport-google-oauth": "^1.0.39",
     "@types/passport-local": "^1.0.33",
-    "apollo-server-express": "^2.4.8",
+    "apollo-server-express": "^2.14.2",
     "async-redis": "^1.1.7",
     "body-parser": "^1.18.1",
     "dotenv": "^7.0.0",
